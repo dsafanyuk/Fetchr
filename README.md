@@ -2,7 +2,7 @@
 
 ## The student-run, store-to-door platform was made by students for students.
 
-_Fetcher_ is a platform that allows students to order things to be delivered to their room.
+_Fetchr_ is a platform that allows students to order things to be delivered to their room.
 
 Need extra money? Sign up to be a courier! View open orders and make a quick buck on the way back from class.
 
