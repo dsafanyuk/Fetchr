@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://fetchr.io/
+HOST: http://fetchr.io/apit 
 
 # Fetchr
 
@@ -166,5 +166,15 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
                 ],
             }
 
-# Delete an order [POST /orders/{order_id}]
+# Delete an order [DELETE /orders/{order_id}]
++ Request (application/json)
+
+        {
+            "user_id":"1"
+        }
+
 + Response 200 (application/json)
+
+        {
+            "deleted_at":"TIME"
+        }
