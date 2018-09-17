@@ -1,6 +1,6 @@
 {
   "name": "fetchr",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www"
@@ -10,8 +10,5 @@
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "morgan": "^1.9.1"
-  },
-  "devDependencies": {
-    "nodemon": "latest"
   }
 }
