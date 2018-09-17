@@ -1,0 +1,170 @@
+FORMAT: 1A
+HOST: http://fetchr.io/
+
+# Fetchr
+
+Fetchr api is the backend to the snack courier service from Devs that Deliver
+
+## Users [/users]
+### List all users [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "user_id": "1",
+                "username": "dsafanyuk,
+                "first_name": "Dave",
+                "last_name": "Safanyuk",
+                "room": "dsafanyuk",
+                "courier": "true",
+                "wallet": "0.00"
+            }
+        ]
+        
+### List single user [GET /user/{user_id}]
++ Response 200 (application/json)
+
+        {
+            "user_id": "1",
+            "username": "dsafanyuk,                
+            "first_name": "Dave",
+            "last_name": "Safayuk",
+            "room": "dsafanyuk",
+            "courier": "true",
+            "wallet": "0.00"
+        }
+### Create a user [POST]
++ Request (application/json)
+
+        {
+            "first_name": "Dave",
+            "last_name": "Safanyuk",
+            "username": "dsafanyuk",
+            "room_num": " 6326,
+            "starting_balance": "5.00"
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /user/{user_id}
+
+    + Body
+
+            {
+                "user_id": "1",
+                "created_at": "2015-08-05T08:40:51.620Z",
+                "username": "dsafanyuk",
+                "money added": "5.00"
+            }
+
+# Update user [PATCH /users/{user_id}]
++ Response 200 (application/json)
+
+        {
+            
+        }
+
+# Delete user [DELETE /users/{user_id}]
++ Request (application/json)
+
+        {
+            "user_id":"1"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "deleted_at":"TIME"
+        }
+
+##  Orders [/orders]
+### List All Orders [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "order": "1",
+                "order_summary": {
+                    "product_name":"Twix",
+                    "product_price": "1.00",
+                    "quantity": "1"
+                },
+                "order_total": "1.00",
+                "room_num": "6362",
+                "customer": "user_id",
+                "courier": NULL,
+                "delivery_status": "Pending"
+            }
+        ]
+
+# List single order [GET /orders/{order_id}]
++ Parameters
+    + order_id (number) - ID of the order in the form of an integer
+    
++ Response 200 (application/json)
+
+        {
+            "order": "1",
+            "order_summary": [
+                    {
+                        "product_name":"Twix",
+                        "product_price": "1.00",
+                        "quantity": "1"
+                    }
+            ],
+            "order_total": "1.00",
+            "room_num": "6362",
+            "customer": "dsafanyuk",
+            "courier": "user_id",
+            "delivery_status": "Pending"
+        }
+# Create an order [POST /orders/]
++ Request (application/json)
+
+        {
+            "user_id": "Favourite programming language?",
+            "order_summary": [
+                    {
+                        "product_name":"Twix",
+                        "product_price": "1.00",
+                        "quantity": "1"
+                    },
+                    {
+                        "product_name":"Snickers",
+                        "product_price": "1.20",
+                        "quantity": "2"
+                    }
+            ]                
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /orders/{order_id}
+
+    + Body
+
+            {
+                "order_id": "1",
+                "created_at": "2015-08-05T08:40:51.620Z",
+                "order_summary": [
+                        {
+                            "product_name":"Twix",
+                            "product_price": "1.00",
+                            "quantity": "1"
+                        },
+                        {
+                            "product_name":"Snickers",
+                            "product_price": "1.20",
+                            "quantity": "2"
+                        },
+                ],
+            }
+
+# Delete an order [POST /orders/{order_id}]
++ Response 200 (application/json)
