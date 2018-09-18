@@ -25,3 +25,33 @@ ___
 
 **Communications Coordinate**: Benji Kintaudi
 
+___
+
+## Run the api
+
+Change into project folder 
+
+`cd Fetchr`
+
+Change into the `api` folder
+
+`cd api`
+
+Install npm dependencies
+
+`npm install`
+
+Start api server
+
+`npm start`
+
+Test using Postman [install here](https://www.getpostman.com/apps) or browser:
+
+http://localhost:3000/api/user
+
+http://localhost:3000/api/user/1
+
+http://localhost:3000/api/order
+
+http://localhost:3000/api/order/1
+
