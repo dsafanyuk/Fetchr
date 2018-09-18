@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var userRouter = require ('./userRoute')
+var orderRouter = require ('./orderRoute')
 
-router.get('/', function(req, res, next) {
-  res.send('respond with a word');
-});
+router.all('/user*', userRouter)
+router.all('/order*', orderRouter)
 
 module.exports = router;
