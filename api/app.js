@@ -2,7 +2,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var dbOptions = require('./db')
+const knex = require('knex')(dbOptions);
 var apiRouter = require('./routes/index');
 var app = express();
 app.use(logger('dev'));
@@ -12,6 +13,5 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', apiRouter);
-
 
 module.exports = app;
