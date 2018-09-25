@@ -12,37 +12,68 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
 
         [
             {
-                "user_id": "1",
-                "username": "dsafanyuk"ed ,
-                "first_name": "Dave",
-                "last_name": "Safanyuk",
-                "room": "dsafanyuk",
-                "courier": "true",
-                "wallet": "0.00"
+                "user_id": 1,
+                "time_created": "2018-09-25T03:27:07.000Z",
+                "email_address": "dsafanyuk@email.com",
+                "password": "notpassword",
+                "room_num": "6326",
+                "is_courier": 0,
+                "credit_card_number": "12345678980",
+                "ccv": "123",
+                "exp_date": "0123",
+                "wallet": 1.23,
+                "first_name": "dave",
+                "last_name": "safanyuk"
+            },
+            {
+                "user_id": 8,
+                "time_created": "2018-09-25T14:22:11.000Z",
+                "email_address": "dsafanyuk@shmoople.com",
+                "password": "notpassword",
+                "room_num": "6326",
+                "is_courier": 0,
+                "credit_card_number": "12345678980",
+                "ccv": "123",
+                "exp_date": "0123",
+                "wallet": 1.23,
+                "first_name": "dave",
+                "last_name": "safanyuk"
             }
         ]
         
 ### List single user [GET /user/{user_id}]
 + Response 200 (application/json)
 
-        {
-            "user_id": "1",
-            "username": "dsafanyuk,                
-            "first_name": "Dave",
-            "last_name": "Safayuk",
-            "room": "dsafanyuk",
-            "courier": "true",
-            "wallet": "0.00"
-        }
+        [
+            {
+                "user_id": 1,
+                "time_created": "2018-09-25T03:27:07.000Z",
+                "email_address": "dsafanyuk@email.com",
+                "password": "notpassword",
+                "room_num": "6326",
+                "is_courier": 0,
+                "credit_card_number": "12345678980",
+                "ccv": "123",
+                "exp_date": "0123",
+                "wallet": 1.23,
+                "first_name": "dave",
+                "last_name": "safanyuk"
+            }
+        ]
 ### Create a user [POST]
 + Request (application/json)
 
         {
-            "first_name": "Dave",
-            "last_name": "Safanyuk",
-            "username": "dsafanyuk",
-            "room_num": " 6326,
-            "starting_balance": "5.00"
+            "email_address":"dsafanyuk@shmoople.com",
+            "password":"notpassword",
+            "room_num":"6326",
+            "is_courier":"0",
+            "credit_card_number":"12345678980",
+            "ccv":"123",
+            "exp_date":"0123",
+            "wallet":"1.23",
+            "first_name":"dave",
+            "last_name":"safanyuk"
         }
 
 + Response 200 (application/json)
