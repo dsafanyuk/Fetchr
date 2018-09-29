@@ -62,3 +62,7 @@ typings/
 
 #github files
 .github/
+
+# MacOS files
+
+.DS_Store

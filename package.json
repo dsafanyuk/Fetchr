@@ -1,0 +1,9 @@
+{
+    "name": "fetchr",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+      "server": "node ./api/bin/www"
+    }
+}
+  
