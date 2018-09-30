@@ -46,9 +46,10 @@ function createUser(req, res) {
     let request = req.body;
     knex("users").insert(request)
         // if user successfully inserted
-        .then((rows) => {
+        .then((user_id) => {
             // Select the user that was just created
-            knex("users").select('*').where('user_id', rows)
+            console.log(rows)
+            knex("users").select('*').where('user_id', user_id)
                 .then((rows) => {
                     res.status(201).send(`User created: ${rows[0].email_address}`)
                 })
@@ -62,7 +63,7 @@ function createUser(req, res) {
 }
 
 
-// UPDATE /user{id}
+// UPDATE /user/{id}
 function updateUser(req, res) {
     res.send("update user");
 }
@@ -76,6 +77,8 @@ function updateUser(req, res) {
  FOREIGN KEY (`courier_id`) 
  REFERENCES `users` (`user_id`))
 */
+
+// Should we just have a 'deactivate account' option instead of a straight up delete?
 function deleteUser(req, res) {
     knex("users").where('user_id', req.params.user_id).del()
         .then((rows) => {

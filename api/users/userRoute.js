@@ -5,7 +5,6 @@ userController = require('./userController')
 
 router.get('/', userController.showAllUsers)
 
-
 router.get('/:user_id/',userController.showOneUser)
 
 router.get('/:user_id/orders', userController.showUserOrders)
