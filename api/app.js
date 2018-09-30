@@ -21,6 +21,7 @@ app.use('*', (req,res,next)=>{
     console.log('middle ware 2')
     next();
 })
+
 app.use('*', (req,res,next)=>{
     console.log('middle ware 3')
     next();
