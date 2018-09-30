@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-orderController = require('../controllers/orders/orderController')
+orderController = require('./orderController')
 
 router.get('/order', orderController.showAllOrders)
 router.get('/order/:id', orderController.showOneOrder)
