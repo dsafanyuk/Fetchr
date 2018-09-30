@@ -1,0 +1,11 @@
+{
+    "name": "fetchr",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+      "server": "node ./api/bin/www",
+      "client": "node ./client/app.js",
+      "fetchr": "node ./api/bin/www && node ./client/app.js"
+    }
+}
+  
