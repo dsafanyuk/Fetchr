@@ -3,7 +3,7 @@ module.exports =  options = {
     connection: {
         host: '127.0.0.1',
         user: 'root',
-        password: 'password',
+        password: 'helloworld',
         database: 'fetchr_db'
     }
 }
