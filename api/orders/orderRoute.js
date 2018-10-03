@@ -3,10 +3,10 @@ var router = express.Router();
 
 orderController = require('./orderController')
 
-router.get('/order', orderController.showAllOrders)
-router.get('/order/:id', orderController.showOneOrder)
-router.patch('/order/:id', orderController.updateOrder)
-router.post('/order', orderController.createOrder)
-router.delete('/order/:id', orderController.deleteOrder)
+router.get('/', orderController.showAllOrders)
+router.get('/:order_id', orderController.showOneOrder)
+router.patch('/:order_id', orderController.updateOrder)
+router.post('/', orderController.createOrder)
+router.delete('/:order_id', orderController.deleteOrder)
 
 module.exports = router;
