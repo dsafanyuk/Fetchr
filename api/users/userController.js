@@ -43,10 +43,21 @@ function showUserOrders(req, res) {
 
 // POST /register
 function registerUser(req, res) {
-    res.send(req.query);
-    console.log(JSON.stringify(req.query));
-    // let request = 
-    // knex("users").insert({email_address: req.query.emailAddress, password: req.query.password, room_num:roomNum, first_name: firstName, last_name: lastName})
+    res.status(200).send('whatever')
+    // res.send(req.body.query);
+    // console.log(req.query);
+    /*knex("users").insert({email_address: req.query.emailAddress, password: req.query.password, room_num:roomNum, first_name: firstName, last_name: lastName, is_active: 1})
+        .then(() => {
+            knex("users").select('*').where('email_address', req.query.emailAddress)
+                .then(rows) => {
+                    res.status(201).send(`User created: ${rows[0].email_address}`)
+                })
+        })
+        .catch(function (err) {
+            res.status(500).send({
+                message: `${err}`
+            })
+        })*/
 }
 
 // POST /user
@@ -103,8 +114,8 @@ module.exports = {
     showAllUsers: showAllUsers,
     showOneUser: showOneUser,
     showUserOrders: showUserOrders,
-    registerUser: registerUser,
     createUser: createUser,
     updateUser: updateUser,
-    deleteUser: deleteUser
+    deleteUser: deleteUser,
+    registerUser: registerUser
 };
