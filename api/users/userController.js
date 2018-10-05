@@ -43,9 +43,10 @@ function showUserOrders(req, res) {
 
 // POST /register
 function registerUser(req, res) {
-    res.send('hah');
+    res.send(req.query);
+    console.log(JSON.stringify(req.query));
     // let request = 
-    // knex("users").insert({email_address: req.query, password:})
+    // knex("users").insert({email_address: req.query.emailAddress, password: req.query.password, room_num:roomNum, first_name: firstName, last_name: lastName})
 }
 
 // POST /user
@@ -102,6 +103,7 @@ module.exports = {
     showAllUsers: showAllUsers,
     showOneUser: showOneUser,
     showUserOrders: showUserOrders,
+    registerUser: registerUser,
     createUser: createUser,
     updateUser: updateUser,
     deleteUser: deleteUser
