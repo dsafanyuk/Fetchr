@@ -9,6 +9,8 @@ router.get('/:user_id/',userController.showOneUser)
 
 router.get('/:user_id/orders', userController.showUserOrders)
 
+router.get('/register', userController.registerUser)
+
 router.patch('/:user_id', userController.updateUser)
 
 router.post('/', userController.createUser)

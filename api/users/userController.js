@@ -41,6 +41,13 @@ function showUserOrders(req, res) {
         })
 }
 
+// POST /register
+function registerUser(req, res) {
+    res.send('hah');
+    // let request = 
+    // knex("users").insert({email_address: req.query, password:})
+}
+
 // POST /user
 function createUser(req, res) {
     let request = req.body;
