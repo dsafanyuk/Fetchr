@@ -1,6 +1,7 @@
 import Vue from 'vue'
-import App from './Components/Home.vue'
+import App from './Components/App.vue'
 import VueRouter from 'vue-router'
+import Home from './Components/Home.vue'
 import Login from './Components/Login.vue'
 import Register from './Components/Register.vue'
 
@@ -8,7 +9,8 @@ Vue.use(VueRouter);
 
 /*----------------------- Routes Declaration -----------------*/
 const routes = [
-  {path : '/login', component : Login},
+  {path : '/',         component : Home },
+  {path : '/login',    component : Login  },
   {path : '/register', component : Register}
 ];
 
