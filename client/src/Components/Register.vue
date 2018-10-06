@@ -43,7 +43,7 @@
                                                     <input type="password" class="form-control" v-model="cRepeatPassword" placeholder="Confirm Password *" value="" />
                                                 </div>
                                                 <div class="form-group text-center">
-                                                <input type="submit" @click="register" class="btnRegister"  value="Register"/>
+                                                <input type="submit" @click="registerCustomer" class="btnRegister"  value="Register"/>
                                               </div>
                                             </form>
                                             </div>
@@ -94,7 +94,7 @@
                                               <div class="form-group">
                                                   <input type="text" class="form-control" placeholder="Enter Your Answer *" value="" />
                                               </div>
-                                              <input type="submit" class="btnRegister"  value="Register"/>
+                                              <input type="submit" @click="registerCourrier" class="btnRegister"  value="Register"/>
                                           </div>
                                       </div>
                                   </div>
@@ -110,6 +110,7 @@
 
 <script>
 export default {
+  // Component Name
   name: "registration",
   data () {
     return {
@@ -122,12 +123,23 @@ export default {
 
     }
     },
+    // Methods Begin Here
     methods : {
-      register(e){
+      registerCustomer(e){
 
-  
+      let url_customer =   "http://fetchr.io/apit/users";
+      if (this.cPassword == this.cRepeatPassword )
+      {
 
       }
+      else {
+        alert("Yooo")
+      }
+
+
+
+    },
+      registerCourrier(){}
 
     }
   }
