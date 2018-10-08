@@ -8,6 +8,11 @@
     "fetchr": "node ./api/bin/www && node ./client/app.js"
   },
   "dependencies": {
-    "express": "^4.16.3"
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
   }
 }

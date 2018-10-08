@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var dbOptions = require("../db");
-
+var bcrypt = require('bcryptjs');
 const knex = require("knex")(dbOptions);
 // GET /user
 function showAllUsers(req, res) {
@@ -41,33 +41,58 @@ function showUserOrders(req, res) {
         })
 }
 
-// POST /register
+// POST /user/register
 function registerUser(req, res) {
-    res.status(200).send('whatever')
-    // res.send(req.body.query);
-    // console.log(req.query);
-    /*knex("users").insert({email_address: req.query.emailAddress, password: req.query.password, room_num:roomNum, first_name: firstName, last_name: lastName, is_active: 1})
-        .then(() => {
-            knex("users").select('*').where('email_address', req.query.emailAddress)
-                .then(rows) => {
+    var newUser = {
+        email_address: req.body.email_address,
+        password: req.body.password,
+        room_num: req.body.room_num,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name
+    }
+
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, function(err, hash) {
+            console.log(`hash is ${hash}`);
+            newUser.password = hash;
+
+            bcrypt.compare(req.body.password, newUser.password, function(err, res) {
+                console.log(res);
+            });
+        });
+    });
+
+    knex("users").insert(newUser)
+        // if user successfully inserted
+        .then((user_id) => {
+            // Select the user that was just created
+            knex("users").select('*').where('user_id', user_id)
+                .then((rows) => {
                     res.status(201).send(`User created: ${rows[0].email_address}`)
                 })
         })
+        // else send err
         .catch(function (err) {
             res.status(500).send({
                 message: `${err}`
-            })
-        })*/
+            }) // FOR DEBUGGING ONLY, dont send exact message in prod
+        })
+}
+
+// POST /user/login
+function loginUser(req, res) {
+    console.log('login succesful');
+    res.redirect('/');
 }
 
 // POST /user
 function createUser(req, res) {
     let request = req.body;
+    console.log(request);
     knex("users").insert(request)
         // if user successfully inserted
         .then((user_id) => {
             // Select the user that was just created
-            console.log(rows)
             knex("users").select('*').where('user_id', user_id)
                 .then((rows) => {
                     res.status(201).send(`User created: ${rows[0].email_address}`)
@@ -109,6 +134,19 @@ function deleteUser(req, res) {
             }) // FOR DEBUGGING ONLY, dont send exact message in prod
         })
 }
+/*
+function userAuthentication() {
+    User.findOne({ username: req.body.email_address }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }*/
 
 module.exports = {
     showAllUsers: showAllUsers,
@@ -117,5 +155,6 @@ module.exports = {
     createUser: createUser,
     updateUser: updateUser,
     deleteUser: deleteUser,
-    registerUser: registerUser
+    registerUser: registerUser,
+    loginUser: loginUser
 };
