@@ -3,6 +3,8 @@ var router = express.Router();
 var dbOptions = require("../db");
 var bcrypt = require('bcryptjs');
 const knex = require("knex")(dbOptions);
+const { validationResult } = require('express-validator/check');
+
 // GET /user
 function showAllUsers(req, res) {
     knex('users').select('*')
@@ -43,6 +45,14 @@ function showUserOrders(req, res) {
 
 // POST /user/register
 function registerUser(req, res) {
+    const errors = validationResult(req); // Validation errors, if there is any
+
+    // If errors is not empty, return error messages
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    // new user with information from the request
     var newUser = {
         email_address: req.body.email_address,
         password: req.body.password,
@@ -52,10 +62,12 @@ function registerUser(req, res) {
     }
 
     bcrypt.genSalt(10, function(err, salt) {
+        // Hash the password
         bcrypt.hash(req.body.password, salt, function(err, hash) {
             console.log(`hash is ${hash}`);
             newUser.password = hash;
 
+            // Compare hashed password with plaintext password
             bcrypt.compare(req.body.password, newUser.password, function(err, res) {
                 console.log(res);
             });
