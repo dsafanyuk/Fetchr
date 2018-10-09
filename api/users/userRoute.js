@@ -23,7 +23,7 @@ router.post('/register', [
     check('last_name', 'Cannot have numbers').isAlpha().trim()
 ], userController.registerUser)
 
-router.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect:'/login', failureFlash: true}), userController.loginUser)
+router.post('/login', userController.loginUser)
 
 router.get('/login', userController.showLogin)
 

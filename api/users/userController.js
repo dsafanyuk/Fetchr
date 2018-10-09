@@ -80,7 +80,9 @@ function registerUser(req, res) {
             // Select the user that was just created
             knex("users").select('*').where('user_id', user_id)
                 .then((rows) => {
-                    res.status(201).send(`User created: ${rows[0].email_address}`)
+                    // res.status(201).send(`User created: ${rows[0].email_address}`)
+                    res.status(201)
+                    res.redirect(`/api/user/login?email=${rows[0].email_address}`)
                 })
         })
         // else send err
@@ -93,12 +95,12 @@ function registerUser(req, res) {
 
 // GET /user/login
 function showLogin(req, res) {
-    res.send('Welcome to the login page');
+    res.send(`Welcome to the login page user: ${req.query.email}`);
 }
 
 // POST /user/login
 function loginUser(req, res) {
-    res.send(req);
+    res.redirect('/api/user/login');
 }
 
 // POST /user
