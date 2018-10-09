@@ -91,10 +91,14 @@ function registerUser(req, res) {
         })
 }
 
+// GET /user/login
+function showLogin(req, res) {
+    res.send('Welcome to the login page');
+}
+
 // POST /user/login
 function loginUser(req, res) {
-    console.log('login succesful');
-    res.redirect('/');
+    res.send(req);
 }
 
 // POST /user
@@ -168,5 +172,6 @@ module.exports = {
     updateUser: updateUser,
     deleteUser: deleteUser,
     registerUser: registerUser,
-    loginUser: loginUser
+    loginUser: loginUser,
+    showLogin: showLogin
 };
