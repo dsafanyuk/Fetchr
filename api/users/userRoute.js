@@ -8,7 +8,8 @@ userController = require('./userController')
 
 router.post('/register', [
     check('email_address', 'Not an email address').isEmail().trim(),
-    check('password', 'Password must have a minimum of 8 characters').isLength({min: 10}).trim(),
+    check('password', 'Password must have at least one lowercase, one uppercase, a number,  and a minimum of 8 characters')
+        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/, "i").trim(),
     check('confirm_password').custom((value, {req}) => {
         if(value !== req.body.password) {
             throw new Error('Password confirmation must match the password')
@@ -23,6 +24,8 @@ router.post('/register', [
 ], userController.registerUser)
 
 router.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect:'/login', failureFlash: true}), userController.loginUser)
+
+router.get('/login', userController.showLogin)
 
 router.get('/', userController.showAllUsers)
 
