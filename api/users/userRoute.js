@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router({mergeParams: true}) // don't forget the parent params!
-var   passport      = require('passport');
-var   LocalStrategy = require('passport-local').Strategy;
+var   auth          = require('../auth')();
 const { check } = require('express-validator/check');
 
 userController = require('./userController')
@@ -29,7 +28,7 @@ router.get('/login', userController.showLogin)
 
 router.get('/', userController.showAllUsers)
 
-router.get('/:user_id/',userController.showOneUser)
+router.get('/:user_id/', auth.authenticate() , userController.showOneUser)
 
 router.get('/:user_id/orders', userController.showUserOrders)
 
