@@ -2,8 +2,10 @@ var express = require("express");
 var router = express.Router();
 var dbOptions = require("../db");
 var bcrypt = require('bcryptjs');
+var cfg    = require('../JWTconfig');
 const knex = require("knex")(dbOptions);
 const { validationResult } = require('express-validator/check');
+const jwt      = require('jwt-simple');
 
 // GET /user
 function showAllUsers(req, res) {
@@ -100,7 +102,25 @@ function showLogin(req, res) {
 
 // POST /user/login
 function loginUser(req, res) {
-    res.redirect('/api/user/login');
+    if (req.body.email_address && req.body.password) {
+        var email = req.body.email_address;
+        var password = req.body.password;
+        var user = knex('users').select('*').where({email_address: email, password: password})
+        
+        if (user) {
+            var payload = {
+                id: user.user_id
+            };
+            var token = jwt.encode(payload, cfg.jwtSecret);
+            res.json({
+                token: token
+            });
+        } else {
+            res.sendStatus(401);
+        }
+    } else {
+        res.sendStatus(401);
+    }
 }
 
 // POST /user
@@ -152,19 +172,6 @@ function deleteUser(req, res) {
             }) // FOR DEBUGGING ONLY, dont send exact message in prod
         })
 }
-/*
-function userAuthentication() {
-    User.findOne({ username: req.body.email_address }, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }*/
 
 module.exports = {
     showAllUsers: showAllUsers,
