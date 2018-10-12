@@ -28,7 +28,7 @@ router.get('/login', userController.showLogin)
 
 router.get('/', userController.showAllUsers)
 
-router.get('/:user_id/', auth.authenticate() , userController.showOneUser)
+router.get('/:user_id/', auth.authenticate, userController.showOneUser)
 
 router.get('/:user_id/orders', userController.showUserOrders)
 

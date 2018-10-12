@@ -13,6 +13,7 @@ var params = {
 module.exports = function() {  
     var strategy = new Strategy(params, function(payload, done) {
         var user = knex('users').select('*')[payload.id] || null;
+        console.log("new Strategy callback fuction");
         if (user) {
             return done(null, {
                 id: user.user_id
