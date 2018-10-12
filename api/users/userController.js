@@ -106,7 +106,7 @@ function loginUser(req, res) {
         var email = req.body.email_address;
         var password = req.body.password;
         var user = knex('users').select('*').where({email_address: email, password: password})
-        
+        console.log("function loginUser");
         if (user) {
             var payload = {
                 id: user.user_id
