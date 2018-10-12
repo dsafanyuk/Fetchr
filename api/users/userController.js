@@ -5,7 +5,7 @@ var bcrypt = require('bcryptjs');
 var cfg    = require('../JWTconfig');
 const knex = require("knex")(dbOptions);
 const { validationResult } = require('express-validator/check');
-const jwt      = require('jwt-simple');
+const jwt      = require('jsonwebtoken');
 
 // GET /user
 function showAllUsers(req, res) {
@@ -22,7 +22,20 @@ function showAllUsers(req, res) {
 
 // GET /user/{id}
 function showOneUser(req, res) {
-    knex('users').where('user_id', req.params.user_id)
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if(authData.user.user_id === req.params.user_id){
+            res.json({
+                message: "Post created",
+                authData
+            });
+        }
+        else {
+            res.status(403).send({
+                message: `error:${err} or user not found`
+            });
+        }
+    });
+    /*knex('users').where('user_id', req.params.user_id)
         .then((rows) => {
             res.send(rows).status(200)
         })
@@ -30,7 +43,7 @@ function showOneUser(req, res) {
             res.status(500).send({
                 message: `${err}`
             }) // FOR DEBUGGING ONLY, dont send exact message in prod
-        })
+        })*/
 }
 // GET /user/{id}/orders
 function showUserOrders(req, res) {
@@ -102,11 +115,37 @@ function showLogin(req, res) {
 
 // POST /user/login
 function loginUser(req, res) {
-    if (req.body.email_address && req.body.password) {
+    var user = 'undefined';
+    
+    knex('users').select('*').where({email_address: req.body.email_address, password: req.body.password})
+        .then((rows) => {
+            console.log(`the email is ${rows[0].email_address}`);
+            user = {
+                user_id: `${rows[0].user_id}`,
+                email_address: `${rows[0].email_address}`,
+                password: `${rows[0].password}`
+            }
+            console.log(user);
+            jwt.sign({user}, 'secretkey', (err, token) => {
+                res.json({
+                    token
+                });
+            });
+        })
+        // else send err
+        .catch(function (err) {
+            res.status(500).send({
+                message: `${err}`
+            }) // FOR DEBUGGING ONLY, dont send exact message in prod
+        })
+
+    // DON'T USE THIS, MIGHT NEED LATER
+    /*if (req.body.email_address && req.body.password) {
         var email = req.body.email_address;
         var password = req.body.password;
         var user = knex('users').select('*').where({email_address: email, password: password})
         console.log("function loginUser");
+        
         if (user) {
             var payload = {
                 id: user.user_id
@@ -120,7 +159,7 @@ function loginUser(req, res) {
         }
     } else {
         res.sendStatus(401);
-    }
+    }*/
 }
 
 // POST /user

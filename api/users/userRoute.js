@@ -28,7 +28,7 @@ router.get('/login', userController.showLogin)
 
 router.get('/', userController.showAllUsers)
 
-router.get('/:user_id/', auth.authenticate, userController.showOneUser)
+router.get('/:user_id/', verifyToken, userController.showOneUser)
 
 router.get('/:user_id/orders', userController.showUserOrders)
 
@@ -37,5 +37,29 @@ router.patch('/:user_id', userController.updateUser)
 router.post('/', userController.createUser)
 
 router.delete('/:user_id', userController.deleteUser)
+
+
+// IMPORTANT, FORMAT OF TOKEN
+// Authorization: Bearer <access_token>
+
+// Verify token
+function verifyToken(req, res, next) {
+    // Get auth header value
+    const bearerHeader = req.headers['authorization'];
+    // Check if bearer is undefined
+    if(typeof bearerHeader !== 'undefined') {
+        // Split at space
+        const bearer = bearerHeader.split(' ');
+        // Get token from array
+        const bearerToken = bearer[1];
+        // Set the token
+        req.token = bearerToken;
+        // next middleware
+        next();
+    }
+    else{
+        res.status(403);
+    }
+}
 
 module.exports = router;
