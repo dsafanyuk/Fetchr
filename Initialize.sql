@@ -27,7 +27,10 @@ DROP TABLE IF EXISTS `Order_Summary`;
 CREATE TABLE `Order_Summary` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `quantity` int(11) DEFAULT NULL
+  `quantity` int(11) DEFAULT NULL,
+  PRIMARY KEY (`order_id`, `product_id`),
+  CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  CONSTRAINT `product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -37,7 +40,7 @@ CREATE TABLE `Order_Summary` (
 
 LOCK TABLES `Order_Summary` WRITE;
 /*!40000 ALTER TABLE `Order_Summary` DISABLE KEYS */;
-INSERT INTO `Order_Summary` VALUES (1,5,3),(4,9,3),(7,16,5),(6,21,1),(2,15,4),(1,15,4),(6,7,4),(6,20,3),(1,15,2),(3,8,3),(4,17,1),(6,30,3),(1,7,5),(2,9,1),(7,22,3),(2,15,5),(1,6,2),(5,5,5),(5,31,4),(3,31,3);
+INSERT INTO `Order_Summary` VALUES (1,3,5), (1,2,3), (1,7,3), (1,4,5), (1,9,2), (2,1,1), (3,3,3), (3,2,1), (3,6,2), (4,5,3), (4,4,4), (5,6,1), (5,2,1), (5,3,3), (6,7,1), (6,6,100), (6,2,1), (7,3,2), (7,2,1), (8,2,2), (8,4,2), (8,5,2), (8,7,2), (8,8,2), (9,10,1), (9,2,2), (9,11,2), (10,3,3), (10,2,2), (11,12,1), (11,1,1), (12,12,4), (12,7,1), (12,6,1), (12,5,1), (12,4,1), (12,3,1), (12,2,1), (12,1,1), (13,5,4), (13,4,4), (13,3,4), (13,1,1), (13,11,2), (14,2,5), (14,3,7), (14,5,8), (14,1,1), (15,1,1), (16,1,1), (17,1,1), (18,1,1), (19,1,1), (20,12,1), (20,2,1), (20,3,1), (20,1,1), (21,1,1), (22,6,4), (22,7,2), (22,3,4), (22,9,3), (22,4,1), (23,9,6), (23,8,4), (23,4,4), (23,5,1), (23,1,1), (24,5,8), (24,4,8), (24,3,8), (24,2,1), (25,1,1), (26,1,1), (26,4,5), (27,2,5), (27,4,7), (27,6,9), (27,8,1), (28,1,1), (29,1,1), (30,5,6), (30,3,7), (30,9,8), (30,1,1), (31,1,1), (32,1,1), (33,5,9), (33,4,6), (33,2,8), (33,1,1), (34,21,2), (34,12,7), (34,1,1), (35,11,2), (35,1,1), (36,9,3), (36,6,4), (36,4,4), (36,1,1), (37,1,1), (38,32,1), (38,23,1), (38,1,1), (39,16,1), (40,13,1), (41,1,1), (42,15,1), (43,1,1), (44,1,1), (45,1,1), (46,2,9), (46,5,9), (46,31,1), (47,11,1), (48,21,1), (49,16,1), (50,1,1), (50,2,2), (50,4,52), (50,6,2), (50,8,2), (50,22,4);
 /*!40000 ALTER TABLE `Order_Summary` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,6 +104,32 @@ INSERT INTO `Products` VALUES (1,'Arizona Tea',0.99,'drinks'),(2,'Dunkin Iced Co
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Products`
+--
+
+DROP TABLE IF EXISTS `Products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `Products` (
+  `product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(45) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `category` varchar(45) NOT NULL,
+  PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Products`
+--
+
+LOCK TABLES `Products` WRITE;
+/*!40000 ALTER TABLE `Products` DISABLE KEYS */;
+INSERT INTO `Products` VALUES (1,'Arizona Tea',0.99,'drinks'),(2,'Dunkin Iced Coffee',1.08,'drinks'),(3,'Bai ',1.81,'drinks'),(4,'Coca Cola',2.42,'drinks'),(5,'Pepsi',3.38,'drinks'),(6,'Sprite',2.33,'drinks'),(7,'Root Beer',1.49,'drinks'),(8,'Milk',1.17,'drinks'),(9,'Doritos Small',2.50,'snacks'),(10,'Pringles',2.57,'snacks'),(11,'Oreos',3.57,'snacks'),(12,'Pretzels',3.08,'snacks'),(13,'Cheetos',2.70,'snacks'),(14,'Cheez-It',1.21,'snacks'),(15,'Fritos',1.77,'snacks'),(16,'Snickers',2.30,'snacks'),(17,'Chex Mix',4.35,'snacks'),(18,'Popcorn',2.46,'snacks'),(19,'Indomie',3.52,'snacks'),(20,'Ice Cream',2.10,'snacks'),(21,'Pencils',3.00,'school_supplies'),(22,'Eraser',1.12,'school_supplies'),(23,'Stapler',1.88,'school_supplies'),(24,'Pen',0.92,'school_supplies'),(25,'Notebooks',1.17,'school_supplies'),(26,'Hole Puncher',2.85,'school_supplies'),(27,'Nyquil',5.99,'misc'),(28,'Advil',2.01,'misc'),(29,'Umbrella',1.26,'misc'),(30,'Toilet Paper',3.70,'misc'),(31,'Tissues',1.02,'misc'),(32,'Sewing Kit',3.96,'misc');
+/*!40000 ALTER TABLE `Products` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Users`
 --
 
@@ -113,13 +142,14 @@ CREATE TABLE `Users` (
   `email_address` varchar(75) NOT NULL,
   `password` varchar(45) NOT NULL,
   `room_num` varchar(4) NOT NULL,
-  `is_courier` tinyint(4) NOT NULL,
+  `is_courier` tinyint(4) NOT NULL DEFAULT 0,
   `credit_card_number` varchar(25) NOT NULL,
   `ccv` varchar(4) NOT NULL,
   `exp_date` varchar(4) NOT NULL,
   `wallet` decimal(5,2) NOT NULL DEFAULT '0.00',
   `first_name` varchar(45) NOT NULL,
   `last_name` varchar(45) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email_address` (`email_address`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`)
@@ -132,7 +162,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (1,'2018-09-25 09:22:11','nec@lectuspedeet.ca',':(lTD3I0','3353',1,'3566002020360500','459','1219',12.75,'Joya  ','Short'),(2,'2018-09-25 09:22:11','velit.in.aliquet@at.edu',':(lTD3I1','1531',0,'5547899433555470','802','1220',3.70,'Damaris  ','Stanley'),(3,'2018-09-25 09:22:11','nulla.ante@Duis.co.uk',':(lTD3I2','4156',1,'3566002020360500','422','1221',12.11,'Debbie  ','Novak'),(4,'2018-09-25 09:22:11','Phasellus.ornare.Fusce@Fuscediamnunc.co.uk',':(lTD3I3','1743',1,'5547899433555470','242','1222',9.28,'Yolanda  ','Weiss'),(5,'2018-09-25 09:22:11','Phasellus.dapibus.quam@sit.net',':(lTD3I4','2038',0,'3566002020360500','265','1223',13.32,'Mina  ','Best'),(6,'2018-09-25 09:22:11','lectus@tortorat.co.uk',':(lTD3I5','5233',1,'5547899433555470','544','1224',6.49,'Hollis  ','Guzman'),(7,'2018-09-25 09:22:11','in.aliquet.lobortis@congue.ca',':(lTD3I6','1167',1,'3566002020360500','226','1225',6.24,'Hilario  ','Hill'),(8,'2018-09-25 09:22:11','Mauris.blandit@dignissimpharetra.org',':(lTD3I7','1877',0,'5547899433555470','419','1226',7.72,'Cami  ','Daniel'),(9,'2018-09-25 09:22:11','Ut.tincidunt.orci@enim.ca',':(lTD3I8','4488',1,'3566002020360500','911','1227',5.06,'Gerardo  ','Gutierrez'),(10,'2018-09-25 09:22:11','sed.turpis@massaQuisqueporttitor.org',':(lTD3I9','2452',0,'5547899433555470','238','1228',14.69,'Britni  ','Drake'),(11,'2018-09-25 09:22:11','fringilla.euismod@quisurnaNunc.co.uk',':(lTD3I10','2282',1,'3566002020360500','964','1229',20.90,'Sixta  ','Hickman'),(12,'2018-09-25 09:22:11','vulputate.ullamcorper.magna@Cumsociisnatoque.net',':(lTD3I11','1742',1,'5547899433555470','677','1230',18.59,'Rudolf  ','Cardenas'),(13,'2018-09-25 09:22:11','Ut@Donec.net',':(lTD3I12','4870',0,'3566002020360500','885','1231',8.63,'Janette  ','Hodges'),(14,'2018-09-25 09:22:11','et@et.edu',':(lTD3I13','2807',0,'5547899433555470','260','1232',23.34,'Rich  ','Bolton'),(15,'2018-09-25 09:22:11','elit.Nulla.facilisi@aliquamadipiscing.edu',':(lTD3I14','6208',1,'3566002020360500','707','1233',15.31,'Cherry  ','Carney'),(16,'2018-09-25 09:22:11','ipsum@suscipitnonummyFusce.ca',':(lTD3I15','3639',0,'5547899433555470','461','1234',18.49,'Enedina  ','Tyler'),(17,'2018-09-25 09:22:11','libero.lacus.varius@parturientmontes.com',':(lTD3I16','1444',1,'3566002020360500','889','1235',19.00,'Shane  ','Farley'),(18,'2018-09-25 09:22:11','Vivamus.sit.amet@cursuset.ca',':(lTD3I17','1644',1,'5547899433555470','371','1236',1.93,'Bess  ','Brennan'),(19,'2018-09-25 09:22:11','luctus.et.ultrices@Duisatlacus.com',':(lTD3I18','5822',0,'3566002020360500','955','1237',5.49,'Lyndsay  ','Hanson'),(20,'2018-09-25 09:22:11','Duis.ac@tinciduntdui.edu',':(lTD3I19','6476',1,'5547899433555470','742','1238',3.93,'Hwa  ','Hardy'),(21,'2018-09-25 09:22:11','eget@rutrum.edu',':(lTD3I20','4272',1,'3566002020360500','677','1239',13.77,'Jasmine  ','Dorsey'),(22,'2018-09-25 09:22:11','amet.luctus@mipedenonummy.net',':(lTD3I21','5168',0,'5547899433555470','928','1240',11.60,'Bethann  ','Blake'),(23,'2018-09-25 09:22:11','dolor@ligulaNullam.org',':(lTD3I22','3263',1,'3566002020360500','628','1241',17.95,'Drucilla  ','Walton'),(24,'2018-09-25 09:22:11','egestas.lacinia@morbitristique.co.uk',':(lTD3I23','6008',0,'5547899433555470','509','1242',7.20,'Lourie  ','Wilkins'),(25,'2018-09-25 09:22:11','quis.tristique@eunibh.net',':(lTD3I24','6240',1,'3566002020360500','283','1243',15.95,'Ching  ','Myers'),(26,'2018-09-25 09:22:11','augue@eumetusIn.net',':(lTD3I25','1925',1,'5547899433555470','312','1244',17.44,'Kattie  ','Duarte'),(27,'2018-09-25 09:22:11','lectus@Maurismagna.org',':(lTD3I26','3920',0,'3566002020360500','406','1245',16.14,'Morris  ','Parrish'),(28,'2018-09-25 09:22:11','quis@Maurisblandit.co.uk',':(lTD3I27','2868',0,'5547899433555470','609','1246',8.59,'Makeda  ','Vaughan'),(29,'2018-09-25 09:22:11','Nunc.ullamcorper@iaculisneceleifend.org',':(lTD3I28','2424',0,'3566002020360500','961','1247',9.66,'Ashlie  ','Gibson'),(30,'2018-09-25 09:22:11','ut.quam.vel@molestietellusAenean.com',':(lTD3I29','2782',1,'5547899433555470','229','1248',12.73,'Malorie  ','Craig');
+INSERT INTO `Users` VALUES (1,'2018-09-25 09:22:11','nec@lectuspedeet.ca',':(lTD3I0','3353',1,'3566002020360500','459','1219',12.75,'Joya  ','Short', 1),(2,'2018-09-25 09:22:11','velit.in.aliquet@at.edu',':(lTD3I1','1531',0,'5547899433555470','802','1220',3.70,'Damaris  ','Stanley', 1),(3,'2018-09-25 09:22:11','nulla.ante@Duis.co.uk',':(lTD3I2','4156',1,'3566002020360500','422','1221',12.11,'Debbie  ','Novak', 1),(4,'2018-09-25 09:22:11','Phasellus.ornare.Fusce@Fuscediamnunc.co.uk',':(lTD3I3','1743',1,'5547899433555470','242','1222',9.28,'Yolanda  ','Weiss', 1),(5,'2018-09-25 09:22:11','Phasellus.dapibus.quam@sit.net',':(lTD3I4','2038',0,'3566002020360500','265','1223',13.32,'Mina  ','Best', 1),(6,'2018-09-25 09:22:11','lectus@tortorat.co.uk',':(lTD3I5','5233',1,'5547899433555470','544','1224',6.49,'Hollis  ','Guzman', 1),(7,'2018-09-25 09:22:11','in.aliquet.lobortis@congue.ca',':(lTD3I6','1167',1,'3566002020360500','226','1225',6.24,'Hilario  ','Hill', 1),(8,'2018-09-25 09:22:11','Mauris.blandit@dignissimpharetra.org',':(lTD3I7','1877',0,'5547899433555470','419','1226',7.72,'Cami  ','Daniel', 1),(9,'2018-09-25 09:22:11','Ut.tincidunt.orci@enim.ca',':(lTD3I8','4488',1,'3566002020360500','911','1227',5.06,'Gerardo  ','Gutierrez', 1),(10,'2018-09-25 09:22:11','sed.turpis@massaQuisqueporttitor.org',':(lTD3I9','2452',0,'5547899433555470','238','1228',14.69,'Britni  ','Drake', 1),(11,'2018-09-25 09:22:11','fringilla.euismod@quisurnaNunc.co.uk',':(lTD3I10','2282',1,'3566002020360500','964','1229',20.90,'Sixta  ','Hickman', 1),(12,'2018-09-25 09:22:11','vulputate.ullamcorper.magna@Cumsociisnatoque.net',':(lTD3I11','1742',1,'5547899433555470','677','1230',18.59,'Rudolf  ','Cardenas', 1),(13,'2018-09-25 09:22:11','Ut@Donec.net',':(lTD3I12','4870',0,'3566002020360500','885','1231',8.63,'Janette  ','Hodges', 1),(14,'2018-09-25 09:22:11','et@et.edu',':(lTD3I13','2807',0,'5547899433555470','260','1232',23.34,'Rich  ','Bolton', 1),(15,'2018-09-25 09:22:11','elit.Nulla.facilisi@aliquamadipiscing.edu',':(lTD3I14','6208',1,'3566002020360500','707','1233',15.31,'Cherry  ','Carney', 1),(16,'2018-09-25 09:22:11','ipsum@suscipitnonummyFusce.ca',':(lTD3I15','3639',0,'5547899433555470','461','1234',18.49,'Enedina  ','Tyler', 1),(17,'2018-09-25 09:22:11','libero.lacus.varius@parturientmontes.com',':(lTD3I16','1444',1,'3566002020360500','889','1235',19.00,'Shane  ','Farley', 1),(18,'2018-09-25 09:22:11','Vivamus.sit.amet@cursuset.ca',':(lTD3I17','1644',1,'5547899433555470','371','1236',1.93,'Bess  ','Brennan', 1),(19,'2018-09-25 09:22:11','luctus.et.ultrices@Duisatlacus.com',':(lTD3I18','5822',0,'3566002020360500','955','1237',5.49,'Lyndsay  ','Hanson', 1),(20,'2018-09-25 09:22:11','Duis.ac@tinciduntdui.edu',':(lTD3I19','6476',1,'5547899433555470','742','1238',3.93,'Hwa  ','Hardy', 1),(21,'2018-09-25 09:22:11','eget@rutrum.edu',':(lTD3I20','4272',1,'3566002020360500','677','1239',13.77,'Jasmine  ','Dorsey', 1),(22,'2018-09-25 09:22:11','amet.luctus@mipedenonummy.net',':(lTD3I21','5168',0,'5547899433555470','928','1240',11.60,'Bethann  ','Blake', 1),(23,'2018-09-25 09:22:11','dolor@ligulaNullam.org',':(lTD3I22','3263',1,'3566002020360500','628','1241',17.95,'Drucilla  ','Walton', 1),(24,'2018-09-25 09:22:11','egestas.lacinia@morbitristique.co.uk',':(lTD3I23','6008',0,'5547899433555470','509','1242',7.20,'Lourie  ','Wilkins', 1),(25,'2018-09-25 09:22:11','quis.tristique@eunibh.net',':(lTD3I24','6240',1,'3566002020360500','283','1243',15.95,'Ching  ','Myers', 1),(26,'2018-09-25 09:22:11','augue@eumetusIn.net',':(lTD3I25','1925',1,'5547899433555470','312','1244',17.44,'Kattie  ','Duarte', 1),(27,'2018-09-25 09:22:11','lectus@Maurismagna.org',':(lTD3I26','3920',0,'3566002020360500','406','1245',16.14,'Morris  ','Parrish', 1),(28,'2018-09-25 09:22:11','quis@Maurisblandit.co.uk',':(lTD3I27','2868',0,'5547899433555470','609','1246',8.59,'Makeda  ','Vaughan', 1),(29,'2018-09-25 09:22:11','Nunc.ullamcorper@iaculisneceleifend.org',':(lTD3I28','2424',0,'3566002020360500','961','1247',9.66,'Ashlie  ','Gibson', 1),(30,'2018-09-25 09:22:11','ut.quam.vel@molestietellusAenean.com',':(lTD3I29','2782',1,'5547899433555470','229','1248',12.73,'Malorie  ','Craig', 1);
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
