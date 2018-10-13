@@ -14,21 +14,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(auth.initialize());
 
-app.use('*', (req,res,next)=>{
-    console.log('middle ware 1')
-    next();
-})
-
-app.use('*', (req,res,next)=>{
-    console.log('middle ware 2')
-    next();
-})
-
-app.use('*', (req,res,next)=>{
-    console.log('middle ware 3')
-    next();
-})
-
 app.use('/api', apiRouter);
 
 module.exports = app;
