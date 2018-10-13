@@ -104,31 +104,6 @@ INSERT INTO `Products` VALUES (1,'Arizona Tea',0.99,'drinks','https://upload.wik
 /*!40000 ALTER TABLE `Products` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `Products`
---
-
-DROP TABLE IF EXISTS `Products`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Products` (
-  `product_id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_name` varchar(45) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `category` varchar(45) NOT NULL,
-  PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Products`
---
-
-LOCK TABLES `Products` WRITE;
-/*!40000 ALTER TABLE `Products` DISABLE KEYS */;
-INSERT INTO `Products` VALUES (1,'Arizona Tea',0.99,'drinks'),(2,'Dunkin Iced Coffee',1.08,'drinks'),(3,'Bai ',1.81,'drinks'),(4,'Coca Cola',2.42,'drinks'),(5,'Pepsi',3.38,'drinks'),(6,'Sprite',2.33,'drinks'),(7,'Root Beer',1.49,'drinks'),(8,'Milk',1.17,'drinks'),(9,'Doritos Small',2.50,'snacks'),(10,'Pringles',2.57,'snacks'),(11,'Oreos',3.57,'snacks'),(12,'Pretzels',3.08,'snacks'),(13,'Cheetos',2.70,'snacks'),(14,'Cheez-It',1.21,'snacks'),(15,'Fritos',1.77,'snacks'),(16,'Snickers',2.30,'snacks'),(17,'Chex Mix',4.35,'snacks'),(18,'Popcorn',2.46,'snacks'),(19,'Indomie',3.52,'snacks'),(20,'Ice Cream',2.10,'snacks'),(21,'Pencils',3.00,'school_supplies'),(22,'Eraser',1.12,'school_supplies'),(23,'Stapler',1.88,'school_supplies'),(24,'Pen',0.92,'school_supplies'),(25,'Notebooks',1.17,'school_supplies'),(26,'Hole Puncher',2.85,'school_supplies'),(27,'Nyquil',5.99,'misc'),(28,'Advil',2.01,'misc'),(29,'Umbrella',1.26,'misc'),(30,'Toilet Paper',3.70,'misc'),(31,'Tissues',1.02,'misc'),(32,'Sewing Kit',3.96,'misc');
-/*!40000 ALTER TABLE `Products` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Users`
