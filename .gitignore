@@ -64,5 +64,6 @@ typings/
 .github/
 
 # MacOS files
-
 .DS_Store
+
+temp.sql
