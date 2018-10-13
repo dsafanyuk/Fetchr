@@ -3,7 +3,7 @@ var router = express.Router();
 var userRouter = require ('../users/userRoute')
 var orderRouter = require ('../orders/orderRoute')
 
-router.use('/user', userRouter)
-router.use('/order', orderRouter)
+router.use('/users', userRouter)
+router.use('/orders', orderRouter)
 
 module.exports = router;
