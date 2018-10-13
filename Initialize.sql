@@ -56,9 +56,9 @@ CREATE TABLE `Orders` (
   `customer_id` int(11) DEFAULT NULL,
   `courier_id` int(11) DEFAULT NULL,
   `delivery_status` varchar(15) DEFAULT NULL,
-  `time_delivered` datetime NOT NULL,
+  `time_delivered` datetime,
   `time_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `order_total` decimal(5,2) NOT NULL,
+  `order_total` decimal(5,2),
   PRIMARY KEY (`order_id`),
   KEY `courier_fk_idx` (`courier_id`),
   KEY `customer_fk_idx` (`customer_id`),
@@ -89,6 +89,7 @@ CREATE TABLE `Products` (
   `product_name` varchar(45) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `category` varchar(45) NOT NULL,
+  `product_url` varchar(200),
   PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -99,7 +100,7 @@ CREATE TABLE `Products` (
 
 LOCK TABLES `Products` WRITE;
 /*!40000 ALTER TABLE `Products` DISABLE KEYS */;
-INSERT INTO `Products` VALUES (1,'Arizona Tea',0.99,'drinks'),(2,'Dunkin Iced Coffee',1.08,'drinks'),(3,'Bai ',1.81,'drinks'),(4,'Coca Cola',2.42,'drinks'),(5,'Pepsi',3.38,'drinks'),(6,'Sprite',2.33,'drinks'),(7,'Root Beer',1.49,'drinks'),(8,'Milk',1.17,'drinks'),(9,'Doritos Small',2.50,'snacks'),(10,'Pringles',2.57,'snacks'),(11,'Oreos',3.57,'snacks'),(12,'Pretzels',3.08,'snacks'),(13,'Cheetos',2.70,'snacks'),(14,'Cheez-It',1.21,'snacks'),(15,'Fritos',1.77,'snacks'),(16,'Snickers',2.30,'snacks'),(17,'Chex Mix',4.35,'snacks'),(18,'Popcorn',2.46,'snacks'),(19,'Indomie',3.52,'snacks'),(20,'Ice Cream',2.10,'snacks'),(21,'Pencils',3.00,'school_supplies'),(22,'Eraser',1.12,'school_supplies'),(23,'Stapler',1.88,'school_supplies'),(24,'Pen',0.92,'school_supplies'),(25,'Notebooks',1.17,'school_supplies'),(26,'Hole Puncher',2.85,'school_supplies'),(27,'Nyquil',5.99,'misc'),(28,'Advil',2.01,'misc'),(29,'Umbrella',1.26,'misc'),(30,'Toilet Paper',3.70,'misc'),(31,'Tissues',1.02,'misc'),(32,'Sewing Kit',3.96,'misc');
+INSERT INTO `Products` VALUES (1,'Arizona Tea',0.99,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(2,'Dunkin Iced Coffee',1.08,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(3,'Bai ',1.81,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(4,'Coca Cola',2.42,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(5,'Pepsi',3.38,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(6,'Sprite',2.33,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(7,'Root Beer',1.49,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(8,'Milk',1.17,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(9,'Doritos Small',2.50,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(10,'Pringles',2.57,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(11,'Oreos',3.57,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(12,'Pretzels',3.08,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(13,'Cheetos',2.70,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(14,'Cheez-It',1.21,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(15,'Fritos',1.77,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(16,'Snickers',2.30,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(17,'Chex Mix',4.35,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(18,'Popcorn',2.46,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(19,'Indomie',3.52,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(20,'Ice Cream',2.10,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(21,'Pencils',3.00,'school_supplies','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(22,'Eraser',1.12,'school_supplies','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(23,'Stapler',1.88,'school_supplies','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(24,'Pen',0.92,'school_supplies','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(25,'Notebooks',1.17,'school_supplies','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(26,'Hole Puncher',2.85,'school_supplies','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(27,'Nyquil',5.99,'misc','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(28,'Advil',2.01,'misc','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(29,'Umbrella',1.26,'misc','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(30,'Toilet Paper',3.70,'misc','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(31,'Tissues',1.02,'misc','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(32,'Sewing Kit',3.96,'misc','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg');
 /*!40000 ALTER TABLE `Products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,29 +141,58 @@ CREATE TABLE `Users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `time_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `email_address` varchar(75) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(60) NOT NULL,
   `room_num` varchar(4) NOT NULL,
   `is_courier` tinyint(4) NOT NULL DEFAULT 0,
-  `credit_card_number` varchar(25) NOT NULL,
-  `ccv` varchar(4) NOT NULL,
-  `exp_date` varchar(4) NOT NULL,
   `wallet` decimal(5,2) NOT NULL DEFAULT '0.00',
   `first_name` varchar(45) NOT NULL,
   `last_name` varchar(45) NOT NULL,
   `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `phone_number` varchar(11),
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email_address` (`email_address`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+DROP TABLE IF EXISTS `users_cc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `users_cc` (
+  `cc_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`cc_id`, `user_id`),
+  KEY `cc_fk_idx` (`cc_id`),
+  KEY `user_fk_idx` (`user_id`),
+  CONSTRAINT `cc_fk` FOREIGN KEY (`cc_id`) REFERENCES `cc_info` (`cc_id`),
+  CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+insert into `users_cc` values (1,11),(2,11),(2,12),(1,13),(2,14),(3,16),(4,17),(2,18),(1,19),(4,1),(5,2),(6,3),(7,4),(14,5),(13,6),(18,7),(15,8),(14,9),(13,4),(17,22),(19,23),(10,24),(15,25),(13,26),(22,26),(21,26),(24,26),(27,27),(29,28),(20,29);
+
+DROP TABLE IF EXISTS `Cc_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `Cc_info` (
+  `cc_id` int(11) NOT NULL AUTO_INCREMENT, 
+  `credit_card_number` varchar(25) NOT NULL,
+  `ccv` varchar(4) NOT NULL,
+  `exp_date` varchar(4) NOT NULL,
+  PRIMARY KEY (`cc_id`),
+  UNIQUE KEY `cc_id_unique` (`cc_id`),
+  UNIQUE KEY `credit_card_number_unique` (`credit_card_number`) 
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+insert into `Cc_info` (credit_card_number, ccv, exp_date) values ('3566002040360500','459','1219'),('5547899423555470','802','1220'),('3566002020860500','422','1221'),('5547819433555470','242','1222'),('3566003020360500','265','1223'),('5547899833555470','544','1224'),('3566002120360500','226','1225'),('5147899433555470','419','1226'),('3566005020360500','911','1227'),('5547899333555470','238','1228'),('3566002720360500','964','1229'),('5590899423555470','677','1230'),('3566002021360500','885','1211'),('5542899433555470','260','1212'),('3566002020368500','707','1213'),('8547899433555470','461','1214'),('3526002020360500','889','1215'),('5554899433555470','371','1216'),('3236002020360500','955','1217'),('5547888833555470','742','1218'),('8888002020360500','677','1219'),('1237899433555470','928','1210'),('3216002020360500','628','1201'),('2317899433555470','509','1202'),('4446002020360500','283','1203'),('5542349433555470','312','1204'),('9966002020360500','406','1205'),('5547833433555470','609','1206'),('3566002440360500','961','1207'),('5547894433555470','229','1208');
 --
 -- Dumping data for table `Users`
 --
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (1,'2018-09-25 09:22:11','nec@lectuspedeet.ca',':(lTD3I0','3353',1,'3566002020360500','459','1219',12.75,'Joya  ','Short', 1),(2,'2018-09-25 09:22:11','velit.in.aliquet@at.edu',':(lTD3I1','1531',0,'5547899433555470','802','1220',3.70,'Damaris  ','Stanley', 1),(3,'2018-09-25 09:22:11','nulla.ante@Duis.co.uk',':(lTD3I2','4156',1,'3566002020360500','422','1221',12.11,'Debbie  ','Novak', 1),(4,'2018-09-25 09:22:11','Phasellus.ornare.Fusce@Fuscediamnunc.co.uk',':(lTD3I3','1743',1,'5547899433555470','242','1222',9.28,'Yolanda  ','Weiss', 1),(5,'2018-09-25 09:22:11','Phasellus.dapibus.quam@sit.net',':(lTD3I4','2038',0,'3566002020360500','265','1223',13.32,'Mina  ','Best', 1),(6,'2018-09-25 09:22:11','lectus@tortorat.co.uk',':(lTD3I5','5233',1,'5547899433555470','544','1224',6.49,'Hollis  ','Guzman', 1),(7,'2018-09-25 09:22:11','in.aliquet.lobortis@congue.ca',':(lTD3I6','1167',1,'3566002020360500','226','1225',6.24,'Hilario  ','Hill', 1),(8,'2018-09-25 09:22:11','Mauris.blandit@dignissimpharetra.org',':(lTD3I7','1877',0,'5547899433555470','419','1226',7.72,'Cami  ','Daniel', 1),(9,'2018-09-25 09:22:11','Ut.tincidunt.orci@enim.ca',':(lTD3I8','4488',1,'3566002020360500','911','1227',5.06,'Gerardo  ','Gutierrez', 1),(10,'2018-09-25 09:22:11','sed.turpis@massaQuisqueporttitor.org',':(lTD3I9','2452',0,'5547899433555470','238','1228',14.69,'Britni  ','Drake', 1),(11,'2018-09-25 09:22:11','fringilla.euismod@quisurnaNunc.co.uk',':(lTD3I10','2282',1,'3566002020360500','964','1229',20.90,'Sixta  ','Hickman', 1),(12,'2018-09-25 09:22:11','vulputate.ullamcorper.magna@Cumsociisnatoque.net',':(lTD3I11','1742',1,'5547899433555470','677','1230',18.59,'Rudolf  ','Cardenas', 1),(13,'2018-09-25 09:22:11','Ut@Donec.net',':(lTD3I12','4870',0,'3566002020360500','885','1231',8.63,'Janette  ','Hodges', 1),(14,'2018-09-25 09:22:11','et@et.edu',':(lTD3I13','2807',0,'5547899433555470','260','1232',23.34,'Rich  ','Bolton', 1),(15,'2018-09-25 09:22:11','elit.Nulla.facilisi@aliquamadipiscing.edu',':(lTD3I14','6208',1,'3566002020360500','707','1233',15.31,'Cherry  ','Carney', 1),(16,'2018-09-25 09:22:11','ipsum@suscipitnonummyFusce.ca',':(lTD3I15','3639',0,'5547899433555470','461','1234',18.49,'Enedina  ','Tyler', 1),(17,'2018-09-25 09:22:11','libero.lacus.varius@parturientmontes.com',':(lTD3I16','1444',1,'3566002020360500','889','1235',19.00,'Shane  ','Farley', 1),(18,'2018-09-25 09:22:11','Vivamus.sit.amet@cursuset.ca',':(lTD3I17','1644',1,'5547899433555470','371','1236',1.93,'Bess  ','Brennan', 1),(19,'2018-09-25 09:22:11','luctus.et.ultrices@Duisatlacus.com',':(lTD3I18','5822',0,'3566002020360500','955','1237',5.49,'Lyndsay  ','Hanson', 1),(20,'2018-09-25 09:22:11','Duis.ac@tinciduntdui.edu',':(lTD3I19','6476',1,'5547899433555470','742','1238',3.93,'Hwa  ','Hardy', 1),(21,'2018-09-25 09:22:11','eget@rutrum.edu',':(lTD3I20','4272',1,'3566002020360500','677','1239',13.77,'Jasmine  ','Dorsey', 1),(22,'2018-09-25 09:22:11','amet.luctus@mipedenonummy.net',':(lTD3I21','5168',0,'5547899433555470','928','1240',11.60,'Bethann  ','Blake', 1),(23,'2018-09-25 09:22:11','dolor@ligulaNullam.org',':(lTD3I22','3263',1,'3566002020360500','628','1241',17.95,'Drucilla  ','Walton', 1),(24,'2018-09-25 09:22:11','egestas.lacinia@morbitristique.co.uk',':(lTD3I23','6008',0,'5547899433555470','509','1242',7.20,'Lourie  ','Wilkins', 1),(25,'2018-09-25 09:22:11','quis.tristique@eunibh.net',':(lTD3I24','6240',1,'3566002020360500','283','1243',15.95,'Ching  ','Myers', 1),(26,'2018-09-25 09:22:11','augue@eumetusIn.net',':(lTD3I25','1925',1,'5547899433555470','312','1244',17.44,'Kattie  ','Duarte', 1),(27,'2018-09-25 09:22:11','lectus@Maurismagna.org',':(lTD3I26','3920',0,'3566002020360500','406','1245',16.14,'Morris  ','Parrish', 1),(28,'2018-09-25 09:22:11','quis@Maurisblandit.co.uk',':(lTD3I27','2868',0,'5547899433555470','609','1246',8.59,'Makeda  ','Vaughan', 1),(29,'2018-09-25 09:22:11','Nunc.ullamcorper@iaculisneceleifend.org',':(lTD3I28','2424',0,'3566002020360500','961','1247',9.66,'Ashlie  ','Gibson', 1),(30,'2018-09-25 09:22:11','ut.quam.vel@molestietellusAenean.com',':(lTD3I29','2782',1,'5547899433555470','229','1248',12.73,'Malorie  ','Craig', 1);
+INSERT INTO `Users` VALUES (1,'2018-09-25 09:22:11','nec@lectuspedeet.ca',':(lTD3I0','3353',1,12.75,'Joya  ','Short', 1,'19073948827'),(2,'2018-09-25 09:22:11','velit.in.aliquet@at.edu',':(lTD3I1','1531',0,3.70,'Damaris  ','Stanley', 1,'19073948827'),(3,'2018-09-25 09:22:11','nulla.ante@Duis.co.uk',':(lTD3I2','4156',1,12.11,'Debbie  ','Novak', 1,'19073948827'),(4,'2018-09-25 09:22:11','Phasellus.ornare.Fusce@Fuscediamnunc.co.uk',':(lTD3I3','1743',1,9.28,'Yolanda  ','Weiss', 1,'19073948827'),(5,'2018-09-25 09:22:11','Phasellus.dapibus.quam@sit.net',':(lTD3I4','2038',0,13.32,'Mina  ','Best', 1,'19073948827'),(6,'2018-09-25 09:22:11','lectus@tortorat.co.uk',':(lTD3I5','5233',1,6.49,'Hollis  ','Guzman', 1,'19073948827'),(7,'2018-09-25 09:22:11','in.aliquet.lobortis@congue.ca',':(lTD3I6','1167',1,6.24,'Hilario  ','Hill', 1,'19073948827'),(8,'2018-09-25 09:22:11','Mauris.blandit@dignissimpharetra.org',':(lTD3I7','1877',0,7.72,'Cami  ','Daniel', 1,'19073948827'),(9,'2018-09-25 09:22:11','Ut.tincidunt.orci@enim.ca',':(lTD3I8','4488',1,5.06,'Gerardo  ','Gutierrez', 1,'19073948827'),(10,'2018-09-25 09:22:11','sed.turpis@massaQuisqueporttitor.org',':(lTD3I9','2452',0,14.69,'Britni  ','Drake', 1,'19073948827'),(11,'2018-09-25 09:22:11','fringilla.euismod@quisurnaNunc.co.uk',':(lTD3I10','2282',1,20.90,'Sixta  ','Hickman', 1,'19073948827'),(12,'2018-09-25 09:22:11','vulputate.magna@Cumsociisnatoque.net',':(lTD3I11','1742',1,18.59,'Rudolf  ','Cardenas', 1,'19073948827'),(13,'2018-09-25 09:22:11','Ut@Donec.net',':(lTD3I12','4870',0,8.63,'Janette  ','Hodges', 1,'19073948827'),(14,'2018-09-25 09:22:11','et@et.edu',':(lTD3I13','2807',0,23.34,'Rich  ','Bolton', 1,'19073948827'),(15,'2018-09-25 09:22:11','elit.Nulla.facilisi@aliquamadipiscing.edu',':(lTD3I14','6208',1,15.31,'Cherry  ','Carney', 1,'19073948827'),(16,'2018-09-25 09:22:11','ipsum@suscipitnonummyFusce.ca',':(lTD3I15','3639',0,18.49,'Enedina  ','Tyler', 1,'19073948827'),(17,'2018-09-25 09:22:11','libero.lacus.varius@parturientmontes.com',':(lTD3I16','1444',1,19.00,'Shane  ','Farley', 1,'19073948827'),(18,'2018-09-25 09:22:11','Vivamus.sit.amet@cursuset.ca',':(lTD3I17','1644',1,1.93,'Bess  ','Brennan', 1,'19073948827'),(19,'2018-09-25 09:22:11','luctus.et.ultrices@Duisatlacus.com',':(lTD3I18','5822',0,5.49,'Lyndsay  ','Hanson', 1,'19073948827'),(20,'2018-09-25 09:22:11','Duis.ac@tinciduntdui.edu',':(lTD3I19','6476',1,3.93,'Hwa  ','Hardy', 1,'19073948827'),(21,'2018-09-25 09:22:11','eget@rutrum.edu',':(lTD3I20','4272',1,13.77,'Jasmine  ','Dorsey', 1,'19073948827'),(22,'2018-09-25 09:22:11','amet.luctus@mipedenonummy.net',':(lTD3I21','5168',0,11.60,'Bethann  ','Blake', 1,'19073948827'),(23,'2018-09-25 09:22:11','dolor@ligulaNullam.org',':(lTD3I22','3263',1,17.95,'Drucilla  ','Walton', 1,'19073948827'),(24,'2018-09-25 09:22:11','egestas.lacinia@morbitristique.co.uk',':(lTD3I23','6008',0,7.20,'Lourie  ','Wilkins', 1,'19073948827'),(25,'2018-09-25 09:22:11','quis.tristique@eunibh.net',':(lTD3I24','6240',1,15.95,'Ching  ','Myers', 1,'19073948827'),(26,'2018-09-25 09:22:11','augue@eumetusIn.net',':(lTD3I25','1925',1,17.44,'Kattie  ','Duarte', 1,'19073948827'),(27,'2018-09-25 09:22:11','lectus@Maurismagna.org',':(lTD3I26','3920',0,16.14,'Morris  ','Parrish', 1,'19073948827'),(28,'2018-09-25 09:22:11','quis@Maurisblandit.co.uk',':(lTD3I27','2868',0,8.59,'Makeda  ','Vaughan', 1,'19073948827'),(29,'2018-09-25 09:22:11','Nunc.ullamcorper@iaculisneceleifend.org',':(lTD3I28','2424',0,9.66,'Ashlie  ','Gibson', 1,'19073948827'),(30,'2018-09-25 09:22:11','ut.quam.vel@molestietellusAenean.com',':(lTD3I29','2782',1,12.73,'Malorie  ','Craig', 1,'19073832737');
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
