@@ -1,5 +1,5 @@
 <template>
-  <div id="landing">
+  <body id="landing">
     <LandingHeader> </LandingHeader>
     <div class="container-fluid">
       <div class="row">
@@ -57,7 +57,7 @@
 
 
     <LandingFooter> </LandingFooter>
-  </div>
+  </body>
 </template>
 
 <script>

@@ -7,7 +7,6 @@ import Register  from './Components/Register.vue'
 import Landing   from './Components/Landing.vue'
 
 Vue.use(VueRouter);
-
 /*----------------------- Routes Declaration -----------------*/
 const routes = [
   {path : '/',         component : Home    },
