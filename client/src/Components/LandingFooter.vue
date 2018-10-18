@@ -1,7 +1,7 @@
 <template >
 
         <footer id="LandingFooter">
-          <h4> Footer code here </h4>
+          <h4> </h4>
 
         </footer>
 
