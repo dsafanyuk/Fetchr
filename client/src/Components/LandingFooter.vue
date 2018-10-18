@@ -9,7 +9,7 @@
           <li><a href="#">Terms</a></li>
           <li><a href="#">Privacy</a></li>
           <li><a href="#">Help</a></li>
-          <li><a href="#">Blog</a></li>
+          
 
         </ul>
 
