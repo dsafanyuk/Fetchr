@@ -1,28 +1,21 @@
 var express = require('express');
-var router = express.Router({mergeParams: true}) // don't forget the parent params!
-var   auth          = require('../auth')();
+var router = express.Router({ mergeParams: true }) // don't forget the parent params!
 const { check } = require('express-validator/check');
-
 userController = require('./userController')
+registerController = require('./registerController')
+loginController = require('./loginController')
 
 router.post('/register', [
     check('email_address', 'Not an email address').isEmail().trim(),
     check('password', 'Password must have at least one lowercase, one uppercase, a number,  and a minimum of 8 characters')
         .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/, "i").trim(),
-    check('confirm_password').custom((value, {req}) => {
-        if(value !== req.body.password) {
-            throw new Error('Password confirmation must match the password')
-        }
-        else{
-            return true;
-        }
-    }).isLength({min: 10}).trim(),
-    check('room_num', 'Please enter 4 digits, no more no less').isLength({min: 4, max: 4}).isNumeric().trim(),
+    check('phone', 'Only digits').isMobilePhone().trim(),
+    check('room_num', 'Please enter 4 digits, no more no less').isLength({ min: 4, max: 4 }).isNumeric().trim(),
     check('first_name', 'Cannot have numbers').isAlpha().trim(),
     check('last_name', 'Cannot have numbers').isAlpha().trim()
-], userController.registerUser)
+], registerController.registerUser)
 
-router.post('/login', userController.loginUser)
+router.post('/login', loginController.loginUser)
 
 router.get('/login', userController.showLogin)
 
@@ -47,7 +40,7 @@ function verifyToken(req, res, next) {
     // Get auth header value
     const bearerHeader = req.headers['authorization'];
     // Check if bearer is undefined
-    if(typeof bearerHeader !== 'undefined') {
+    if (typeof bearerHeader !== 'undefined') {
         // Split at space
         const bearer = bearerHeader.split(' ');
         // Get token from array
@@ -57,7 +50,7 @@ function verifyToken(req, res, next) {
         // next middleware
         next();
     }
-    else{
+    else {
         res.status(403);
     }
 }
