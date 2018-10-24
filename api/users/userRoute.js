@@ -15,7 +15,9 @@ router.post('/register', [
     check('last_name', 'Cannot have numbers').isAlpha().trim()
 ], registerController.registerUser)
 
-router.post('/login', loginController.loginUser)
+router.get('/:user_id/creditCheck', userController.creditCheck)
+
+router.post('/login', userController.loginUser)
 
 router.get('/login', userController.showLogin)
 
