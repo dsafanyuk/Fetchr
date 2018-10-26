@@ -9,6 +9,7 @@ import Landing   from './Components/Landing.vue'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(VueRouter);
+Vue.use(Vuetify);
 /*----------------------- Routes Declaration -----------------*/
 const routes = [
   {path : '/',         component : Home    },
@@ -21,6 +22,7 @@ const router = new VueRouter({
   routes,
   mode : 'history'
 });
+
 
 new Vue({
   el: '#app',

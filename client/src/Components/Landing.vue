@@ -28,13 +28,7 @@
         <LandingCard> </LandingCard>
       </div>
       <div class="col-md-3">
-        <v-btn
-      slot="activator"
-      color="red lighten-2"
-      dark
-    >
-      Click Me
-    </v-btn>
+          <ProductInfo></ProductInfo>
       </div>
     </div>
 
