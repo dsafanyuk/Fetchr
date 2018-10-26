@@ -28,6 +28,13 @@
         <LandingCard> </LandingCard>
       </div>
       <div class="col-md-3">
+        <v-btn
+      slot="activator"
+      color="red lighten-2"
+      dark
+    >
+      Click Me
+    </v-btn>
       </div>
     </div>
 
@@ -40,6 +47,7 @@
   import LandingHeader from './LandingHeader.vue'
   import LandingFooter from './LandingFooter.vue'
   import LandingCard   from './LandingCard.vue'
+  import ProductInfo   from './ProductInfo.vue'
 
 
   export default {
@@ -53,7 +61,8 @@
     components: {
       'LandingHeader': LandingHeader,
       'LandingFooter': LandingFooter,
-      'LandingCard' : LandingCard
+      'LandingCard'  : LandingCard,
+      'ProductInfo'  : ProductInfo
     }
   }
 </script>
