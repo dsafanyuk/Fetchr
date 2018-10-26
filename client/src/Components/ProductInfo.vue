@@ -1,16 +1,17 @@
 <template>
+
   <div class="text-xs-center">
     <v-dialog
       v-model="dialog"
       width="500"
     >
-      <v-btn
+      <a href="#"
         slot="activator"
         color="red lighten-2"
         dark
       >
-        Click Me
-      </v-btn>
+      <img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" alt="Barcelona" width="250px" height="150px">
+      </a>
 
       <v-card>
         <v-card-title
@@ -39,6 +40,7 @@
       </v-card>
     </v-dialog>
   </div>
+
 </template>
 
 

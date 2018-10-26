@@ -12,10 +12,10 @@ Vue.use(VueRouter);
 Vue.use(Vuetify);
 /*----------------------- Routes Declaration -----------------*/
 const routes = [
-  {path : '/',         component : Home    },
-  {path : '/login',    component : Login   },
-  {path : '/register', component : Register},
-  {path : '/landing',  component : Landing }
+  {path : '/',         component : Home      },
+  {path : '/login',    component : Login     },
+  {path : '/register', component : Register  },
+  {path : '/dashboard',  component : Landing }
 ];
 
 const router = new VueRouter({

@@ -1,7 +1,9 @@
 <template>
-  <div id="landing_card" class="col-md-3">
+  <div id="landing_card" class="col-md-3 col-xs-2">
      <div class="thumb">
-           <img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" alt="Barcelona" width="250px" height="150px">
+          <ProductInfo>
+           
+           </ProductInfo>
      </div>
      <div class="details">
         <div class="row">
@@ -20,15 +22,21 @@
   	     </div>
         </div>
      </div>
+
   </div>
 </template>
 
 <script>
+import ProductInfo from './ProductInfo.vue'
+
   export default {
     data() {
       return {
 
       }
+    },
+    components: {
+      'ProductInfo'  : ProductInfo
     }
   }
 </script>
