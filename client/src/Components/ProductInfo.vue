@@ -17,7 +17,7 @@
           class="headline grey lighten-2"
           primary-title
         >
-          Privacy Policy
+          Product Information
         </v-card-title>
 
         <v-card-text>
