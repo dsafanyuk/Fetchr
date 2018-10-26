@@ -1,6 +1,6 @@
 <template>
 
-  <body id="landing">
+        <v-app>
     <LandingHeader> </LandingHeader>
     <div class="container-fluid">
       <div class="row">
@@ -28,13 +28,14 @@
         <LandingCard> </LandingCard>
       </div>
       <div class="col-md-3">
-          <ProductInfo></ProductInfo>
+        
       </div>
     </div>
 
 
     <LandingFooter> </LandingFooter>
-  </body>
+  </v-app>
+
 </template>
 
 <script>
