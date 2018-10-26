@@ -65,5 +65,5 @@ typings/
 
 # MacOS files
 .DS_Store
-
+.vscode/
 temp.sql
