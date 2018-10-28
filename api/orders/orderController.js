@@ -15,7 +15,7 @@ function showAllOrders(req, res) {
 
 // GET /order/{id}
 function showOneOrder(req, res) {
-  knex('orders').where('orderId', req.params.orderId)
+  knex('orders').where('order_id', req.params.orderId)
     .then((rows) => {
       res.send(rows).status(200);
     })
