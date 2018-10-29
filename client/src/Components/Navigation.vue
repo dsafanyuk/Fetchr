@@ -2,7 +2,7 @@
 
 <div id="navigation">
   <a href="/register">Sign up </a> </br>
-  <a href="/landing"> landing </a>
+  <a href="/dashboard"> landing </a>
 
 </div>
 
