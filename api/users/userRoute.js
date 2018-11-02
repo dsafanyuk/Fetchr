@@ -24,6 +24,12 @@ router.post('/register', [
   check('last_name', 'Cannot have numbers').isAlpha().trim(),
 ], registerController.registerUser);
 
+router.post('/favorite', userController.favorite);
+
+router.delete('/unfavorite', userController.unfavorite);
+
+router.get('/:user_id/favorites', userController.favorites);
+
 router.post('/login', loginController.loginUser);
 
 router.get('/login', userController.showLogin);
