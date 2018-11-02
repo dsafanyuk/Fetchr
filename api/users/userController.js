@@ -92,6 +92,48 @@ function creditCheck(req, res) {
     });
 }
 
+// POST /users/favorite
+// send in request body { "user_id": {their user id}, "product_id": {the product id} }
+function favorite(req, res) {
+    knex('favorites').insert({user_id: req.body.user_id, product_id: req.body.product_id})
+        .then(() => {
+            res.send(200).status(200)
+        })
+        .catch(function (err) {
+            res.status(500).send({
+                message: `${err}`
+            }) // FOR DEBUGGING ONLY, dont send exact error message in prod
+        })
+}
+
+// DELETE /users/unfavorite
+// send in request body { "user_id": {their user id}, "product_id": {the product id} }
+function unfavorite(req, res) {
+    knex('favorites').where({user_id: req.body.user_id, product_id: req.body.product_id}).del()
+        .then(() => {
+            res.send(200).status(200)
+        })
+        .catch(function (err) {
+            res.status(500).send({
+                message: `${err}`
+            }) // FOR DEBUGGING ONLY, dont send exact error message in prod
+        })
+}
+
+// GET /users/{user_id}/favorites
+function favorites(req, res) {
+    knex('favorites').select('*').where('user_id', req.params.user_id)
+        .innerJoin('products', 'products.product_id', 'favorites.product_id')
+        .then((favorites) => {
+            res.send(favorites).status(200)
+        })
+        .catch(function (err) {
+            res.status(500).send({
+                message: `${err}`
+            }) // FOR DEBUGGING ONLY, dont send exact message in prod
+        })
+}
+
 module.exports = {
   showAllUsers,
   showOneUser,
@@ -100,4 +142,7 @@ module.exports = {
   updateUser,
   showLogin,
   creditCheck,
+  favorite,
+  favorites,
+  unfavorite,
 };
