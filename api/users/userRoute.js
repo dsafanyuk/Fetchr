@@ -30,6 +30,8 @@ router.delete('/unfavorite', userController.unfavorite);
 
 router.get('/:user_id/favorites', userController.favorites);
 
+router.get('/:user_id/creditCheck', userController.creditCheck)
+
 router.post('/login', loginController.loginUser);
 
 router.get('/login', userController.showLogin);
