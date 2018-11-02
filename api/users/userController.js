@@ -20,7 +20,7 @@ function showOneUser(req, res) {
   if (req.token.user.userId === req.params.userId) {
     knex('users')
       .select('*')
-      .where('userId', req.params.userId)
+      .where('user_id', req.params.user_id)
       .then((rows) => {
         res.send(rows).status(200);
       })
@@ -37,7 +37,7 @@ function showOneUser(req, res) {
 function showUserOrders(req, res) {
   knex('orders')
     .select('*')
-    .where('customer_id', req.params.userId)
+    .where('customer_id', req.params.user_id)
     .then((rows) => {
       res.send(rows);
     })
