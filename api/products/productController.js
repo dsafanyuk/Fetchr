@@ -41,8 +41,9 @@ function showOneProduct(req, res) {
         })
 }
 
-// GET /products/filter/{category}
+// GET /products/filter/{:category}
 function showItemByCategory(req, res) {
+    let category = req.params.category
     sortParams = req.sortParams
     var productOrderQuery = (queryBuilder, sortParams) => {
         if (sortParams) {
@@ -51,7 +52,7 @@ function showItemByCategory(req, res) {
             queryBuilder.orderBy('total_sold', 'desc')
         }
     };
-    knex('product_records').modify(productOrderQuery, sortParams)
+    knex('product_records').where('category', category).modify(productOrderQuery, sortParams)
         .then((products) => {
             if (products.length == 0) {
                 res.status(204).json('no category of this id')
