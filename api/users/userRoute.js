@@ -1,12 +1,9 @@
 const express = require('express');
-const {
-  check
-} = require('express-validator/check');
+const { check } = require('express-validator/check');
 const jwt = require('jsonwebtoken');
 const userController = require('./userController');
 const registerController = require('./registerController');
 const loginController = require('./loginController');
-
 const router = express.Router({
   mergeParams: true
 }); // don't forget the parent params!
@@ -48,31 +45,22 @@ router.post('/', userController.createUser);
 
 
 // IMPORTANT, FORMAT OF TOKEN
-// Authorization: Bearer <access_token>
 
 // Verify token
 function verifyToken(req, res, next) {
-  // Get auth header value
-  const bearerHeader = req.headers.authorization;
+  // Get jwt in cookies
+  const jwtCookie = req.cookies.authCookie.token;
 
-  // Check if bearer is undefined
-  if (typeof bearerHeader !== 'undefined') {
-    // Split at space
-    const bearer = bearerHeader.split(' ');
-    // Get token from array
-    const bearerToken = bearer[1];
-
+  // Check if there is cookie
+  if (typeof jwtCookie === 'string') {
     // Verifies secret
-    jwt.verify(bearerToken, 'secretkey', (err, decoded) => {
+    jwt.verify(jwtCookie, 'secretkey', (err, decoded) => {
       if (!err) {
         // if everything is good, save to request for use in other routes
         req.token = decoded;
         next();
       } else {
-        return res.json({
-          success: false,
-          message: 'Failed to authenticate token.'
-        });
+        return res.status(403).json({ success: false, message: 'Failed to authenticate token.' });
       }
 
       return 0;
