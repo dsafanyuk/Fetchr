@@ -1,4 +1,5 @@
 const {validationResult} = require('express-validator/check');
+
 const bcrypt = require('bcryptjs');
 const knex = require('knex')(require('../db'));
 
@@ -40,11 +41,11 @@ async function registerUser(req, res) {
         knex('users')
           .insert(newUser)
           // if user successfully inserted
-          .then((userId) => {
+          .then((user_id) => {
             // Select the user that was just created
             knex('users')
               .select('*')
-              .where('user_id', userId)
+              .where('user_id', user_id)
               .then(() => {
                 res.redirect(307, './login');
               });

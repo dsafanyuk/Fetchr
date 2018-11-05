@@ -13,9 +13,9 @@ function showAllOrders(req, res) {
     });
 }
 
-// GET /order/{id}
+// GET /order/{order_id}
 function showOneOrder(req, res) {
-  knex('orders').where('order_id', req.params.orderId)
+  knex('orders').where('order_id', req.params.order_id)
     .then((rows) => {
       res.send(rows).status(200);
     })
@@ -31,11 +31,11 @@ function createOrder(req, res) {
   const request = req.body;
   knex('orders').insert(request)
     // if order successfully inserted
-    .then((orderId) => {
+    .then((order_id) => {
       // Select the order that was just created
-      knex('orders').select('*').where('order_id', orderId)
+      knex('orders').select('*').where('order_id', order_id)
         .then((rows) => {
-          res.status(201).send(`Order created for id ${rows[0].orderId}`);
+          res.status(201).send(`Order created for id ${rows[0].order_id}`);
         });
     })
     // else send err
@@ -49,7 +49,7 @@ function createOrder(req, res) {
 // UPDATE /orders{id}
 function updateOrder(req, res) {
   const order = req.body;
-  knex('orders').where('orderId', req.params.orderId)
+  knex('orders').where('order_id', req.params.order_id)
     .update({
       customer_id: order.customer_id,
       courier_id: order.courier_id,
@@ -67,13 +67,13 @@ function updateOrder(req, res) {
     });
 }
 
-// GET /orders/{id}/summary
+// GET /orders/{order_id}/summary
 function showOneOrderSummary(req, res) {
   // Retrieve order summary
   knex('orders')
-    .innerJoin('order_summary', 'orders.orderId', 'order_summary.orderId')
+    .innerJoin('order_summary', 'orders.order_id', 'order_summary.order_id')
     .innerJoin('products', 'order_summary.product_id', 'products.product_id')
-    .where('orders.orderId', req.params.orderId)
+    .where('orders.order_id', req.params.order_id)
     .select('product_name', 'quantity', 'price', 'product_url')
     .then((productList) => {
       productList.forEach((product) => {
