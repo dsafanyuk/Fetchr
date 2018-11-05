@@ -9,7 +9,7 @@
           <li><a href="#">Terms</a></li>
           <li><a href="#">Privacy</a></li>
           <li><a href="#">Help</a></li>
-          
+
 
         </ul>
 
@@ -49,5 +49,5 @@
 </script>
 
 <style>
-  @import 'custom_css/footer.scss'
+  @import '../custom_css/footer.scss'
 </style>
