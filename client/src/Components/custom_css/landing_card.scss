@@ -1,100 +1,122 @@
 .card {
-    position: relative;
-    box-shadow: 0 2px 7px #dfdfdf;
-    margin: 50px auto;
-    background: #fafafa;
+  position: relative;
+  box-shadow: 0 2px 7px #dfdfdf;
+  margin: 50px auto;
+  background: #fafafa;
 }
+
 .card span {
-      font-family: 'Roboto', sans-serif !important;
+  font-family: 'Roboto', sans-serif !important;
 }
+
 .badge {
-    position: absolute;
-    left: 0;
-    top: 20px;
-    text-transform: uppercase;
-    font-size: 13px;
-    font-weight: 700;
-    background: red;
-    color: #fff;
-    padding: 3px 10px;
+  position: absolute;
+  left: 0;
+  top: 20px;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 700;
+  background: red;
+  color: #fff;
+  padding: 3px 10px;
 }
+
 .thumb {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 150px;
-    background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  background: #f0f0f0;
 }
+
 .thumb img {
-    max-width: 100%;
-    max-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
+
 .details {
   padding-top: 15px;
   padding-left: 5px;
   padding-right: 5px;
 }
+
 .catagory {
-    display: block;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #ccc;
-    margin-bottom: 70px;
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ccc;
+  margin-bottom: 70px;
 }
+
 .details h4 a {
-    font-weight: 500;
-    display: block;
-    margin-bottom: 18px;
-    text-transform: uppercase;
-    color: #363636;
-    text-decoration: none;
-    transition: 0.3s;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  color: #363636;
+  text-decoration: none;
+  transition: 0.3s;
 }
+
 .details h4 a:hover {
-    color: #fbb72c;
+  color: #fbb72c;
 }
+
 .details p {
-    font-size: 15px;
-    line-height: 22px;
-    margin-bottom: 18px;
-    color: #999;
+  font-size: 15px;
+  line-height: 22px;
+  margin-bottom: 18px;
+  color: #999;
 }
+
 .bottom-details {
-    overflow: hidden;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
+  overflow: hidden;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
 }
+
 .bottom-details div {
-    float: left;
-    width: 50%;
+  float: left;
+  width: 50%;
 }
+
 .price {
-    font-size: 15px;
-    color: #fbb72c;
-    font-weight: 600;
+  font-size: 15px;
+  color: #fbb72c;
+  font-weight: 600;
 }
+
 .price small {
-    font-size: 80%;
-    font-weight: 400;
-    text-decoration: line-through;
-    display: inline-block;
-    margin-right: 5px;
+  font-size: 80%;
+  font-weight: 400;
+  text-decoration: line-through;
+  display: inline-block;
+  margin-right: 5px;
 }
+
 .links {
-    text-align: right;
+  text-align: right;
 }
+
 .links a {
-    display: inline-block;
-    margin-left: 5px;
-    color: #e1e1e1;
-    transition: 0.3s;
-    font-size: 17px;
+  display: inline-block;
+  margin-left: 5px;
+  color: #e1e1e1;
+  transition: 0.3s;
+  font-size: 17px;
 }
+
 .links a:hover {
-    color: #fbb72c;
+  color: #fbb72c;
 }
-.card_container{
+
+.card_container {
   display: flex;
   margin-top: 10px;
+}
+
+
+.card_prop{
+  display: inline-block;
 }
