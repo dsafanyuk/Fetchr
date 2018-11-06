@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://fetchr.io/apit 
+HOST: http://localhost:3000/api/
 
 # Fetchr
 
@@ -18,12 +18,11 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
                 "password": "notpassword",
                 "room_num": "6326",
                 "is_courier": 0,
-                "credit_card_number": "12345678980",
-                "ccv": "123",
-                "exp_date": "0123",
                 "wallet": 1.23,
                 "first_name": "dave",
-                "last_name": "safanyuk"
+                "last_name": "safanyuk",
+                "is_active": 1,
+                "phone_number": 9078838372
             },
             {
                 "user_id": 8,
@@ -32,16 +31,15 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
                 "password": "notpassword",
                 "room_num": "6326",
                 "is_courier": 0,
-                "credit_card_number": "12345678980",
-                "ccv": "123",
-                "exp_date": "0123",
                 "wallet": 1.23,
                 "first_name": "dave",
-                "last_name": "safanyuk"
+                "last_name": "safanyuk",
+                "is_active": 0,
+                "phone_number": 3278838372
             }
         ]
         
-### List single user [GET /user/{user_id}]
+### List single user [GET /users/{user_id}]
 + Response 200 (application/json)
 
         [
@@ -52,14 +50,38 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
                 "password": "notpassword",
                 "room_num": "6326",
                 "is_courier": 0,
-                "credit_card_number": "12345678980",
-                "ccv": "123",
-                "exp_date": "0123",
                 "wallet": 1.23,
                 "first_name": "dave",
-                "last_name": "safanyuk"
+                "last_name": "safanyuk",
+                "is_active": 1,
+                "phone_number": 9078838372
             }
         ]
+
+### Show one user's orders [GET /users/{user_id}/orders]
++ Response 200 (application/json)
+
+        [
+            {
+                "order_id": 1,
+                "customer_id": 1,
+                "courier_id": 17,
+                "delivery_status": "Pending",
+                "time_delivered": "2018-09-25T03:27:07.000Z",
+                "time_created": "2018-09-25T03:27:07.000Z",
+                "order_total": 20.00
+            },
+            {
+                "order_id": 16,
+                "customer_id": 1,
+                "courier_id": 13,
+                "delivery_status": "Pending",
+                "time_delivered": "2018-09-25T03:27:07.000Z",
+                "time_created": "2018-09-25T03:27:07.000Z",
+                "order_total": 5.00
+            }
+        ]
+
 ### Create a user [POST]
 + Request (application/json)
 
@@ -67,29 +89,28 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
             "email_address":"dsafanyuk@shmoople.com",
             "password":"notpassword",
             "room_num":"6326",
-            "is_courier":"0",
-            "credit_card_number":"12345678980",
-            "ccv":"123",
-            "exp_date":"0123",
-            "wallet":"1.23",
+            "phone_number": 992847463,
             "first_name":"dave",
             "last_name":"safanyuk"
         }
 
 + Response 200 (application/json)
 
-    + Headers
+        {
+            "user_id": 1,
+            "time_created": "2018-09-25T03:27:07.000Z",
+            "email_address": "dsafanyuk@email.com",
+            "password": "notpassword",
+            "room_num": "6326",
+            "is_courier": 0,
+            "wallet": 1.23,
+            "first_name": "dave",
+            "last_name": "safanyuk",
+            "is_active": 1,
+            "phone_number": 9078838372
+        }
 
-            Location: /user/{user_id}
-
-    + Body
-
-            {
-                "user_id": "1",
-                "created_at": "2015-08-05T08:40:51.620Z",
-                "username": "dsafanyuk",
-                "money added": "5.00"
-            }
+### Check for Credit Cards [GET /users/{user_id}/creditCheck]
 
 # Update user [PATCH /users/{user_id}]
 + Response 200 (application/json)
@@ -119,11 +140,6 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
         [
             {
                 "order": "1",
-                "order_summary": {
-                    "product_name":"Twix",
-                    "product_price": "1.00",
-                    "quantity": "1"
-                },
                 "order_total": "1.00",
                 "room_num": "6362",
                 "customer": "user_id",
@@ -157,19 +173,7 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
 + Request (application/json)
 
         {
-            "user_id": "Favourite programming language?",
-            "order_summary": [
-                    {
-                        "product_name":"Twix",
-                        "product_price": "1.00",
-                        "quantity": "1"
-                    },
-                    {
-                        "product_name":"Snickers",
-                        "product_price": "1.20",
-                        "quantity": "2"
-                    }
-            ]                
+            "user_id": "Favourite programming language?"         
         }
 
 + Response 200 (application/json)
@@ -182,19 +186,7 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
 
             {
                 "order_id": "1",
-                "created_at": "2015-08-05T08:40:51.620Z",
-                "order_summary": [
-                        {
-                            "product_name":"Twix",
-                            "product_price": "1.00",
-                            "quantity": "1"
-                        },
-                        {
-                            "product_name":"Snickers",
-                            "product_price": "1.20",
-                            "quantity": "2"
-                        },
-                ],
+                "created_at": "2015-08-05T08:40:51.620Z"
             }
 
 # Delete an order [DELETE /orders/{order_id}]
@@ -209,3 +201,66 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
         {
             "deleted_at":"TIME"
         }
+
+## Products [/products]
+
+### List all products [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "product_id": 1,
+                "product_name": "Arizona Tea",
+                "price": 0.99,
+                "category": "drinks",
+                "product_url": "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg",
+                "total_sold": 100.00
+            },
+            {
+                "product_id": 2,
+                "product_name": "Doritos small",
+                "price": 1.99,
+                "category": "snacks",
+                "product_url": "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg",
+                "total_sold": 100.00
+            }
+        ]
+
+### List a single product [GET /products/{product_id}]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "product_id": 1,
+                "product_name": "Arizona Tea",
+                "price": 0.99,
+                "category": "drinks",
+                "product_url": "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg"
+            }
+        ]
+
+### Filter products by category [GET /products/filter/{category}]
+
+
++ Response 200 (application/json)
+
+        [
+            {
+                "product_id": 22,
+                "product_name": "Eraser",
+                "price": 1.12,
+                "category": "school_supplies",
+                "product_url": "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg",
+                "total_sold": 4
+            },
+            {
+                "product_id": 21,
+                "product_name": "Pencils",
+                "price": 3,
+                "category": "school_supplies",
+                "product_url": "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg",
+                "total_sold": 3
+            }
+        ]
