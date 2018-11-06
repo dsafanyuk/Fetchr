@@ -40,6 +40,9 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
         ]
         
 ### List single user [GET /users/{user_id}]
++ Parameters
+    + user_id (number) - ID of the order in the form of an integer
+    
 + Response 200 (application/json)
 
         [
@@ -59,28 +62,31 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
         ]
 
 ### Show one user's orders [GET /users/{user_id}/orders]
++ Parameters
+    + user_id (number) - ID of the order in the form of an integer
+    
 + Response 200 (application/json)
 
-        [
-            {
-                "order_id": 1,
-                "customer_id": 1,
-                "courier_id": 17,
-                "delivery_status": "Pending",
-                "time_delivered": "2018-09-25T03:27:07.000Z",
-                "time_created": "2018-09-25T03:27:07.000Z",
-                "order_total": 20.00
-            },
-            {
-                "order_id": 16,
-                "customer_id": 1,
-                "courier_id": 13,
-                "delivery_status": "Pending",
-                "time_delivered": "2018-09-25T03:27:07.000Z",
-                "time_created": "2018-09-25T03:27:07.000Z",
-                "order_total": 5.00
-            }
-        ]
+    [
+        {
+            "order_id": 1,
+            "customer_id": 1,
+            "courier_id": 17,
+            "delivery_status": "Pending",
+            "time_delivered": "2018-09-25T03:27:07.000Z",
+            "time_created": "2018-09-25T03:27:07.000Z",
+            "order_total": 20.00
+        },
+        {
+            "order_id": 16,
+            "customer_id": 1,
+            "courier_id": 13,
+            "delivery_status": "Pending",
+            "time_delivered": "2018-09-25T03:27:07.000Z",
+            "time_created": "2018-09-25T03:27:07.000Z",
+            "order_total": 5.00
+        }
+    ]
 
 ### Create a user [POST]
 + Request (application/json)
@@ -94,7 +100,7 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
             "last_name":"safanyuk"
         }
 
-+ Response 200 (application/json)
++ Response 307 (application/json)
 
         {
             "user_id": 1,
@@ -110,7 +116,23 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
             "phone_number": 9078838372
         }
 
-### Check for Credit Cards [GET /users/{user_id}/creditCheck]
+### Login [POST /users/login]
++ Request(application/json)
+
+        {
+            "email_address": lolokay@partycentral.com,
+            "password": "hahagitrekt"
+        }
+
++ Response 200 (application/json)
+
+        {
+            login token
+        }
+
+### Check for credit cards [GET /users/{user_id}/creditCheck]
++ Parameters
+    + user_id (number) - ID of the order in the form of an integer
 
 # Update user [PATCH /users/{user_id}]
 + Response 200 (application/json)
@@ -132,6 +154,58 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
             "deleted_at":"TIME"
         }
 
+
+### List user's favorites [GET /users/{user_id}/favorites]
++ Parameters
+    + user_id (number) - ID of the order in the form of an integer
+
++ Response 200 (application/json)
+
+        [
+            {
+                "user_id": 1,
+                "product_id": 1,
+                "product_name": "Arizona Tea",
+                "price": 0.99,
+                "category": "drinks",
+                "product_url": "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg"
+            },
+            {
+                "user_id": 1,
+                "product_id": 1,
+                "product_name": "Arizona Tea",
+                "price": 0.99,
+                "category": "drinks",
+                "product_url": "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg"
+            }
+        ]
+
+
+### Favorite a product [POST /users/favorite]
+
++ Request (application/json)
+
+        {
+            "user_id": 1,
+            "product_id": 1
+        }
+
++ Response 200 (application/json)
+
+
+### Unfavorite a product [DELETE /users/unfavorite]
+
++ Request (application/json)
+
+        {
+            "user_id": 1,
+            "product_id": 1
+        }
+        
+
++ Response 200 (application/json)
+
+
 ##  Orders [/orders]
 ### List All Orders [GET]
 
@@ -139,12 +213,13 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
 
         [
             {
-                "order": "1",
-                "order_total": "1.00",
-                "room_num": "6362",
-                "customer": "user_id",
-                "courier": NULL,
-                "delivery_status": "Pending"
+                "order_id": 1,
+                "customer_id": 1,
+                "courier_id": 17,
+                "delivery_status": "Pending",
+                "time_delivered": "2018-09-25T03:27:07.000Z",
+                "time_created": "2018-09-25T03:27:07.000Z",
+                "order_total": 20.00
             }
         ]
 
@@ -155,51 +230,32 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
 + Response 200 (application/json)
 
         {
-            "order": "1",
-            "order_summary": [
-                    {
-                        "product_name":"Twix",
-                        "product_price": "1.00",
-                        "quantity": "1"
-                    }
-            ],
-            "order_total": "1.00",
-            "room_num": "6362",
-            "customer": "dsafanyuk",
-            "courier": "user_id",
-            "delivery_status": "Pending"
+            "order_id": 1,
+            "customer_id": 1,
+            "courier_id": 17,
+            "delivery_status": "Pending",
+            "time_delivered": "2018-09-25T03:27:07.000Z",
+            "time_created": "2018-09-25T03:27:07.000Z",
+            "order_total": 20.00
         }
 # Create an order [POST /orders/]
-+ Request (application/json)
 
-        {
-            "user_id": "Favourite programming language?"         
-        }
-
-+ Response 200 (application/json)
-
-    + Headers
-
-            Location: /orders/{order_id}
-
-    + Body
++ Response 201 (application/json)
 
             {
-                "order_id": "1",
-                "created_at": "2015-08-05T08:40:51.620Z"
+                "order created for id 1"
             }
 
-# Delete an order [DELETE /orders/{order_id}]
-+ Request (application/json)
+
+# Show order summary [GET /orders/{order_id}/summary]
++ Parameters
+    + order_id (number) - ID of the order in the form of an integer
 
         {
-            "user_id":"1"
-        }
-
-+ Response 200 (application/json)
-
-        {
-            "deleted_at":"TIME"
+            "product_name": "Popsicle",
+            "quantity": "700",
+            "price": 1500,
+            "product_url": "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg"
         }
 
 ## Products [/products]
