@@ -27,7 +27,6 @@ Need extra money? Sign up to be a courier! View open orders and make a quick buc
 **Communications Coordinate**: Benji Kintaudi
 
 ---
-
 ## Run the api
 
 Change into project folder
@@ -45,6 +44,8 @@ Install npm dependencies
 Start api server
 
 `npm start`
+
+### [API Documentation](https://fetchr1.docs.apiary.io/#)
 
 Test using Postman [install here](https://www.getpostman.com/apps) or browser:
 
