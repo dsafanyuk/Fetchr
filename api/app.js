@@ -5,6 +5,11 @@ const logger = require('morgan');
 const cors = require('cors');
 const apiRouter = require('./routes/index');
 
+const corsOptions = {
+  origin: 'http://127.0.0.1:8080',
+  credentials: true,
+};
+
 const app = express();
 
 app.use(logger('dev'));
@@ -15,7 +20,7 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use('/api', apiRouter);
 

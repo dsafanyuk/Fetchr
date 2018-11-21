@@ -23,12 +23,11 @@
         <div class="row">
                 <LandingCard v-for="product in products" :key="product.product_id" :product=product ></LandingCard>
         </div>
+        </div>
+        <LandingFooter> </LandingFooter>
 
-    </div>
-    <LandingFooter> </LandingFooter>
 
-
-</v-app>
+    </v-app>
 </template>
 
 <script>
@@ -71,5 +70,5 @@ export default {
 </script>
 
 <style lang="css">
-@import 'custom_css/landing.scss';
+    @import 'custom_css/landing.scss';
 </style>
