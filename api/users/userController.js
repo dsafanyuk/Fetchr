@@ -30,7 +30,7 @@ function showOneUser(req, res) {
         });
       });
   } else {
-    res.status(403).send({message: 'Unauthorized'});
+    res.status(403).send({ message: 'Unauthorized' });
   }
 }
 // GET /users/{user_id}/orders
@@ -112,7 +112,7 @@ function favorite(req, res) {
     .then(() => {
       res.send(200).status(200);
     })
-    .catch(function(err) {
+    .catch((err) => {
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact error message in prod
@@ -131,7 +131,7 @@ function unfavorite(req, res) {
     .then(() => {
       res.send(200).status(200);
     })
-    .catch(function(err) {
+    .catch((err) => {
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact error message in prod
@@ -147,7 +147,7 @@ function favorites(req, res) {
     .then((favorites) => {
       res.send(favorites).status(200);
     })
-    .catch(function(err) {
+    .catch((err) => {
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod

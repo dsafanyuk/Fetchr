@@ -20,7 +20,7 @@
     <div class="container">
       <ul class="foote_bottom_ul_amrc">
         <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
+        <li @click="showOneUser"><a href="#">About</a></li>
         <li><a href="#"></a></li>
         <li><a href="#">Blog</a></li>
         <li><a href="#">Contact</a></li>
@@ -42,9 +42,37 @@
 </template>
 
 <script>
-  export default {
-    name: "LandingFooter"
+  import axios from 'axios'
 
+  export default {
+    name: "LandingFooter",
+    methods: {
+      showOneUser(e) {
+        let userId = document.cookie.split('=')[2];
+        let api_url = `http://127.0.0.1:3000/api/users/${userId}`;
+
+        axios.post(api_url, {
+          clientToken: document.cookie.split('=')[1].split(';')[0],
+        })
+          .then((response) => {
+            if (response.status == 200) {
+              console.log(response);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+            if (error.response) {
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            }
+          });
+
+        return;
+      }
+    }
   }
 </script>
 
