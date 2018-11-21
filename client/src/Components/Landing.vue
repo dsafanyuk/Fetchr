@@ -36,12 +36,17 @@
 </template>
 
 <script>
-import LandingHeader from './mini-components/LandingHeader.vue';
-import LandingFooter from './mini-components/LandingFooter.vue';
-import LandingCard from './mini-components/LandingCard.vue';
-import ShoppingCart from './mini-components/ShoppingCart.vue';
-import axios from 'axios';
-import Toasted from 'vue-toasted';
+    import LandingHeader from './mini-components/LandingHeader.vue';
+    import LandingFooter from './mini-components/LandingFooter.vue';
+    import LandingCard from './mini-components/LandingCard.vue';
+    import ShoppingCart from './mini-components/ShoppingCart.vue';
+    import axios from 'axios';
+    import Toasted from 'vue-toasted';
+
+    const api = axios.create({
+        withCredentials: true,
+    });
+
 
 export default {
   data() {
@@ -55,7 +60,7 @@ export default {
   created: function loadProducts() {
     let loadingProductsToast = this.$toasted.show('Loading products...');
     axios
-      .get('http://localhost:3000/api/products')
+      .get('http://127.0.0.1:3000/api/products')
       .then((response) => {
         this.products = response.data;
         loadingProductsToast.text('Products loaded!').goAway(5000);

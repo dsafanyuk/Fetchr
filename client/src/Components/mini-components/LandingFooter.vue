@@ -44,6 +44,10 @@
 <script>
   import axios from 'axios'
 
+  const api = axios.create({
+    withCredentials: true,
+  });
+
   export default {
     name: "LandingFooter",
     methods: {
@@ -51,7 +55,7 @@
         let userId = document.cookie.split('=')[2];
         let api_url = `http://127.0.0.1:3000/api/users/${userId}`;
 
-        axios.post(api_url, {
+        api.post(api_url, {
           clientToken: document.cookie.split('=')[1].split(';')[0],
         })
           .then((response) => {
