@@ -1,6 +1,7 @@
 <template>
     <v-app>
-        <LandingHeader></LandingHeader>
+        <LandingHeader v-on:showcart="displayCart" ></LandingHeader>
+        <ShoppingCart v-if="seen"></ShoppingCart>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -45,6 +46,7 @@ import Toasted from 'vue-toasted';
 export default {
   data() {
     return {
+      seen : false,
       products: {},
       selectedCategory: 'Popular',
     };
@@ -83,9 +85,19 @@ export default {
     LandingCard: LandingCard,
     ShoppingCart: ShoppingCart,
   },
+  methods : {
+    displayCart(show){
+     if (this.seen)
+      this.seen = false;
+      else {
+        this.seen = true;
+      }
+    }
+  }
+
 };
 </script>
 
-<style lang="css">
+<style lang="scss">
     @import 'custom_css/landing.scss';
 </style>

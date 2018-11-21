@@ -74,9 +74,11 @@ nav {
   float: right;
   background: white;
   width: 320px;
-  position: relative;
+  position: absolute;
   border-radius: 3px;
   padding: 20px;
+  z-index: 3;
+right: 0;
 
 
   .shopping-cart-header {

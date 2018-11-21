@@ -4,7 +4,7 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="custom_url col-md-4 navbar-nav  mt-2 ">
             <li class="nav-item active">
-              <img src="/lil_logo.png" width="80" height="80" class="d-inline-block align-top"align="left">
+              <img src="/lil_logo.png" width="80" height="80" class="d-inline-block align-top" align="left">
             </li>
           </ul>
           <form class="col-md-4 form-inline my-2 my-lg-0">
@@ -23,32 +23,41 @@
                <div class="dropdown-divider"></div>
                <a class="dropdown-item" href="#">Log Out</a>
                </div>
-            <i class="fas fa-shopping-cart fa-2x"></i>
+          <a id="cart" href="#" v-on:click="showShoppingCart"> <i id="cart" class="fas fa-shopping-cart fa-xs"></i></a>
           </div>
         </div>
-        </div>
-      </nav>
+      </div>
+    </nav>
 
 </template>
 <script>
+import Landing from '../Landing.vue';
+import ShoppingCart from './ShoppingCart.vue'
 export default {
-
-  data () {
-    name: "LandingHeader"
-    return {
-
+  data() {
+    name: 'LandingHeader';
+    return {};
+  },
+  components: {
+    ShoppingCart: ShoppingCart
+  },
+  methods: {
+    showShoppingCart: function  ()
+    {
+    
+      this.$emit('showcart', 'show');
     }
   }
-}
+};
 </script>
 
 <style lang="css">
 @import '../custom_css/landing.scss'
-@import '..https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
-@import '..https://use.fontawesome.com/releases/v5.4.1/css/all.css'
-@import '..https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'
-@import '..https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'
-@import '..https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
+@import 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
+@import 'https://use.fontawesome.com/releases/v5.4.1/css/all.css'
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'
+@import 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'
+@import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
 
 .icons_div {
 float : right ;
@@ -57,6 +66,4 @@ float : right ;
 .btn_space {
   margin-right: 10px;
 }
-
-
 </style>
