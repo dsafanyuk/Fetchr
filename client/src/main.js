@@ -22,7 +22,6 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/dashboard', component: Landing }
-
 ];
 
 const router = new VueRouter({
