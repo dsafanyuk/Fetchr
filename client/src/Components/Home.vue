@@ -27,6 +27,9 @@
                           <li>
                               <a class="button button-sm button-shadow" href="/register">Signup</a>
                           </li>
+                          <li>
+                              <a class="button button-sm button-shadow" href="/dashboard">Dashboard</a>
+                          </li>
                       </ul>
                   </div>
               </div>
@@ -314,14 +317,14 @@
   </template>
 
 <script>
-import Navigation from './Navigation.vue'
+import Navigation from './Navigation.vue';
 
 export default {
-  data () {
-    return {}
+  data() {
+    return {};
   },
-  components : {'Navigation': Navigation}
-}
+  components: {Navigation: Navigation},
+};
 </script>
 
 <style scoped lang="css">

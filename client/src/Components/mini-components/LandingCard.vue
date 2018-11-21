@@ -3,7 +3,7 @@
     <div class="product-card">
         <div class="card  z-depth-4">
             <div class="card-img">
-                <span href="#" class="btn-floating btn-large price waves-effect waves-light brown darken-3">{{product.price}}</span>
+                <span href="#" class="btn-floating btn-large price waves-effect waves-light brown darken-3">${{product.price.toFixed(2)}}</span>
                 <img :src=product.product_url :alt=product.product_name>
             </div>
                 <ul class="card-action-buttons">
