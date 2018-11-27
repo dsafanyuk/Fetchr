@@ -1,0 +1,26 @@
+    .order thead tr {
+        border: 1px solid black;
+    }
+
+    .order th, td {
+        padding: 15px;
+        text-align: left;
+    }
+    
+    .order tbody tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+    
+    .order tbody tr:nth-child(even) {
+        background-color: #F0FFF0;
+    }
+
+    .order {
+        width: 70%;
+    }
+
+    .orders {
+        padding-top: 3em;
+        padding-bottom: 3em;
+        padding-left: 10em;
+    }
