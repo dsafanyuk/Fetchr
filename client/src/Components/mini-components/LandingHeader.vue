@@ -21,7 +21,7 @@
                <a class="dropdown-item" href="#">My Account</a>
                <a class="dropdown-item" href="#">My Orders</a>
                <div class="dropdown-divider"></div>
-               <a class="dropdown-item" href="#">Log Out</a>
+               <a v-on:click='logout()' class="dropdown-item" href="#">Log Out</a>
                </div>
           <a id="cart" href="#" v-on:click="showShoppingCart"> <i id="cart" class="fas fa-shopping-cart fa-xs"></i></a>
           </div>
@@ -33,6 +33,8 @@
 <script>
 import Landing from '../Landing.vue';
 import ShoppingCart from './ShoppingCart.vue'
+import browsercookies from 'browser-cookies';
+
 export default {
   data() {
     name: 'LandingHeader';
@@ -44,8 +46,16 @@ export default {
   methods: {
     showShoppingCart: function  ()
     {
-    
+
       this.$emit('showcart', 'show');
+    }
+
+  },
+  methods: {
+    logout: function() {
+        browsercookies.erase('userId');
+        browsercookies.erase('authCookie');
+        this.$router.push('/login');
     }
   }
 };
