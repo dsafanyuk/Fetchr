@@ -1,10 +1,7 @@
 <template >
-
-<div id= "home">
-  <router-view> </router-view>
-
-</div>
-
+  <div id="home">hello
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>

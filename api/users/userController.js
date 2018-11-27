@@ -122,20 +122,24 @@ function favorite(req, res) {
 // DELETE /users/unfavorite
 // send in request body { "user_id": {their user id}, "product_id": {the product id} }
 function unfavorite(req, res) {
-  knex('favorites')
-    .where({
-      user_id: req.body.user_id,
-      product_id: req.body.product_id,
-    })
-    .del()
-    .then(() => {
-      res.send(200).status(200);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: `${err}`,
-      }); // FOR DEBUGGING ONLY, dont send exact error message in prod
-    });
+  if (!req.body.user_id || !req.body.product_id) {
+    res.status(400).send('missing info');
+  } else {
+    knex('favorites')
+      .where({
+        user_id: req.body.user_id,
+        product_id: req.body.product_id,
+      })
+      .del()
+      .then(() => {
+        res.send(200).status(200);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: `${err}`,
+        }); // FOR DEBUGGING ONLY, dont send exact error message in prod
+      });
+  }
 }
 
 // GET /users/{user_id}/favorites

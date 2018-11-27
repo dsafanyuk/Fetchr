@@ -3,42 +3,87 @@
         <div class="col-md-12 mx-auto register-right">
             <div class="row register-form">
                 <div class="col-md-6 mx-auto">
-
-                    <img class="center_img" width="300px" height="300px" src="./images/logo.png" />
-
-                    <h4 class="text-center form_h"> Text Hereeeeeee </h4>
+                    <img class="center_img" width="300px" height="300px" src="./images/logo.png">
+                    <h4 class="text-center form_h">Text Hereeeeeee</h4>
                 </div>
-
                 <div class="col-md-6 mx-auto">
-
                     <div class="form-group">
-                        <h4 class="text-center form_h"> Sign Up on our Platform </h4>
+                        <h4 class="text-center form_h">Sign Up on our Platform</h4>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" v-model="cFirstname" placeholder="First Name" value="" /></div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" v-model="cLastname" placeholder="Last Name" value="" />
+                        <input
+                            type="text"
+                            class="form-control"
+                            v-model="cFirstname"
+                            placeholder="First Name"
+                            value=""
+                        >
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" v-model="cEmail" placeholder="Email" value="" />
+                        <input
+                            type="text"
+                            class="form-control"
+                            v-model="cLastname"
+                            placeholder="Last Name"
+                            value=""
+                        >
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" v-model="cRoom" placeholder="Room Number" value="" />
+                        <input
+                            type="email"
+                            class="form-control"
+                            v-model="cEmail"
+                            placeholder="Email"
+                            value=""
+                        >
                     </div>
                     <div class="form-group">
-                        <input type="text" maxlength="10" minlength="10" class="form-control" v-model="cPhone"
-                            placeholder="Phone " value="" />
+                        <input
+                            type="number"
+                            class="form-control"
+                            v-model="cRoom"
+                            placeholder="Room Number"
+                            value=""
+                        >
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" v-model="cPassword" required placeholder="Password *"
-                            value="" />
+                        <input
+                            type="text"
+                            maxlength="10"
+                            minlength="10"
+                            class="form-control"
+                            v-model="cPhone"
+                            placeholder="Phone "
+                            value=""
+                        >
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" v-model="cRepeatPassword" required placeholder="Confirm Password *"
-                            value="" />
+                        <input
+                            type="password"
+                            class="form-control"
+                            v-model="cPassword"
+                            required
+                            placeholder="Password *"
+                            value=""
+                        >
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="password"
+                            class="form-control"
+                            v-model="cRepeatPassword"
+                            required
+                            placeholder="Confirm Password *"
+                            value=""
+                        >
                     </div>
                     <div class="form-group text-center">
-                        <input type="submit" @click="registerCustomer" class="btnRegister" value="Register" />
+                        <input
+                            type="submit"
+                            @click="registerCustomer"
+                            class="btnRegister"
+                            value="Register"
+                        >
                     </div>
                 </div>
             </div>
@@ -66,7 +111,7 @@
         //******************************************* Methods Begin Here  ********************************/
         methods: {
             registerCustomer(e) {
-                let api_url = 'http://localhost:3000/api/users/register';
+                let api_url = 'http://127.0.0.1:3000/api/users/register';
 
                 if (
                     this.cFirstname &&
@@ -118,5 +163,5 @@
 </script>
 
 <style>
-    @import 'custom_css/registration.scss';
+@import 'custom_css/registration.scss';
 </style>
