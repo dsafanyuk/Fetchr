@@ -24,7 +24,7 @@ router.post('/register', [
 
 router.post('/favorite', userController.favorite);
 
-router.delete('/unfavorite', userController.unfavorite);
+router.post('/unfavorite', userController.unfavorite);
 
 router.get('/:user_id/favorites', userController.favorites);
 
