@@ -123,7 +123,7 @@ export default {
   computed: {
     filteredProducts() {
         var category = this.selectedCategory.toLowerCase().split(' ').join('_')
-        console.log(`Category = ${category}`)
+        //console.log(`Category = ${category}`)
         if (category === 'popular' || !category){
             return this.products;
         } else if (category === 'favorites') {

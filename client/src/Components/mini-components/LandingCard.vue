@@ -58,6 +58,8 @@
   import axios from 'axios'
   import Toasted from 'vue-toasted';
   import browserCookies from 'browser-cookies';
+  import _ from 'lodash'
+  import State from '../assets/js/shoppingCartState'
 
   const api = axios.create({
     withCredentials: true,
@@ -78,6 +80,7 @@
       return {
         isFavorite: this.product.is_favorite,
         inCart: false,
+         shared: State.data,
       };
     },
     components: {},
@@ -140,17 +143,30 @@
         if (this.inCart) {
           this.inCart = false;
           this.$toasted.success('Removed from cart').goAway(1000);
+
         } else {
           this.inCart = true;
           this.$toasted.success('Added to cart').goAway(1000);
+          State.add(this.product);
         }
       },
+      inc () {
+        State.inc(this.product)
+        },
+        dec () {
+          State.dec(this.product)
+        }
     },
+    computed : {
+      quantityIncart (){
+        return 0;
+      }
+    }
   };
 </script>
 
 <style scoped lang="css">
-@import '../custom_css/landing_card.scss';
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-@import '../custom_css/materialize.css';
+  @import '../custom_css/landing_card.scss';
+  @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+  @import '../custom_css/materialize.css';
 </style>
