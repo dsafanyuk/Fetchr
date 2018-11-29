@@ -22,8 +22,8 @@ const routes = [
   {path : '/',         component : Home      },
   {path : '/login',    component : Login     },
   {path : '/register', component : Register  },
-  {path : '/dashboard',  component : Landing },
-  {path : '/orders',  component : Orders }
+  {path : '/dashboard',component : Landing },
+  {path : '/orders',   component : Orders }
 ];
 
 const router = new VueRouter({
