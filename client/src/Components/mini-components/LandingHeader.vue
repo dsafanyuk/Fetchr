@@ -4,7 +4,7 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="custom_url col-md-4 navbar-nav  mt-2 ">
             <li class="nav-item active">
-              <img src="../images/fetchr_header_logo.png"  height="70" class="d-inline-block align-top" align="left">
+              <img v-on:click="goToDashboard" src="../images/fetchr_header_logo.png"  height="70" class="d-inline-block align-top" align="left">
             </li>
           </ul>
           <form class="col-md-4 form-inline my-2 my-lg-0">
@@ -53,7 +53,10 @@ export default {
     logout: function() {
         browsercookies.erase('userId');
         browsercookies.erase('authCookie');
-        this.$router.push('/login');
+        window.location.href = 'http://127.0.0.1:8080/login';
+    },
+    goToDashboard: function() {
+      this.$router.push('/dashboard');
     },
     gotoOrders: function() {
       this.$router.push('/orders')

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+import VeeValidate from 'vee-validate'
 import VueToast from 'vue-toasted'
 
 import App from './Components/App.vue'
@@ -17,6 +18,7 @@ import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(VueRouter);
 Vue.use(Vuetify);
+Vue.use(VeeValidate);
 Vue.use(VueToast)
 Vue.use(VueMaterial)
 /*----------------------- Routes Declaration -----------------*/
