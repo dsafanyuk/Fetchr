@@ -11,24 +11,14 @@
         </div>
         <ul class="card-action-buttons">
           <li>
-            <div v-if="isFavorite == 'true'">
-              <a
-                v-on:click="unfavorite()"
-                id="favorite"
-                class="btn-floating waves-effect waves-light red accent-2"
-              >
-                <i class="material-icons like">favorite</i>
-              </a>
-            </div>
-            <div v-if="isFavorite == 'false'">
-              <a
-                v-on:click="favorite()"
-                id="favorite"
-                class="btn-floating waves-effect waves-light red accent-2"
-              >
-                <i class="material-icons like">favorite_border</i>
-              </a>
-            </div>
+            <a
+              v-on:click="favorite()"
+              id="favorite"
+              class="btn-floating waves-effect waves-light red accent-2"
+            >
+              <i v-if="isFavorite" class="material-icons like">favorite</i>
+              <i v-if="!isFavorite" class="material-icons like">favorite_border</i>
+            </a>
           </li>
           <li>
             <a v-on:click="addToCart()" id="buy" class="btn-floating waves-effect waves-light blue">
@@ -55,118 +45,78 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import Toasted from 'vue-toasted';
-  import browserCookies from 'browser-cookies';
-  import _ from 'lodash'
-  import State from '../assets/js/shoppingCartState'
+import axios from "axios";
+import Toasted from "vue-toasted";
+import browserCookies from "browser-cookies";
 
-  const api = axios.create({
-    withCredentials: true,
-  });
+const api = axios.create({
+  withCredentials: true
+});
 
-  export default {
-    props: {
-      product: {
-        product_id: String,
-        product_name: String,
-        price: Number,
-        category: String,
-        product_url: String,
-        is_favorite: Boolean,
-      },
+export default {
+  props: {
+    product: {
+      product_id: String,
+      product_name: String,
+      price: Number,
+      category: String,
+      product_url: String
+    }
+  },
+  data() {
+    return {
+      isFavorite: false,
+      inCart: false
+    };
+  },
+  components: {},
+  methods: {
+    favorite: function() {
+      let api_url = `http://127.0.0.1:3000/api/users/favorite`;
+
+      console.log(browserCookies.get("userId"));
+
+      if (this.isFavorite) {
+        this.isFavorite = false;
+        this.$toasted.success("Unfavorited").goAway(1000);
+      } else {
+        api
+          .post(api_url, {
+            user_id: browserCookies.get("userId"),
+            product_id: this.product.product_id
+          })
+          .then(response => {
+            if (response.status == 200) {
+              console.log(response);
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            if (error.response) {
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            }
+          });
+
+        this.isFavorite = true;
+        this.$toasted.success("Favorited").goAway(1000);
+      }
     },
-    data() {
-      return {
-        isFavorite: this.product.is_favorite,
-        inCart: false,
-         shared: State.data,
-      };
-    },
-    components: {},
-    methods: {
-      favorite: function () {
-        let api_url = `http://127.0.0.1:3000/api/users/favorite`;
-
-        api.post(api_url, {
-          user_id: browserCookies.get('userId'),
-          product_id: this.product.product_id,
-        })
-        .then((response) => {
-          if (response.status == 200) {
-            this.isFavorite = 'true';
-            console.log(`After favoriting, isFavorite = ${this.isFavorite}`)
-            this.$toasted.success('Favorited').goAway(1000);
-          }
-        })
-        .catch((error) => {          
-          console.log(error);
-          this.$toasted.error('Error favoriting').goAway(1000);
-          if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          }
-        });
-      },
-      unfavorite: function(){
-        let api_url = `http://127.0.0.1:3000/api/users/unfavorite`;
-        console.log(browserCookies.get('userId'));
-        console.log(this.product.product_id)
-        api.post(api_url, {
-          user_id: browserCookies.get('userId'),
-          product_id: this.product.product_id,
-        })
-          .then((response) => {
-              if (response.status == 200) {
-                console.log(response);
-                this.isFavorite = 'false';
-                console.log(`After unfavoriting, isFavorite = ${this.isFavorite}`)
-                this.$toasted.success('Unfavorited').goAway(1000);
-              }
-            })
-            .catch((error) => {          
-              console.log(error);
-              this.$toasted.error('Error unfavoriting').goAway(1000);
-              if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-              }
-            });
-      },
-      addToCart: function () {
-        if (this.inCart) {
-          this.inCart = false;
-          this.$toasted.success('Removed from cart').goAway(1000);
-
-        } else {
-          this.inCart = true;
-          this.$toasted.success('Added to cart').goAway(1000);
-          State.add(this.product);
-        }
-      },
-      inc () {
-        State.inc(this.product)
-        },
-        dec () {
-          State.dec(this.product)
-        }
-    },
-    computed : {
-      quantityIncart (){
-        return 0;
+    addToCart: function() {
+      if (this.inCart) {
+        this.inCart = false;
+        this.$toasted.success("Removed from cart").goAway(1000);
+      } else {
+        this.inCart = true;
+        this.$toasted.success("Added to cart").goAway(1000);
       }
     }
-  };
+  }
+};
 </script>
 
-<style scoped lang="css">
-  @import '../custom_css/landing_card.scss';
-  @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-  @import '../custom_css/materialize.css';
+<style scoped lang="css" src="../custom_css/landing_card.scss">
 </style>
