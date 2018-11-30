@@ -23,6 +23,7 @@ function loginUser(req, res) {
 
       // Creates token and send it as a response
       if (passwordIsCorrect) {
+        console.log('password correct');
         // The payload
         user = {
           user_id: `${users[0].user_id}`,
