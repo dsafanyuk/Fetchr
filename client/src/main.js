@@ -9,6 +9,8 @@ import Login     from './Components/Login.vue'
 import Register  from './Components/Register.vue'
 import Landing   from './Components/Landing.vue'
 import Orders    from './Components/Orders.vue'
+import Checkout from './Components/Checkout.vue'
+import Confirmation from './Components/Confirmation.vue'
 
 import VueMaterial from 'vue-material'
 import 'vuetify/dist/vuetify.min.css'
@@ -22,8 +24,10 @@ const routes = [
   {path : '/',         component : Home      },
   {path : '/login',    component : Login     },
   {path : '/register', component : Register  },
-  {path : '/dashboard',component : Landing },
-  {path : '/orders',   component : Orders }
+  {path : '/dashboard',  component : Landing },
+  {path : '/orders',  component : Orders },
+  {path : '/confirmation',  component : Confirmation },
+  {path : '/checkout',  component : Checkout }
 ];
 
 const router = new VueRouter({

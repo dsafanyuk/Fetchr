@@ -12,7 +12,7 @@
      <CartItems v-for="Item in Items" :Item="Item"  :key="Item.product_id"> </CartItems>
    </ul>
 
-   <a href="#" class="button">Checkout</a>
+   <a v-on:click="checkout" class="button">Checkout</a>
  </div>
 </template>
 
@@ -43,6 +43,11 @@ export default {
     // Update the total
     this.total = (Math.floor (currentTotal * 100)/100)
 
+  },
+  methods:{
+    checkout: function(event) {
+      this.$router.push('/checkout');
+    }
   },
   components: {
     CartItems : CartItems,

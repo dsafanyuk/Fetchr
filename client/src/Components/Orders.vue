@@ -36,6 +36,7 @@ import LandingFooter from './mini-components/LandingFooter.vue';
 import OrderSummary from './mini-components/OrderSummary.vue';
 import browserCookies from 'browser-cookies';
 import axios from 'axios';
+import State from './assets/js/shoppingCartState';
 
 export default {
 
@@ -46,6 +47,7 @@ export default {
     };
   },
   mounted: function() {
+      console.log(State.data)
     axios.get('http://127.0.0.1:3000/api/users/' + browserCookies.get('userId') + '/orders').then((response) => {
       this.orders = response.data;
     });
@@ -68,6 +70,5 @@ export default {
 
 </script>
 
-<style scoped lang="css">
-    @import 'custom_css/orders.css';
+<style scoped lang="css" src='./custom_css/orders.css'>
 </style>
