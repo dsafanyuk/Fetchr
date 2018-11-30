@@ -1,6 +1,6 @@
 <template>
     <v-dialog width="570">
-            <button slot="activator" class="btn btn-outline-success my-2 my-sm-0" type="button">View</button>
+            <button slot="activator" class="btn btn-outline-dark my-2 my-sm-0" type="button">View</button>
                 <v-card>
                     <v-card-title class="headline grey lighten-2" primary-title >
                         Order Summary
@@ -32,7 +32,7 @@
                     { text: 'Total', align: 'left', value:'price' },
                     { text: 'Quantity', align: 'left', value:'quantity' }
                 ],
-                products: [{}]
+                products: []
             };
         },
         mounted: function() {

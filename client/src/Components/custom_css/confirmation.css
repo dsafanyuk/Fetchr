@@ -1,0 +1,19 @@
+.confirmation {
+    padding-top: 3em;
+    padding-bottom: 3em;
+    padding-left: 10em;
+    padding-right: 10em;
+}
+
+.thankyou {
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.userInfo {
+    text-align: center;
+}
+
+.userInfo p {
+    margin-bottom: .5em !important;
+}
