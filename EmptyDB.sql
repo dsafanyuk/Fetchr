@@ -30,13 +30,13 @@ CREATE TABLE `favorites` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `Order_Summary`
+-- Table structure for table `order_summary`
 --
 
-DROP TABLE IF EXISTS `Order_Summary`;
+DROP TABLE IF EXISTS `order_summary`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `Order_Summary` (
+CREATE TABLE `order_summary` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
@@ -47,17 +47,17 @@ CREATE TABLE `Order_Summary` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Order_Summary`
+-- Dumping data for table `order_summary`
 --
 
 --
--- Table structure for table `Orders`
+-- Table structure for table `orders`
 --
 
-DROP TABLE IF EXISTS `Orders`;
+DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `Orders` (
+CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) DEFAULT NULL,
   `courier_id` int(11) DEFAULT NULL,
@@ -74,18 +74,18 @@ CREATE TABLE `Orders` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Orders`
+-- Dumping data for table `orders`
 --
 
 
 --
--- Table structure for table `Products`
+-- Table structure for table `products`
 --
 
-DROP TABLE IF EXISTS `Products`;
+DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `Products` (
+CREATE TABLE `products` (
   `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_name` varchar(45) NOT NULL,
   `price` decimal(10,2) NOT NULL,
@@ -96,24 +96,56 @@ CREATE TABLE `Products` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Products`
+-- Dumping data for table `products`
 --
 
-LOCK TABLES `Products` WRITE;
-/*!40000 ALTER TABLE `Products` DISABLE KEYS */;
-INSERT INTO `Products` VALUES (1,'Arizona Tea',0.99,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(2,'Dunkin Iced Coffee',1.08,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(3,'Bai ',1.81,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(4,'Coca Cola',2.42,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(5,'Pepsi',3.38,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(6,'Sprite',2.33,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(7,'Root Beer',1.49,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(8,'Milk',1.17,'drinks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(9,'Doritos Small',2.50,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(10,'Pringles',2.57,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(11,'Oreos',3.57,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(12,'Pretzels',3.08,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(13,'Cheetos',2.70,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(14,'Cheez-It',1.21,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(15,'Fritos',1.77,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(16,'Snickers',2.30,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(17,'Chex Mix',4.35,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(18,'Popcorn',2.46,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(19,'Indomie',3.52,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(20,'Ice Cream',2.10,'snacks','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(21,'Pencils',3.00,'school_supplies','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(22,'Eraser',1.12,'school_supplies','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(23,'Stapler',1.88,'school_supplies','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(24,'Pen',0.92,'school_supplies','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(25,'Notebooks',1.17,'school_supplies','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(26,'Hole Puncher',2.85,'school_supplies','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(27,'Nyquil',5.99,'misc','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(28,'Advil',2.01,'misc','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(29,'Umbrella',1.26,'misc','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(30,'Toilet Paper',3.70,'misc','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(31,'Tissues',1.02,'misc','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg'),(32,'Sewing Kit',3.96,'misc','https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg');
-/*!40000 ALTER TABLE `Products` ENABLE KEYS */;
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` VALUES (1, 'Arizona Tea',0.99, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Arizona%20Iced%20Tea.png'),
+(2, 'Dunkin Iced Coffee',1.08, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Dunkin%20Iced%20Coffee.png'),
+(3, 'Bai ',1.81, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Bai.png'),
+(4, 'Coca Cola',2.42, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Coca%20Cola.png'),
+(5, 'Pepsi',3.38, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Pepsi.png'),
+(6, 'Sprite',2.33, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Sprite.png'),
+(7, 'Root Beer',1.49, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Root%20Beer.png'),
+(8, 'Milk',1.17, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Milk.png'),
+(9, 'Doritos Small',2.50, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Doritos.png'),
+(10, 'Pringles',2.57, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Pringles.png'),
+(11, 'Oreos',3.57, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Oreo.png'),
+(12, 'Pretzels',3.08, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Pretzels.png'),
+(13, 'Cheetos',2.70, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Cheetos.png'),
+(14, 'Cheez-It',1.21, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Cheez-It.jp2'),
+(16, 'Snickers',2.30, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Snickers.png'),
+(17, 'Chex Mix',4.35, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Chex%20Mix.png'),
+(18, 'Popcorn',2.46, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Popcorn.png'),
+(19, 'Indomie',3.52, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Indomie.png'),
+(20, 'Ice Cream',2.10, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Ice%20Cream.png'),
+(21, 'Pencils',3.00, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Pencils.png'),
+(22, 'Eraser',1.12, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Eraser.png'),
+(23, 'Stapler',1.88, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Stapler.png'),
+(24, 'Pen',0.92, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Pen.png'),
+(25, 'Notebooks',1.17, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Notebooks.png'),
+(26, 'Hole Puncher',2.85, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Hole%20Puncher.png'),
+(27, 'Nyquil',5.99, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Nyquil.png'),
+(28, 'Advil',2.01, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Advil.png'),
+(29, 'Umbrella',1.26, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Umbrella.png'),
+(30, 'Toilet Paper',3.70, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Toilet%20Paper.png'),
+(31, 'Tissues',1.02, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Tissues.png'),
+(32, 'Sewing Kit',3.96, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Sewing%20Kit.png')
+;/*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
 --
--- Table structure for table `Users`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `Users`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `Users` (
+CREATE TABLE `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `time_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `email_address` varchar(75) NOT NULL,
@@ -146,10 +178,10 @@ CREATE TABLE `users_cc` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
-DROP TABLE IF EXISTS `Cc_info`;
+DROP TABLE IF EXISTS `cc_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `Cc_info` (
+CREATE TABLE `cc_info` (
   `cc_id` int(11) NOT NULL AUTO_INCREMENT, 
   `credit_card_number` varchar(25) NOT NULL,
   `ccv` varchar(4) NOT NULL,
@@ -162,9 +194,9 @@ CREATE TABLE `Cc_info` (
 
 
 CREATE or replace view fetchr_db.product_records as
-SELECT Products.*,  ifnull(sum(Order_Summary.quantity),0) as 'total_sold' 
-  FROM fetchr_db.Products left OUTER JOIN fetchr_db.Order_summary
-    ON Order_Summary.product_id = Products.product_id
+SELECT products.*,  ifnull(sum(order_summary.quantity),0) as 'total_sold' 
+  FROM fetchr_db.products left OUTER JOIN fetchr_db.order_summary
+    ON order_summary.product_id = products.product_id
  group by product_id;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

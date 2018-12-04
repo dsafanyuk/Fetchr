@@ -26,7 +26,7 @@ function showAllProducts(req, res) {
         where user_id = ${user_id})
     UNION
     SELECT *, 'false' as 'is_favorite'
-        FROM PRODUCTS
+        FROM products
     having product_id not in 
         (select product_id 
           from favorites

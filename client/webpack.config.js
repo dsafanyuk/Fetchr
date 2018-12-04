@@ -1,5 +1,5 @@
-let path = require('path');
-let webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/main.js',
@@ -9,28 +9,18 @@ module.exports = {
     filename: 'build.js',
   },
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-        ],
+        use: ['vue-style-loader', 'css-loader'],
       },
       {
         test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
+        use: ['vue-style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.sass$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader?indentedSyntax',
-        ],
+        use: ['vue-style-loader', 'css-loader', 'sass-loader?indentedSyntax'],
       },
       {
         test: /\.vue$/,
@@ -40,11 +30,7 @@ module.exports = {
             // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
             // the "scss" and "sass" values for the lang attribute to the right configs here.
             // other preprocessors should work out of the box, no loader config like this necessary.
-            scss: [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loader',
-            ],
+            scss: ['vue-style-loader', 'css-loader', 'sass-loader'],
             sass: [
               'vue-style-loader',
               'css-loader',
@@ -75,11 +61,12 @@ module.exports = {
     extensions: ['*', '.js', '.vue', '.json'],
   },
   devServer: {
+    host: '127.0.0.1',
     historyApiFallback: true,
     noInfo: false,
     overlay: true,
     watchOptions: {
-      poll: 1000 // Check for changes every second
+      poll: 1000, // Check for changes every second
     },
   },
   performance: {
@@ -96,12 +83,6 @@ if (process.env.NODE_ENV === 'production') {
       'process.env': {
         NODE_ENV: '"production"',
         // eslint-disable-next-line comma-dangle
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false,
       },
     }),
     new webpack.LoaderOptionsPlugin({

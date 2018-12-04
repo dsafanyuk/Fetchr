@@ -111,8 +111,8 @@
 </template>
 
 <script>
-    import axios from 'axios';
-
+import axios from "axios";
+const api = axios.create();
     export default {
         $_veeValidate: {
             validator: 'new'
@@ -168,8 +168,6 @@
                 this.$validator.reset()
             },
             registerCustomer(e) {
-                let api_url = 'http://127.0.0.1:3000/api/users/register';
-
                 if (
                     this.cFirstname &&
                     this.cLastname &&
@@ -181,8 +179,8 @@
                 ) {
                     // Replace with a Validator Lib
                     if (this.cPassword === this.cRepeatPassword) {
-                        axios
-                            .post(api_url, {
+                        api
+                            .post('api/users/register', {
                                 first_name: this.cFirstname,
                                 last_name: this.cLastname,
                                 email_address: this.cEmail,
@@ -220,5 +218,5 @@
 </script>
 
 <style>
-@import 'custom_css/registration.scss';
+@import "custom_css/registration.scss";
 </style>

@@ -1,8 +1,8 @@
 const options = {
   client: 'mysql',
   connection: {
-    host: '127.0.0.1',
-    user: 'root',
+    host: process.env.DBHOST || '127.0.0.1',
+    user: process.env.DBUSER || 'root',
     password: process.env.DBPASS,
     database: 'fetchr_db',
   },
