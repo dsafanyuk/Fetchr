@@ -160,5 +160,5 @@ export default {
 };
 </script>
 
-<style  lang="css" src="../custom_css/landing_card.scss">
+<style scoped lang="css" src="../custom_css/landing_card.scss">
 </style>
