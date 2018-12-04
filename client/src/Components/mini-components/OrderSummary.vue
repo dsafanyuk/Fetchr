@@ -16,6 +16,7 @@
 
 <script>
 import axios from "axios";
+const api = axios.create();
 
 export default {
   props: {
@@ -32,17 +33,13 @@ export default {
     };
   },
   mounted: function() {
-    axios
-      .get(
-        "http://fetchrapp.com:3000/api/orders/" + this.productID + "/summary"
-      )
-      .then(response => {
-        this.products = response.data.map(product => {
-          product.price = "$" + product.price.toFixed(2);
-          product.value = false;
-          return product;
-        });
+    api.get(`/api/orders/${this.productID}/summary`).then(response => {
+      this.products = response.data.map(product => {
+        product.price = "$" + product.price.toFixed(2);
+        product.value = false;
+        return product;
       });
+    });
   }
 };
 </script>

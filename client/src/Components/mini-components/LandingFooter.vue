@@ -76,10 +76,8 @@ export default {
   methods: {
     showOneUser(e) {
       let userId = document.cookie.split("=")[2];
-      let api_url = `http://fetchrapp.com:3000/api/users/${userId}`;
-
       api
-        .post(api_url, {
+        .post(`/api/users/${userId}`, {
           clientToken: document.cookie.split("=")[1].split(";")[0]
         })
         .then(response => {
