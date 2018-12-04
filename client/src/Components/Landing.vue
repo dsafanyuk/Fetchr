@@ -1,161 +1,132 @@
 <template>
-    <v-app>
-        <LandingHeader v-on:showcart="displayCart"></LandingHeader>
-        <ShoppingCart v-if="seen"></ShoppingCart>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="category-wrapper">
-                        <input
-                            v-model="selectedCategory"
-                            id="tab1"
-                            type="radio"
-                            name="tabs"
-                            value="Popular"
-                        >
-                        <label for="tab1">
-                            <span>
-                                Popular
-                                <i
-                                    class="material-icons"
-                                    style="vertical-align: middle;"
-                                >whatshot</i>
-                            </span>
-                        </label>
-                        <input
-                            v-model="selectedCategory"
-                            id="tab2"
-                            type="radio"
-                            name="tabs"
-                            value="Snacks"
-                        >
-                        <label for="tab2">Snacks</label>
-                        <input
-                            v-model="selectedCategory"
-                            id="tab3"
-                            type="radio"
-                            name="tabs"
-                            value="Drinks"
-                        >
-                        <label for="tab3">Drinks</label>
-                        <input
-                            v-model="selectedCategory"
-                            id="tab4"
-                            type="radio"
-                            name="tabs"
-                            value="School Supplies"
-                        >
-                        <label for="tab4">School Supplies</label>
-                        <input
-                            v-model="selectedCategory"
-                            id="tab5"
-                            type="radio"
-                            name="tabs"
-                            value="Misc"
-                        >
-                        <label for="tab5">Misc</label>
-                        <input
-                            v-model="selectedCategory"
-                            id="tab6"
-                            type="radio"
-                            name="tabs"
-                            value="Favorites"
-                        >
-                        <label for="tab6">Favorites</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <LandingCard
-                    v-for="product in filteredProducts"
-                    :key="product.product_id"
-                    :product="product"
-                ></LandingCard>
-            </div>
+  <v-app>
+    <LandingHeader v-on:showcart="displayCart"></LandingHeader>
+    <ShoppingCart v-if="seen"></ShoppingCart>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="category-wrapper">
+            <input v-model="selectedCategory" id="tab1" type="radio" name="tabs" value="Popular">
+            <label for="tab1">
+              <span>
+                Popular
+                <i class="material-icons" style="vertical-align: middle;">whatshot</i>
+              </span>
+            </label>
+            <input v-model="selectedCategory" id="tab2" type="radio" name="tabs" value="Snacks">
+            <label for="tab2">Snacks</label>
+            <input v-model="selectedCategory" id="tab3" type="radio" name="tabs" value="Drinks">
+            <label for="tab3">Drinks</label>
+            <input
+              v-model="selectedCategory"
+              id="tab4"
+              type="radio"
+              name="tabs"
+              value="School Supplies"
+            >
+            <label for="tab4">School Supplies</label>
+            <input v-model="selectedCategory" id="tab5" type="radio" name="tabs" value="Misc">
+            <label for="tab5">Misc</label>
+            <input v-model="selectedCategory" id="tab6" type="radio" name="tabs" value="Favorites">
+            <label for="tab6">Favorites</label>
+          </div>
         </div>
-        <LandingFooter></LandingFooter>
-    </v-app>
+      </div>
+      <div class="row">
+        <LandingCard
+          v-for="product in filteredProducts"
+          :key="product.product_id"
+          :product="product"
+        ></LandingCard>
+      </div>
+    </div>
+    <LandingFooter></LandingFooter>
+  </v-app>
 </template>
 
 <script>
-    import LandingHeader from './mini-components/LandingHeader.vue';
-    import LandingFooter from './mini-components/LandingFooter.vue';
-    import LandingCard from './mini-components/LandingCard.vue';
-    import ShoppingCart from './mini-components/ShoppingCart.vue';
-    import browserCookies from 'browser-cookies';
-    import axios from 'axios';
-    import Toasted from 'vue-toasted';
+import LandingHeader from "./mini-components/LandingHeader.vue";
+import LandingFooter from "./mini-components/LandingFooter.vue";
+import LandingCard from "./mini-components/LandingCard.vue";
+import ShoppingCart from "./mini-components/ShoppingCart.vue";
+import browserCookies from "browser-cookies";
+import axios from "axios";
+import Toasted from "vue-toasted";
 
-    const api = axios.create({
-        withCredentials: true,
-    });
-
+const api = axios.create();
 
 export default {
   data() {
     return {
-      seen : false,
+      seen: false,
       products: {},
-      selectedCategory: 'Popular',
+      selectedCategory: "Popular"
     };
   },
   props: {},
   created: function loadProducts() {
-    console.log(browserCookies.get('userId'))
-    let loadingProductsToast = this.$toasted.show('Loading products...');
-    axios
-      .get('http://127.0.0.1:3000/api/products',{
-          headers: {
-              user_id : browserCookies.get('userId')
-          }
+    let loadingProductsToast = this.$toasted.show("Loading products...");
+    api
+      .get(`/api/products`, {
+        headers: {
+          user_id: browserCookies.get("userId")
+        }
       })
-      .then((response) => {
+      .then(response => {
         this.products = response.data;
-        console.log(this.products)
-        loadingProductsToast.text('Products loaded!').goAway(5000);
+        loadingProductsToast.text("Products loaded!").goAway(5000);
       })
-      .catch((error) => {
-          console.log(error);
+      .catch(error => {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+        }
         loadingProductsToast.goAway();
-        this.$toasted.error('Something went wrong');
+        this.$toasted.error("Something went wrong");
       });
   },
   computed: {
     filteredProducts() {
-        var category = this.selectedCategory.toLowerCase().split(' ').join('_')
-        //console.log(`Category = ${category}`)
-        if (category === 'popular' || !category){
-            return this.products;
-        } else if (category === 'favorites') {
-            return this.products.filter((product) => {
-                return product.is_favorite === 'true';
-            });
-        } else {
-            return this.products.filter((product) => {
-                return product.category === category;
-            });
-        }
-    },
-},
+      var category = this.selectedCategory
+        .toLowerCase()
+        .split(" ")
+        .join("_");
+      if (category === "popular" || !category) {
+        return this.products;
+      } else if (category === "favorites") {
+        return this.products.filter(product => {
+          return product.is_favorite == "true";
+        });
+      } else {
+        return this.products.filter(product => {
+          return product.category === category;
+        });
+      }
+    }
+  },
   components: {
     LandingHeader: LandingHeader,
     LandingFooter: LandingFooter,
     LandingCard: LandingCard,
-    ShoppingCart: ShoppingCart,
+    ShoppingCart: ShoppingCart
   },
-  methods : {
-    displayCart(show){
-     if (this.seen)
-      this.seen = false;
+  methods: {
+    displayCart(show) {
+      if (this.seen) this.seen = false;
       else {
         this.seen = true;
       }
     }
   }
-
 };
 </script>
 
 <style lang="scss">
-@import 'custom_css/landing.scss';
+@import "custom_css/landing.scss";
 </style>

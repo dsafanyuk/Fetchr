@@ -5,8 +5,19 @@ const logger = require('morgan');
 const cors = require('cors');
 const apiRouter = require('./routes/index');
 
-const corsOptions = {
-  origin: 'http://127.0.0.1:8080',
+const whitelist = [
+  'http://127.0.0.1:8080',
+  'http://fetchrapp.com',
+  'http://www.fetchrapp.com',
+];
+var corsOptions = {
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 };
 
@@ -14,9 +25,11 @@ const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({
-  extended: false,
-}));
+app.use(
+  express.urlencoded({
+    extended: false,
+  }),
+);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
