@@ -1,0 +1,26 @@
+{
+  "name": "fetchr",
+  "version": "0.0.1",
+  "description": "Fetchr is a store to door platform for students",
+  "main": "index.js",
+  "scripts": {
+    "server": "node ./api/bin/www",
+    "client": "node ./client/app.js",
+    "fetchr": "node ./api/bin/www && node ./client/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dsafanyuk/Fetchr.git"
+  },
+  "author": "Fetchr Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dsafanyuk/Fetchr/issues"
+  },
+  "homepage": "https://github.com/Dsafanyuk/Fetchr#readme",
+  "devDependencies": {
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
+}
