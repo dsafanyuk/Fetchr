@@ -13,7 +13,7 @@
           </form>
           <div class="col-md-4 ">
             <div class=" icons_div btn-group " style=" float: right;">
-             <button type="button" class="btn btn-secondary">Hi Josh!</button>
+             <button type="button" class="btn btn-secondary">Hi, {{ firstName }}</button>
              <button type="button" class="btn btn-secondary btn_space dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              <span class="sr-only">Toggle Dropdown</span>
             </button>
@@ -34,11 +34,18 @@
 import Landing from '../Landing.vue';
 import ShoppingCart from './ShoppingCart.vue'
 import browsercookies from 'browser-cookies';
+import axios from 'axios';
+
+const api = axios.create({
+  withCredentials: true,
+});
 
 export default {
   data() {
     name: 'LandingHeader';
-    return {};
+    return {
+      firstName: browsercookies.get('first_name')
+    };
   },
   components: {
     ShoppingCart: ShoppingCart
@@ -51,8 +58,11 @@ export default {
     },
 
     logout: function() {
-        browsercookies.erase('userId');
-        browsercookies.erase('authCookie');
+        let allCookies = browsercookies.all();
+        for(let cookieName in allCookies) {
+          browsercookies.erase(cookieName);
+        }
+
         window.location.href = 'http://127.0.0.1:8080/login';
     },
     goToDashboard: function() {

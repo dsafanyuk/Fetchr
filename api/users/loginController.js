@@ -29,13 +29,21 @@ function loginUser(req, res) {
           user_id: `${users[0].user_id}`,
           email_address: `${users[0].email_address}`,
         };
+        
         // Create jwt, expires in 1 hour
         jwt.sign({ user }, 'secretkey', { expiresIn: 60 * 60 }, (err, token) => {
           if (err) {
+            console.log('error in login');
             res.status(500).send(err);
           } else {
-            res.cookie('authCookie', token, { maxAge: 900000 });
-            res.cookie('userId', user.user_id, { maxAge: 900000 });
+            console.log('creating cookies..')
+            Object.keys(users[0]).forEach((userDetail)=>{
+              if(userDetail !== 'password') {
+                let userValue = `${users[0][userDetail]}`;
+                res.cookie(userDetail, userValue, { maxAge: 900000 });
+              }
+            })
+            
             res.json({
               token,
             });
