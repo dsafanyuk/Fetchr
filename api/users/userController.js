@@ -1,19 +1,5 @@
 const knex = require('knex')(require('../db'));
 
-// GET /users
-function showAllUsers(req, res) {
-  knex('users')
-    .select('*')
-    .then((rows) => {
-      res.send(rows).status(200);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: `${err}`,
-      }); // FOR DEBUGGING ONLY, dont send exact message in prod
-    });
-}
-
 // GET /users/{user_id}
 function showOneUser(req, res) {
   // Check user id with value at the parameter
@@ -159,7 +145,6 @@ function favorites(req, res) {
 }
 
 module.exports = {
-  showAllUsers,
   showOneUser,
   showUserOrders,
   createUser,
