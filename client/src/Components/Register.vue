@@ -112,6 +112,8 @@
 
 <script>
 import axios from "axios";
+import Toasted from 'vue-toasted';
+
 const api = axios.create();
     export default {
         $_veeValidate: {
@@ -168,6 +170,8 @@ const api = axios.create();
                 this.$validator.reset()
             },
             registerCustomer(e) {
+                let toasted = this.$toasted;
+
                 if (
                     this.cFirstname &&
                     this.cLastname &&
@@ -195,6 +199,13 @@ const api = axios.create();
                                 }
                             })
                             .catch(function (error) {
+                                if (error.response.status == 400) {
+                                    toasted.error(error.response.data, {
+                                        theme: "primary", 
+                                        position: "top-center", 
+                                        duration : 5000
+                                    });
+                                }
                                 console.log(error);
                                 if (error.response) {
                                     // The request was made and the server responded with a status code
