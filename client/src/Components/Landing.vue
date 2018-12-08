@@ -69,7 +69,7 @@ export default {
     api
       .get(`/api/products`, {
         headers: {
-          user_id: browserCookies.get("userId")
+          user_id: browserCookies.get("user_id")
         }
       })
       .then(response => {

@@ -85,7 +85,7 @@ export default {
     favorite: function() {
       api
         .post("api/users/favorite", {
-          user_id: browserCookies.get("userId"),
+          user_id: browserCookies.get("user_id"),
           product_id: this.product.product_id
         })
         .then(response => {
@@ -108,11 +108,9 @@ export default {
         });
     },
     unfavorite: function() {
-      console.log(browserCookies.get("userId"));
-      console.log(this.product.product_id);
       api
         .post("/api/users/unfavorite", {
-          user_id: browserCookies.get("userId"),
+          user_id: browserCookies.get("user_id"),
           product_id: this.product.product_id
         })
         .then(response => {

@@ -72,33 +72,7 @@ const api = axios.create({
 });
 
 export default {
-  name: "LandingFooter",
-  methods: {
-    showOneUser(e) {
-      let userId = document.cookie.split("=")[2];
-      api
-        .post(`/api/users/${userId}`, {
-          clientToken: document.cookie.split("=")[1].split(";")[0]
-        })
-        .then(response => {
-          if (response.status == 200) {
-            console.log(response);
-          }
-        })
-        .catch(function(error) {
-          console.log(error);
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          }
-        });
-
-      return;
-    }
-  }
+  name: "LandingFooter"
 };
 </script>
 
