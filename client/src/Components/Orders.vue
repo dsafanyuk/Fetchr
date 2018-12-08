@@ -49,7 +49,7 @@ export default {
   mounted: function() {
     console.log(State.data);
     api
-      .get("/api/users/" + browserCookies.get("userId") + "/orders")
+      .get("/api/users/" + browserCookies.get("user_id") + "/orders")
       .then(response => {
         this.orders = response.data;
       });

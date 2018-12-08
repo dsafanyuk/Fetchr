@@ -73,7 +73,7 @@ export default {
       });
       api
         .post("/api/orders/", {
-          customer_id: browserCookies.get("userId"),
+          customer_id: browserCookies.get("user_id"),
           delivery_status: "pending",
           order_total: total,
           productsWithQuantity: productsWithQuantity
