@@ -5,38 +5,10 @@
         <div class="card-img">
           <span
             href="#"
-            class="btn-floating btn-large price waves-effect waves-light brown darken-3"
+            class="btn-floating btn-large price waves-effect waves-light custom"
           >${{product.price.toFixed(2)}}</span>
           <img :src="product.product_url" :alt="product.product_name">
         </div>
-        <ul class="card-action-buttons">
-          <li>
-            <div v-if="isFavorite == 'true'">
-              <a
-                v-on:click="unfavorite()"
-                id="favorite"
-                class="btn-floating waves-effect waves-light red accent-2"
-              >
-                <i class="material-icons like">favorite</i>
-              </a>
-            </div>
-            <div v-if="isFavorite == 'false'">
-              <a
-                v-on:click="favorite()"
-                id="favorite"
-                class="btn-floating waves-effect waves-light red accent-2"
-              >
-                <i class="material-icons like">favorite_border</i>
-              </a>
-            </div>
-          </li>
-          <li>
-            <a v-on:click="addToCart()" id="buy" class="btn-floating waves-effect waves-light blue">
-              <i v-if="inCart" class="material-icons buy">check</i>
-              <i v-if="!inCart" class="material-icons buy">add_shopping_cart</i>
-            </a>
-          </li>
-        </ul>
         <div class="card-content">
           <div class="row">
             <div class="col s12">
@@ -49,6 +21,37 @@
             </div>
           </div>
         </div>
+        <div style="display:flex" class="btn_container">
+          <div class="favorite_button">
+            <v-btn
+              id="fave_btn"
+              block
+              color="primary"
+              v-if="isFavorite == 'true'"
+              v-on:click="unfavorite()"
+              dark
+              :ripple="false"
+            >
+              <v-icon medium>favorite</v-icon>
+            </v-btn>
+            <v-btn
+              id="fave_btn"
+              block
+              color="primary"
+              v-if="isFavorite == 'false'"
+              v-on:click="favorite()"
+              :ripple="false"
+            >
+              <v-icon medium>favorite_border</v-icon>
+            </v-btn>
+          </div>
+          <div class="cart_button">
+            <v-btn id="cart_btn" block color="accent" v-on:click="addToCart()" :ripple="false">
+              <v-icon medium v-if="inCart">check</v-icon>
+              <v-icon medium v-if="!inCart">add_shopping_cart</v-icon>
+            </v-btn>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -58,7 +61,6 @@
 import axios from "axios";
 import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
-import _ from "lodash";
 import State from "../assets/js/shoppingCartState";
 
 const api = axios.create();
@@ -77,10 +79,12 @@ export default {
     return {
       isFavorite: this.product.is_favorite,
       inCart: false,
-      shared: State.data
+      shared: State.data,
+      productDetail: this.product.is_favorite
     };
   },
   components: {},
+  watch: {},
   methods: {
     favorite: function() {
       api
@@ -90,9 +94,10 @@ export default {
         })
         .then(response => {
           if (response.status == 200) {
+            console.log(response);
             this.isFavorite = "true";
-            console.log(`After favoriting, isFavorite = ${this.isFavorite}`);
-            this.$toasted.success("Favorited").goAway(1000);
+            this.product.is_favorite = "true";
+            this.$toasted.success("Added to favorites!").goAway(1000);
           }
         })
         .catch(error => {
@@ -115,10 +120,10 @@ export default {
         })
         .then(response => {
           if (response.status == 200) {
-            console.log(response);
             this.isFavorite = "false";
+            this.product.is_favorite = "false";
             console.log(`After unfavoriting, isFavorite = ${this.isFavorite}`);
-            this.$toasted.success("Unfavorited").goAway(1000);
+            this.$toasted.success("Removed from favorites!").goAway(1000);
           }
         })
         .catch(error => {
@@ -159,4 +164,7 @@ export default {
 </script>
 
 <style scoped lang="css" src="../custom_css/landing_card.scss">
+.btn-floating {
+  background-color: #344955 !important;
+}
 </style>
