@@ -40,7 +40,7 @@ function loginUser(req, res) {
             Object.keys(users[0]).forEach((userDetail)=>{
               if(userDetail !== 'password') {
                 let userValue = `${users[0][userDetail]}`;
-                res.cookie(userDetail, userValue, { maxAge: 900000 });
+                res.cookie(userDetail, userValue, { maxAge: 24*60*60*1000 }); // In miliseconds
               }
             })
             
