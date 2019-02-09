@@ -22,7 +22,7 @@ router.post('/register', [
   check('last_name', 'Cannot have numbers').isAlpha().trim(),
 ], registerController.registerUser);
 
-router.post('/wallet', userController.addBalance);
+router.post('/:user_id/wallet', userController.addBalance);
 
 router.get('/:user_id/wallet', userController.checkBalance);
 
