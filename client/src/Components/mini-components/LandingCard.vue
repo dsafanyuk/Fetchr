@@ -46,7 +46,7 @@
             </v-btn>
           </div>
           <div class="cart_button">
-            <v-btn id="cart_btn" block color="accent" v-on:click="addToCart()" :ripple="false">
+            <v-btn id="cart_btn" block color="accent" v-on:click="addItem" :ripple="false">
               <v-icon medium v-if="inCart">check</v-icon>
               <v-icon medium v-if="!inCart">add_shopping_cart</v-icon>
             </v-btn>
@@ -61,7 +61,6 @@
 import axios from "axios";
 import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
-import State from "../assets/js/shoppingCartState";
 
 const api = axios.create();
 export default {
@@ -78,13 +77,17 @@ export default {
   data() {
     return {
       isFavorite: this.product.is_favorite,
-      inCart: false,
-      shared: State.data,
       productDetail: this.product.is_favorite
     };
   },
   components: {},
   watch: {},
+  computed: {
+    // Check if item is in cart, returns boolean value
+    inCart: function() {
+      return this.$store.getters.cartItems.includes(this.product);
+    }
+  },
   methods: {
     favorite: function() {
       api
@@ -138,28 +141,13 @@ export default {
           }
         });
     },
-    addToCart: function() {
-      if (this.inCart) {
-        this.inCart = false;
-        this.$toasted.success("Removed from cart").goAway(1000);
-      } else {
-        this.inCart = true;
-        this.$toasted.success("Added to cart").goAway(1000);
-        State.add(this.product);
-      }
+    // Add item to cart
+    addItem: function() {
+      this.$toasted.success("Added to cart").goAway(1000);
+      this.$store.commit("addItem", this.product);
+      this.$forceUpdate();
     },
-    inc() {
-      State.inc(this.product);
-    },
-    dec() {
-      State.dec(this.product);
-    }
   },
-  computed: {
-    quantityIncart() {
-      return 0;
-    }
-  }
 };
 </script>
 

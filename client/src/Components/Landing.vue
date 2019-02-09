@@ -77,7 +77,7 @@ export default {
       })
       .then(response => {
         this.products = response.data;
-        loadingProductsToast.text("Products loaded!").goAway(5000);
+        loadingProductsToast.text("Products loaded!").goAway(500);
       })
       .catch(error => {
         if (error.response) {
@@ -97,7 +97,6 @@ export default {
   computed: {
     filteredProducts() {
       if (this.search_input) {
-        console.log("hello");
         return this.products.filter(product => {
           return (
             product.product_name

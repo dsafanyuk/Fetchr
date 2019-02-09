@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Vuex from 'vuex';
 import Vuetify from 'vuetify';
 import VeeValidate from 'vee-validate';
 import VueToast from 'vue-toasted';
@@ -31,6 +32,7 @@ Vue.use(Vuetify, {
     accent: '#f9aa33'
   }
 })
+Vue.use(Vuex);
 /*----------------------- Routes Declaration -----------------*/
 const routes = [
   {path: '/', component: Home},
@@ -54,10 +56,51 @@ if (process.env.NODE_ENV == 'production') {
   axios.defaults.baseURL = 'http://127.0.0.1:3000';
 }
 
+const store = new Vuex.Store({
+  state: {
+    count: 0,
+    cart: {},
+  },
+  mutations: {
+    addItem: (state, product) => {
+      Vue.set(state.cart, product.product_id, product);
+      Vue.set(state.cart[product.product_id], 'quantity', 1 );
+    },
+    removeItem: (state, product) => {
+      Vue.delete(state.cart, product.product_id);
+    },
+    incQuantity: (state, product) => {
+      console.log(state.cart[product.product_id]);
+      state.cart[product.product_id].quantity++;
+    },
+    decQuantity: (state, product) => {
+      state.cart[product.product_id].quantity--;
+    }
+  },
+  getters: {
+    cartItems(state) {
+      return Object.values(state.cart);
+    },
+    totalCartItems(state) {
+      return state.cart.length;
+    },
+    totalCartPrice(state) {
+      var total = 0;
+      
+      Object.values(state.cart).forEach(cartItem=>{
+          total += cartItem.price * cartItem.quantity
+      })
+
+      return total.toFixed(2);
+    }
+  }
+});
+
 axios.defaults.withCredentials = true; // force axios to have withCredentials with all requests.
 new Vue({
   el: '#app',
   template: '<App/>',
+  store: store,
   router,
   render: (h) => h(App),
 });

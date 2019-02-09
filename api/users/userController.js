@@ -143,13 +143,12 @@ function favorites(req, res) {
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
     });
 }
-// POST /users/wallet
+// POST /users/:user_id/wallet
 function addBalance(req,res){
   knex('users')
-  .where('user_id', req.body.user_id)
-  .update({
-    wallet: req.body.amount
-  })
+  .where('user_id', req.params.user_id)
+  .increment(
+    'wallet',req.body.amount)
   .then(()=>{
     res.send('success').status(200)
   })

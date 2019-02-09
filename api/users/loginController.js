@@ -31,7 +31,7 @@ function loginUser(req, res) {
         };
         
         // Create jwt, expires in 1 hour
-        jwt.sign({ user }, 'secretkey', { expiresIn: 60 * 60 }, (err, token) => {
+        jwt.sign({ user }, 'secretkey', (err, token) => {
           if (err) {
             console.log('error in login');
             res.status(500).send(err);
