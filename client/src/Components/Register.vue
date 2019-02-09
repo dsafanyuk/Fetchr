@@ -90,14 +90,18 @@
                                 solo
                                 required
                             ></v-text-field>
+                            <div class="alert alert-info alert-dismissable">
+                              <a class="panel-close close" data-dismiss="alert">×</a>
+                              Password <strong>must have at least</strong>.<br>- 8 characters<br>- an uppercse letter<br>- a special character.
+                            </div>
                         </form>
                         <div class="form-group text-center">
-                            <v-btn 
+                            <v-btn
                                 round color="cyan" dark
                                 type="submit"
                                 @click="registerCustomer"
                             >Register</v-btn>
-                            <v-btn 
+                            <v-btn
                                 round color="cyan" dark
                                 type="button"
                                 @click="clear"
@@ -201,8 +205,8 @@ const api = axios.create();
                             .catch(function (error) {
                                 if (error.response.status == 400) {
                                     toasted.error(error.response.data, {
-                                        theme: "primary", 
-                                        position: "top-center", 
+                                        theme: "primary",
+                                        position: "top-center",
                                         duration : 5000
                                     });
                                 }
