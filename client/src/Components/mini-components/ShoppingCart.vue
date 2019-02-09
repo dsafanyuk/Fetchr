@@ -7,7 +7,6 @@
           primary-title
         >Your Shopping Cart</v-card-title>
         <v-data-table
-          :headers="headers"
           :items="items"
           hide-headers
           :total-items="10"
@@ -35,7 +34,7 @@
             <td class="text-xs-right">
               <strong>Total</strong>
             </td>
-            <td class="text-xs-left" :colspan="headers.length">{{total}}</td>
+            <td class="text-xs-left" :colspan="4">{{total}}</td>
           </template>
         </v-data-table>
         <div class="text-xs-center">
