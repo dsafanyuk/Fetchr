@@ -2,38 +2,40 @@
   <v-app>
     <LandingHeader v-on:showcart="displayCart" v-model="search_input"></LandingHeader>
     <ShoppingCart v-if="seen"></ShoppingCart>
+    <div class="category-wrapper shadow">
+      <v-tabs centered light icons-and-text v-model.lazy="active" show-arrows max>
+        <v-tabs-slider color="orange"></v-tabs-slider>
+        <v-tab href="#Popular">Popular
+          <v-icon>fas fa-fire-alt</v-icon>
+        </v-tab>
+
+        <v-tab href="#Snacks">Snacks
+          <v-icon>fas fa-hamburger</v-icon>
+        </v-tab>
+
+        <v-tab href="#Drinks">Drinks
+          <v-icon>fas fa-mug-hot</v-icon>
+        </v-tab>
+
+        <v-tab href="#Personal">Personal
+          <v-icon>fas fa-toilet-paper</v-icon>
+        </v-tab>
+        <v-tab href="#Electronics">Electronics
+          <v-icon>fas fa-headphones-alt</v-icon>
+        </v-tab>
+        <v-tab href="#School Supplies">School Supplies
+          <v-icon>fas fa-paperclip</v-icon>
+        </v-tab>
+        <v-tab href="#Misc">Misc
+          <v-icon>fas fa-random</v-icon>
+        </v-tab>
+
+        <v-tab href="#Favorites">Favorites
+          <v-icon>fas fa-heart</v-icon>
+        </v-tab>
+      </v-tabs>
+    </div>
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="category-wrapper">
-            <v-tabs centered light icons-and-text v-model="active" show-arrows>
-              <v-tabs-slider color="orange"></v-tabs-slider>
-              <v-tab href="#Popular">Popular
-                <v-icon>fas fa-fire-alt</v-icon>
-              </v-tab>
-
-              <v-tab href="#Snacks">Snacks
-                <v-icon>fas fa-cookie</v-icon>
-              </v-tab>
-
-              <v-tab href="#Drinks">Drinks
-                <v-icon>fas fa-mug-hot</v-icon>
-              </v-tab>
-
-              <v-tab href="#School Supplies">School Supplies
-                <v-icon>fas fa-paperclip</v-icon>
-              </v-tab>
-              <v-tab href="#Misc">Misc
-                <v-icon>fas fa-random</v-icon>
-              </v-tab>
-
-              <v-tab href="#Favorites">Favorites
-                <v-icon>fas fa-heart</v-icon>
-              </v-tab>
-            </v-tabs>
-          </div>
-        </div>
-      </div>
       <div class="row">
         <LandingCard
           v-for="product in filteredProducts"
@@ -42,6 +44,7 @@
         ></LandingCard>
       </div>
     </div>
+
     <LandingFooter></LandingFooter>
   </v-app>
 </template>
@@ -64,7 +67,14 @@ export default {
       seen: false,
       products: [],
       interval: null,
-      search_input: ""
+      search_input: "",
+      snacksProducts: [],
+      drinksProducts: [],
+      personalProducts: [],
+      electronicsProducts: [],
+      school_suppliesProducts: [],
+      miscProducts: [],
+      favoriteProducts: []
     };
   },
   created: function loadProducts() {
@@ -137,6 +147,46 @@ export default {
       else {
         this.seen = true;
       }
+    },
+    sortProducts() {
+      let allProducts = this.products;
+      this.snacksProducts = allProducts.filter(product => {
+        allProducts.splice(
+          allProducts.indexOf(allProducts[product]),
+          allProducts.indexOf(allProducts[product]) + 1
+        );
+        return product.category == "snacks";
+      });
+      this.drinksProducts = allProducts.filter(product => {
+        allProducts.splice(
+          allProducts.indexOf(allProducts[product]),
+          allProducts.indexOf(allProducts[product]) + 1
+        );
+
+        return product.category == "drinks";
+      });
+      this.personalProducts = allProducts.filter(product => {
+        allProducts.splice(
+          allProducts.indexOf(allProducts[product]),
+          allProducts.indexOf(allProducts[product]) + 1
+        );
+        return product.category == "personal";
+      });
+      this.electronicsProducts = allProducts.filter(product => {
+        console.log(allProducts.indexOf(allProducts[product]));
+        return product.category == "electronics";
+      });
+      this.school_suppliesProducts = allProducts.filter(product => {
+        allProducts.splice(
+          allProducts.indexOf(allProducts[product]),
+          allProducts.indexOf(allProducts[product]) + 1
+        );
+        return product.category == "school_supplies";
+      });
+      this.miscProducts = allProducts.filter(product => {
+        console.log(allProducts.indexOf(allProducts[product]));
+        return product.category == "misc";
+      });
     }
   }
 };

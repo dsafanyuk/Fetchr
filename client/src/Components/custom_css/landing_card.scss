@@ -31,12 +31,12 @@
   display: flex;
 }
 .card .card-img img {
-  border-radius: 2px 2px 0 0;
-  max-height: 100%;
-  max-width: 100%;
-  min-height:329px;
-  min-height:279px;
-  padding-top: 29px;
+    border-radius: 2px 2px 0 0;
+    max-height: 250px;
+    max-width: 250px;
+    min-height: 250px;
+    min-height: 250px;
+    padding-top: 29px;
   top: 50%;
   object-fit: contain;
   display: block;

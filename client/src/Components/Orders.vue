@@ -36,7 +36,6 @@ import LandingFooter from "./mini-components/LandingFooter.vue";
 import OrderSummary from "./mini-components/OrderSummary.vue";
 import browserCookies from "browser-cookies";
 import axios from "axios";
-import State from "./assets/js/shoppingCartState";
 
 const api = axios.create();
 

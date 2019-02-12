@@ -61,14 +61,30 @@ function createOrder(req, res) {
             message: `${err}`,
           });
         });
-      return orderProducts[0].order_id;
+       return orderProducts[0].order_id;
     })
-    .then((order_id) => {
+    .then((orderProducts) => {
+      let order = orderProducts
       //if successful send back order id
-      res.send({status: 'success', message: order_id}).status(200);
+      knex('users')
+        .where('user_id', request.customer_id)
+        .decrement(
+          'wallet', request.order_total)
+        .then(() => {
+          console.log(order)
+          res.send({ status: 'success', message: orderProducts }).status(200);
+        })
+        .catch((err) => {
+          console.log(err)
+
+          res.status(500).send({
+            message: `${err}`
+          })
+        })
     })
     // else send err
     .catch((err) => {
+      console.log(err)
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod

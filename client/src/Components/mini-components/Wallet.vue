@@ -2,6 +2,11 @@
   <div class="text-xs-center">
     <v-dialog v-model="show" width="500">
       <v-card>
+        <div class="text-xs-right">
+          <v-btn icon small color="gray " top @click="show = !show">
+            <v-icon>clear</v-icon>
+          </v-btn>
+        </div>
         <v-card-title
           class="headline justify-center text-xs-center font-weight-bold"
           primary-title
@@ -33,13 +38,13 @@
 <script>
 import browserCookies from "browser-cookies";
 import axios from "axios";
+import { mapGetters } from "vuex";
 
 const api = axios.create();
 
 export default {
   props: {
-    value: Boolean,
-    walletBalance: String
+    value: Function
   },
   data() {
     return {
@@ -47,6 +52,9 @@ export default {
       selectedAmount: null,
       transactionIsProcessing: false
     };
+  },
+  created: function() {
+    this.$store.dispatch("wallet/getWalletBalance");
   },
   methods: {
     selectAmount(n) {
@@ -64,9 +72,9 @@ export default {
             console.log(response.status);
             if (response.status == 200) {
               console.log("transaction successful");
+              this.$store.dispatch("wallet/getWalletBalance");
             }
             this.transactionIsProcessing = false;
-            this.$emit("updateWallet");
           })
           .catch(error => {
             if (error.response) {
@@ -84,15 +92,15 @@ export default {
     }
   },
   computed: {
+    walletBalance: function() {
+      return this.$store.getters["wallet/walletBalance"];
+    },
     show: {
       get() {
-        console.log(`GET constructor ${this.value}`);
-        return this.value;
+        return this.$store.getters["wallet/walletIsActive"];
       },
       set(value) {
-        console.log(`set constructor ${value}`);
-
-        this.$emit("input", value);
+        this.$store.commit("wallet/toggleWallet", value);
       }
     },
     validAmountChosen() {
