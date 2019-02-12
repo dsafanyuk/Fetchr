@@ -1,10 +1,9 @@
 .checkout {
-    padding-top: 3em;
-    padding-bottom: 3em;
-    padding-left: 10em;
-    padding-right: 10em;
+  padding-top: 3em;
+  padding-bottom: 3em;
+  padding-left: 10em;
+  padding-right: 10em;
 }
-
-.submitOrderButton {
-    text-align: right;
+.checkout-img{
+  max-height: 75px;
 }

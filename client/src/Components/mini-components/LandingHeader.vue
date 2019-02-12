@@ -1,26 +1,57 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="visible-xs text-xs-center" @click="showShoppingCart()">
+      <v-btn fixed light round bottom raised color="lightened" class="floating-cart navbar-toggler">
+        <span class="text--lighten-1 btn-text">Shopping Cart&nbsp;&nbsp;</span>
+        <v-icon color="white">shopping_cart</v-icon>
+      </v-btn>
+    </div>
+    <router-link to="/dashboard">
+      <img
+        src="../images/fetchr_header_logo.png"
+        height="70"
+        class="d-inline-block align-top navbar-brand"
+        align="left"
+        to="/dashboard"
+      >
+    </router-link>
+
+    <v-menu fixed left class="navbar-toggler ml-auto hidden-sm-up float-xs-right">
+      <v-btn
+        slot="activator"
+        class="navbar-toggler ml-auto hidden-sm-up float-xs-right"
+        color="primary"
+        icon
+      >
+        <v-icon>fas fa-bars</v-icon>
+      </v-btn>
+      <v-list dense class="pt-0" style="cursor: pointer">
+        <v-list-tile
+          v-for="menuItem in menu"
+          :key="menuItem.title"
+          @click="menuActions(menuItem.title)"
+        >
+          <v-list-tile-action>
+            <v-icon>{{ menuItem.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title
+              v-if="menuItem.title == 'Wallet'"
+              style="font-family:'Lucida Console', Monaco, monospace"
+              @click="menuActions(menuItem.title)"
+            >${{ walletBalance }}</v-list-tile-title>
+            <v-list-tile-title v-else>
+              <strong>{{ menuItem.title }}</strong>
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
+
     <ShoppingCart v-model="showCart"></ShoppingCart>
-    <Wallet
-      v-model="showWallet"
-      v-on:updateWallet="getWalletBalance()"
-      :walletBalance="walletBalance"
-    ></Wallet>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-      <ul class="custom_url col-md-4 navbar-nav mt-2">
-        <li class="nav-item active">
-          <router-link to="/dashboard">
-            <img
-              src="../images/fetchr_header_logo.png"
-              height="70"
-              class="d-inline-block align-top"
-              align="left"
-              to="/dashboard"
-            >
-          </router-link>
-        </li>
-      </ul>
-      <div class="col-md-4">
+    <Wallet v-model="showWallet" :walletBalance="walletBalance"></Wallet>
+    <div class="collapse navbar-collapse col-md-6 offset-md-3" id="navbarTogglerDemo03">
+      <div class="col-md-6">
         <input
           class="form-control mr-sm-2"
           size="30"
@@ -32,7 +63,7 @@
         >
       </div>
 
-      <div class="text-xs-right col-xs-1 offset-md-2">
+      <div class="text-xs-right col-xs-1 offset-md-5">
         <v-menu fixed>
           <v-btn
             v-if="!firstName"
@@ -65,7 +96,7 @@
           </v-list>
         </v-menu>
       </div>
-      <div class="text-xs-right col-xs-1" id="shopping_cart" @click="showShoppingCart()">
+      <div class="text-xs-right col-xs-1" id="shopping_cart" @click="showShoppingCart(true)">
         <v-btn fab color="#f9aa33">
           <v-icon color="white">shopping_cart</v-icon>
         </v-btn>
@@ -88,9 +119,7 @@ export default {
     name: "LandingHeader";
     return {
       firstName: browserCookies.get("first_name"),
-      showWallet: false,
       showCart: false,
-      walletBalance: "",
       menu: [
         { title: "Account", icon: "fas fa-user-alt fa-s" },
         { title: "Orders", icon: "far fa-list-alt fa-s" },
@@ -110,25 +139,20 @@ export default {
     Wallet: Wallet
   },
   created: function() {
-    this.getWalletBalance();
+    this.$store.dispatch("wallet/getWalletBalance");
+  },
+  computed: {
+    walletBalance: function() {
+      return this.$store.getters["wallet/walletBalance"];
+    }
   },
   methods: {
-    getWalletBalance: function() {
-      api
-        .get("/api/users/" + browserCookies.get("user_id") + "/wallet")
-        .then(response => {
-          this.walletBalance = response.data[0].wallet.toFixed(2);
-          browserCookies.set("wallet", this.walletBalance);
-        })
-        .catch(err => {
-          console.log(err.data);
-          this.walletBalance = "error";
-        });
-      console.log("Retrieved wallet balance");
+    showWallet: function(value) {
+      this.$store.commit("wallet/toggleWallet", value);
     },
-    showShoppingCart: function() {
-      this.$emit("showcart", "show");
-      this.showCart = true;
+
+    showShoppingCart: function(value) {
+      this.$store.commit("cart/toggleCart", value);
     },
     menuActions: function(menuItem) {
       switch (menuItem) {
@@ -141,7 +165,7 @@ export default {
           break;
         }
         case "Wallet": {
-          this.showWallet = true;
+          this.$store.commit("wallet/toggleWallet", true);
           break;
         }
         case "Logout":
@@ -166,10 +190,18 @@ export default {
 @import "../custom_css/landing.scss";
 @import "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css";
 @import "https://use.fontawesome.com/releases/v5.4.1/css/all.css";
-@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
-
 .icons_div {
   float: right;
+}
+.floating-cart {
+  display: block;
+  text-align: center;
+  left: 25%;
+  margin-right: auto;
+  z-index: 100;
+}
+.btn-txt {
+  color: #fff !important;
 }
 
 .btn_space {
