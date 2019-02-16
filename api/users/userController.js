@@ -24,6 +24,7 @@ function showUserOrders(req, res) {
   knex('orders')
     .select('*')
     .where('customer_id', req.params.user_id)
+    .orderBy('order_id', 'desc')
     .then((rows) => {
       res.send(rows);
     })
