@@ -46,7 +46,6 @@ export default {
     };
   },
   mounted: function() {
-    console.log(State.data);
     api
       .get("/api/users/" + browserCookies.get("user_id") + "/orders")
       .then(response => {

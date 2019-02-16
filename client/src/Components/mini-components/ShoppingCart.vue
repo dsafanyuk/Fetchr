@@ -17,12 +17,14 @@
             <td class="text-xs-right">
               <v-btn icon v-on:click="decQuantity(props.item)">
                 <v-icon color="primary">remove_circle</v-icon>
+
               </v-btn>
               {{ props.item.quantity }}
               <v-btn icon v-on:click="incQuantity(props.item)">
                 <v-icon color="primary">add_circle</v-icon>
               </v-btn>
             </td>
+
             <td
               class="text-xs-right"
               :colspan="2"
@@ -43,6 +45,7 @@
         </v-data-table>
         <div class="text-xs-center">
           <v-btn color="gray">Continue Shopping</v-btn>
+
           <v-btn v-on:click="checkout(false)" dark color="green">Checkout &nbsp;&nbsp;
             <v-icon>check</v-icon>
           </v-btn>

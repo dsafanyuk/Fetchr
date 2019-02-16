@@ -15,6 +15,10 @@ module.exports = {
         use: ['vue-style-loader', 'css-loader'],
       },
       {
+        test: /\.(woff|woff2|eot|ttf|svg)(\?.*$|$)/,
+        loader: 'file-loader' 
+      },
+      {
         test: /\.scss$/,
         use: ['vue-style-loader', 'css-loader', 'sass-loader'],
       },
