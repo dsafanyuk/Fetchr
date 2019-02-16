@@ -15,8 +15,7 @@
 </template>
 
 <script>
-import axios from "axios";
-const api = axios.create();
+import axios from "../../axios";
 
 export default {
   props: {
@@ -33,7 +32,7 @@ export default {
     };
   },
   mounted: function() {
-    api.get(`/api/orders/${this.productID}/summary`).then(response => {
+    axios.get(`/api/orders/${this.productID}/summary`).then(response => {
       this.products = response.data.map(product => {
         product.price = "$" + product.price.toFixed(2);
         product.value = false;

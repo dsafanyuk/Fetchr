@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const userController = require('./userController');
 const registerController = require('./registerController');
 const loginController = require('./loginController');
+const verifyToken = require('../routes/verifyToken');
 
 const router = express.Router({
   mergeParams: true,
@@ -22,61 +23,26 @@ router.post('/register', [
   check('last_name', 'Cannot have numbers').isAlpha().trim(),
 ], registerController.registerUser);
 
-router.post('/:user_id/wallet', userController.addBalance);
+router.post('/:user_id/wallet', verifyToken, userController.addBalance);
 
-router.get('/:user_id/wallet', userController.checkBalance);
+router.get('/:user_id/wallet', verifyToken, userController.checkBalance);
 
-router.post('/favorite', userController.favorite);
+router.post('/favorite', verifyToken, userController.favorite);
 
-router.post('/unfavorite', userController.unfavorite);
+router.post('/unfavorite', verifyToken, userController.unfavorite);
 
-router.get('/:user_id/favorites', userController.favorites);
+router.get('/:user_id/favorites', verifyToken, userController.favorites);
 
-router.get('/:user_id/creditCheck', userController.creditCheck);
+router.get('/:user_id/creditCheck',  verifyToken, userController.creditCheck);
 
 router.post('/login', loginController.loginUser);
 
-router.get('/login', userController.showLogin);
+router.get('/:user_id/',  verifyToken, userController.showOneUser); // eslint-disable-line no-use-before-define
 
-router.get('/:user_id/', verifyToken, userController.showOneUser); // eslint-disable-line no-use-before-define
+router.get('/:user_id/orders',  verifyToken, userController.showUserOrders);
 
-router.get('/:user_id/orders', userController.showUserOrders);
+router.patch('/:user_id',  verifyToken, userController.updateUser);
 
-router.patch('/:user_id', userController.updateUser);
-
-router.post('/', userController.createUser);
-
-
-// IMPORTANT, FORMAT OF TOKEN
-
-// Verify token
-function verifyToken(req, res, next) {
-  // Get jwt in cookies
-  const jwtCookie = req.headers.authtoken;
-
-  // Check if there is cookie
-  if (typeof jwtCookie === 'string') {
-    // Verifies secret
-    jwt.verify(jwtCookie, 'secretkey', (err, decoded) => {
-      if (!err) {
-        // if everything is good, save to request for use in other routes
-        req.token = decoded;
-        next();
-      } else {
-        return res.status(403).json({ success: false, message: 'Failed to authenticate token.' });
-      }
-
-      return 0;
-    });
-  } else {
-    // If there is no token, return an error
-    return res.status(403).send({
-      success: false,
-      message: 'No token provided.',
-    });
-  }
-
-  return 0;
-}
+router.post('/',  verifyToken, userController.createUser);
 
 module.exports = router;

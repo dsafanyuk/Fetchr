@@ -1,6 +1,5 @@
-import axios from 'axios'
+import axios from '../../axios'
 import browserCookies from 'browser-cookies'
-const api = axios.create();
 
 const state = {
     showWallet: false,
@@ -9,7 +8,7 @@ const state = {
 
 const actions = {
     getWalletBalance: (state) => {
-        api.get("/api/users/" + browserCookies.get("user_id") + "/wallet")
+        axios.get("/api/users/" + browserCookies.get("user_id") + "/wallet")
             .then(response => {
                 state.commit('setWallet', response.data[0].wallet.toFixed(2))
             })

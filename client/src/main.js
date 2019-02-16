@@ -52,14 +52,19 @@ const router = new VueRouter({
   mode: 'history',
 });
 
+// Called before every route
+router.beforeEach((to, from, next) => {
+  
+  if(store.getters["login/isLoggedIn"]) {
+    next();
+  } else if((to.path == "/login") || (to.path == "/register") || (to.path == "/")) {
+    next();
+  } else {
+    // Redirect to login page
+    next({path:'/login'});
+  }
+})
 
-if (process.env.NODE_ENV == 'production') {
-  axios.defaults.baseURL = 'http://fetchrapp.com:3000';
-} else {
-  axios.defaults.baseURL = 'http://127.0.0.1:3000';
-}
-
-axios.defaults.withCredentials = true; // force axios to have withCredentials with all requests.
 new Vue({
   el: '#app',
   template: '<App/>',

@@ -55,10 +55,8 @@ import LandingFooter from "./mini-components/LandingFooter.vue";
 import LandingCard from "./mini-components/LandingCard.vue";
 import ShoppingCart from "./mini-components/ShoppingCart.vue";
 import browserCookies from "browser-cookies";
-import axios from "axios";
+import axios from "../axios";
 import Toasted from "vue-toasted";
-
-const api = axios.create();
 
 export default {
   data() {
@@ -79,13 +77,10 @@ export default {
   },
   created: function loadProducts() {
     let loadingProductsToast = this.$toasted.show("Loading products...");
-    api
-      .get(`/api/products`, {
-        headers: {
-          user_id: browserCookies.get("user_id")
-        }
-      })
+    axios
+      .get(`/api/products`)
       .then(response => {
+        console.log(response);
         this.products = response.data;
         loadingProductsToast.text("Products loaded!").goAway(500);
       })
