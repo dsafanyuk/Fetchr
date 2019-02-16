@@ -35,11 +35,6 @@ function showUserOrders(req, res) {
     });
 }
 
-// GET /users/login
-function showLogin(req, res) {
-  res.send(`Welcome to the login page user: ${req.query.email}`);
-}
-
 // POST /user
 function createUser(req, res) {
   const request = req.body;
@@ -178,7 +173,6 @@ module.exports = {
   showUserOrders,
   createUser,
   updateUser,
-  showLogin,
   creditCheck,
   favorite,
   favorites,

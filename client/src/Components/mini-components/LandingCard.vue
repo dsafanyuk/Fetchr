@@ -58,11 +58,10 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../../axios";
 import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
 
-const api = axios.create();
 export default {
   props: {
     product: {
@@ -90,7 +89,7 @@ export default {
   },
   methods: {
     favorite: function() {
-      api
+      axios
         .post("api/users/favorite", {
           user_id: browserCookies.get("user_id"),
           product_id: this.product.product_id
@@ -116,7 +115,7 @@ export default {
         });
     },
     unfavorite: function() {
-      api
+      axios
         .post("/api/users/unfavorite", {
           user_id: browserCookies.get("user_id"),
           product_id: this.product.product_id

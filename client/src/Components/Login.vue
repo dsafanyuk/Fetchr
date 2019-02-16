@@ -54,10 +54,8 @@
   </v-app>
 </template>
 <script>
-  import axios from 'axios'
+  import axios from '../axios'
   import Toasted from 'vue-toasted';
-
-const api = axios.create();
 
   export default {
     $_veeValidate: {
@@ -86,14 +84,20 @@ const api = axios.create();
     methods: {
       loginCustomer(e) {
         if (this.cEmail && this.cPassword) {
-          api.post('api/users/login', {
+          axios.post('api/users/login', {
               email_address: this.cEmail,
               password: this.cPassword
           })
             .then((response) => {
               console.log(response.status);
               if (response.status == 200) {
-                this.$router.push('/dashboard');
+                // Change login status, returns a promise
+                this.$store.dispatch('login/login').then(response => {
+                  this.$router.push('/dashboard');
+                },
+                  error => {
+                    console.error("Login action failed");
+                  });
               }
             })
             .catch((error) => {

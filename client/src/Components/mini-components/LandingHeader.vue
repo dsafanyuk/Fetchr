@@ -109,9 +109,6 @@ import Landing from "../Landing.vue";
 import ShoppingCart from "./ShoppingCart.vue";
 import Wallet from "./Wallet";
 import browserCookies from "browser-cookies";
-import axios from "axios";
-
-const api = axios.create();
 
 export default {
   props: ["search"],
@@ -174,6 +171,7 @@ export default {
             for (let cookieName in allCookies) {
               browserCookies.erase(cookieName);
             }
+            this.$store.dispatch("login/logout");
             window.location.href = "http://127.0.0.1:8080/login";
           }
           break;

@@ -35,9 +35,7 @@ import LandingHeader from "./mini-components/LandingHeader.vue";
 import LandingFooter from "./mini-components/LandingFooter.vue";
 import OrderSummary from "./mini-components/OrderSummary.vue";
 import browserCookies from "browser-cookies";
-import axios from "axios";
-
-const api = axios.create();
+import axios from "../axios";
 
 export default {
   data() {
@@ -46,7 +44,7 @@ export default {
     };
   },
   mounted: function() {
-    api
+    axios
       .get("/api/users/" + browserCookies.get("user_id") + "/orders")
       .then(response => {
         this.orders = response.data;

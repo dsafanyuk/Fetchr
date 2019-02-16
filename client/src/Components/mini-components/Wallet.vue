@@ -37,10 +37,8 @@
 
 <script>
 import browserCookies from "browser-cookies";
-import axios from "axios";
+import axios from "../../axios";
 import { mapGetters } from "vuex";
-
-const api = axios.create();
 
 export default {
   props: {
@@ -64,7 +62,7 @@ export default {
       this.transactionIsProcessing = true;
       if (this.refillAmounts.includes(this.selectedAmount)) {
         console.log("true");
-        api
+        axios
           .post("/api/users/" + browserCookies.get("user_id") + "/wallet", {
             amount: this.selectedAmount
           })

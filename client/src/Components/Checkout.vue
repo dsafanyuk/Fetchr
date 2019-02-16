@@ -82,10 +82,8 @@
 import LandingHeader from "./mini-components/LandingHeader.vue";
 import LandingFooter from "./mini-components/LandingFooter.vue";
 import browserCookies from "browser-cookies";
-import axios from "axios";
+import axios from "../axios";
 import { mapState, mapActions, mapGetters } from "vuex";
-
-const api = axios.create();
 
 export default {
   data() {
@@ -127,7 +125,7 @@ export default {
       });
       this.$store.dispatch("wallet/getWalletBalance");
       if (this.sufficientFunds) {
-        api
+        axios
           .post("/api/orders/", {
             customer_id: browserCookies.get("user_id"),
             delivery_status: "pending",

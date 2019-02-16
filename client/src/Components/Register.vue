@@ -115,10 +115,9 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../axios";
 import Toasted from 'vue-toasted';
 
-const api = axios.create();
     export default {
         $_veeValidate: {
             validator: 'new'
@@ -187,7 +186,7 @@ const api = axios.create();
                 ) {
                     // Replace with a Validator Lib
                     if (this.cPassword === this.cRepeatPassword) {
-                        api
+                        axios
                             .post('api/users/register', {
                                 first_name: this.cFirstname,
                                 last_name: this.cLastname,
