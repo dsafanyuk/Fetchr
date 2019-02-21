@@ -361,10 +361,9 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../../../axios";
 import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
-const api = axios.create();
 const user = browserCookies.get("user_id");
 
 export default {
@@ -381,19 +380,21 @@ export default {
   },
   methods: {
     getAvailableOrders() {
-      api
+      axios
         .get("/api/courier/" + user + "/countAvailableOrder")
         .then(response => {
           this.available_orders = response.data[0][0]["count_av"];
         });
     },
     getTotalDelivered() {
-      api.get("/api/courier/" + user + "/getTotalDelivered").then(response => {
-        this.delivered_orders = response.data[0][0]["count_d"];
-      });
+      axios
+        .get("/api/courier/" + user + "/getTotalDelivered")
+        .then(response => {
+          this.delivered_orders = response.data[0][0]["count_d"];
+        });
     },
     getRevenue() {
-      api.get("/api/courier/" + user + "/getRevenue").then(response => {
+      axios.get("/api/courier/" + user + "/getRevenue").then(response => {
         this.revenue = response.data[0][0]["revenue"];
       });
     }

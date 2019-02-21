@@ -16,12 +16,10 @@ import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
 import CourierDashboard from './Components/Courier/CourierDashboard.vue';
 import Account from './Components/Account.vue'
-import axios from 'axios';
 import store from './store'
 
 import 'vuetify/dist/vuetify.min.css';
-Vue.use(VueSocketio, io('http://127.0.0.1:3000?userid=1',{autoConnect: false}), { store });
-
+Vue.use(VueSocketio, io('http://127.0.0.1:3000'), {store});
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
 Vue.use(VueToast);

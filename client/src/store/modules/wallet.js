@@ -3,7 +3,7 @@ import browserCookies from 'browser-cookies'
 
 const state = {
     showWallet: false,
-    walletBalance: null,
+    walletBalance: '',
 }
 
 const actions = {
