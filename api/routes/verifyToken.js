@@ -6,7 +6,6 @@ function verifyToken(req, res, next) {
     // Get used id from browser cookies
     const user_id = req.header('user_id');
   
-    console.log(req.header('token'));
 
     // Check if there is cookie
     if (typeof jwtCookie === 'string') {
@@ -21,7 +20,6 @@ function verifyToken(req, res, next) {
             next();
           }
           else {
-            console.log(req.token.user_id);
             return res.status(403).json({ success: false, message: 'Not authorized'});
           }
         } else {

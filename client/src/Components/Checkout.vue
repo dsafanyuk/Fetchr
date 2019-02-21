@@ -114,6 +114,7 @@ export default {
   },
   methods: {
     checkout: function(event) {
+      let socket = this.$socket;
       let router = this.$router;
       let productsWithQuantity = [];
       this.items.map(product => {
@@ -133,7 +134,7 @@ export default {
             productsWithQuantity: productsWithQuantity
           })
           .then(function(response) {
-            console.log(response.data);
+            socket.emit("ORDER_CREATED");
             //go to the confirmation page and send it the order id
             router.push("/confirmation?order=" + response.data.message);
           });
