@@ -1,25 +1,69 @@
 <template>
 <body>
   <v-app>
+    <CourierOrderSummary
+      v-if="summaryOrder.order_id"
+      :selectedOrder="summaryOrder"
+      :summaryIsActive="summaryIsActive"
+      v-model="summaryIsActive"
+      @closeDialog="summaryIsActive"
+    ></CourierOrderSummary>
     <CourierHeader></CourierHeader>
     <CourierSummaryCard class="summarycard"></CourierSummaryCard>
-    <div class="row">
-      <div class="col-lg-6">
-        <button type="button" v-on:click="getAvailableOrders">Refresh Available Orders</button>
-        <CourierAvailableOrders
-          :orders="availableOrders"
-          v-on:accepted="getAvailableOrders(); getAcceptedOrders();"
-        ></CourierAvailableOrders>
-      </div>
-      <div class="col-lg-6">
-        <button type="button" v-on:click="getAcceptedOrders">Refresh Accepted Orders</button>
-        <v-tabs height="80px" centered light icons-and-text show-arrows>
+
+    <!-- MOBILE AND TABLETS -->
+    <div class="hidden-lg-and-up row">
+      <div class="col-md-3">
+        <v-tabs height="80px" centered light show-arrows grow v-model.lazy="active">
           <v-tabs-slider color="accent"></v-tabs-slider>
-          <v-tab href="#baby1">Accepted</v-tab>
-          <v-tab href="#baby2">Delivered</v-tab>
-          <v-tab-item v-for="i in 2" :key="i" :value="'baby' + i">
-            <CourierAcceptedOrders v-if="i == 1" :orders="acceptedOrders"></CourierAcceptedOrders>
-            <CourierDeliveredOrders v-if="i == 2" :orders="deliveredOrders"></CourierDeliveredOrders>
+          <v-tab href="#baby1">Available</v-tab>
+          <v-tab href="#baby2">Accepted</v-tab>
+          <v-tab href="#baby3">Delivered</v-tab>
+          <v-tab-item v-for="i in 3" :key="i" :value="'baby' + i">
+            <CourierAvailableOrders
+              v-if="i == 1"
+              :orders="availableOrders"
+              @toggleSummary="toggleOrderSummary"
+            ></CourierAvailableOrders>
+            <CourierAcceptedOrders
+              v-if="i == 2"
+              :orders="acceptedOrders"
+              @toggleSummary="toggleOrderSummary"
+            ></CourierAcceptedOrders>
+            <CourierDeliveredOrders
+              v-if="i == 3"
+              :orders="deliveredOrders"
+              @toggleSummary="toggleOrderSummary"
+            ></CourierDeliveredOrders>
+          </v-tab-item>
+        </v-tabs>
+      </div>
+    </div>
+
+    <!-- Computers -->
+    <div class="row hidden-md-and-down">
+      <div class="col-lg-10 offset-lg-1">
+        <v-tabs height="80px" centered light show-arrows grow v-model="active" class="shadow-lg">
+          <v-tabs-slider color="accent"></v-tabs-slider>
+          <v-tab href="#baby1">Available</v-tab>
+          <v-tab href="#baby2">Accepted</v-tab>
+          <v-tab href="#baby3">Delivered</v-tab>
+          <v-tab-item v-for="i in 3" :key="i" :value="'baby' + i">
+            <CourierAvailableOrders
+              v-if="i == 1"
+              :orders="availableOrders"
+              @toggleSummary="toggleOrderSummary"
+            ></CourierAvailableOrders>
+            <CourierAcceptedOrders
+              v-if="i == 2"
+              :orders="acceptedOrders"
+              @toggleSummary="toggleOrderSummary"
+            ></CourierAcceptedOrders>
+            <CourierDeliveredOrders
+              v-if="i == 3"
+              :orders="deliveredOrders"
+              @toggleSummary="toggleOrderSummary"
+            ></CourierDeliveredOrders>
           </v-tab-item>
         </v-tabs>
       </div>
@@ -29,6 +73,7 @@
 </template>
 
 <script>
+import CourierOrderSummary from "../mini-components/Courier/CourierOrderSummary";
 import CourierHeader from "../mini-components/Courier/CourierHeader.vue";
 import CourierDeliveredOrders from "./CourierDeliveredOrders";
 import CourierSummaryCard from "../mini-components/Courier/CourierSummaryCard.vue";
@@ -37,26 +82,13 @@ import CourierAcceptedOrders from "./CourierAcceptedOrders";
 import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
 import axios from "../../axios";
-const user = browserCookies.get("user_id");
 
 export default {
   data() {
     return {
-      buildings: [
-        "Ballard",
-        "Coberly",
-        "Griffith",
-        "Dixon",
-        "Bradley",
-        "Young"
-      ],
-      blankOrder: {
-        order_id: "",
-        first_name: "",
-        building: "",
-        order_total: "",
-        time_created: ""
-      }
+      active: "Available",
+      summaryOrder: {},
+      summaryIsActive: false
     };
   },
   components: {
@@ -64,7 +96,8 @@ export default {
     CourierSummaryCard: CourierSummaryCard,
     CourierAvailableOrders: CourierAvailableOrders,
     CourierAcceptedOrders: CourierAcceptedOrders,
-    CourierDeliveredOrders: CourierDeliveredOrders
+    CourierDeliveredOrders: CourierDeliveredOrders,
+    CourierOrderSummary: CourierOrderSummary
   },
   created: function clearOrders() {
     this.$store.dispatch("courier/clearAllOrders");
@@ -86,6 +119,13 @@ export default {
     }
   },
   methods: {
+    toggleOrderSummary(value) {
+      if (value) this.summaryOrder = value;
+      else this.summaryOrder = "";
+
+      if (this.toggleSummary) this.summaryIsActive = false;
+      else this.summaryIsActive = true;
+    },
     getDeliveredOrders() {
       this.$store.dispatch("courier/getDeliveredOrders");
     },
@@ -104,6 +144,7 @@ export default {
   height: 79px !important;
 }
 .summarycard {
-  margin-top: 100px;
+  margin-top: 1%;
 }
+
 </style>

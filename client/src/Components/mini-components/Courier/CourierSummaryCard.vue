@@ -19,14 +19,13 @@
             <div class="table-detail text-right">
               <span
                 data-plugin="peity-bar"
-                data-colors="#34d3eb,#ebeff2"
                 data-width="120"
                 data-height="45"
                 style="display: none;"
               >5,3,9,6,5,9,7,3,5,2,9,7,2,1</span>
               <svg class="peity" height="45" width="120">
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="0.8571428571428571"
                   y="20"
                   width="6.857142857142858"
@@ -39,7 +38,7 @@
                   width="6.857142857142856"
                   height="15"
                 ></rect>
-                <rect fill="#34d3eb" x="18" y="0" width="6.857142857142858" height="45"></rect>
+                <rect fill="#f9aa33" x="18" y="0" width="6.857142857142858" height="45"></rect>
                 <rect
                   fill="#ebeff2"
                   x="26.571428571428573"
@@ -48,7 +47,7 @@
                   height="30"
                 ></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="35.14285714285714"
                   y="20"
                   width="6.857142857142861"
@@ -62,7 +61,7 @@
                   height="45"
                 ></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="52.285714285714285"
                   y="10"
                   width="6.857142857142861"
@@ -76,7 +75,7 @@
                   height="15"
                 ></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="69.42857142857143"
                   y="20"
                   width="6.857142857142861"
@@ -84,7 +83,7 @@
                 ></rect>
                 <rect fill="#ebeff2" x="78" y="35" width="6.857142857142861" height="10"></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="86.57142857142857"
                   y="0"
                   width="6.857142857142861"
@@ -98,7 +97,7 @@
                   height="35"
                 ></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="103.71428571428571"
                   y="35"
                   width="6.857142857142861"
@@ -119,7 +118,7 @@
     </div>
 
     <!-- Ban 2 -->
-    <div class="col-lg-4">
+    <div class="col-lg-4 hidden-md-and-down">
       <div class="card-box">
         <div class="bar-widget">
           <div class="table-box">
@@ -138,14 +137,14 @@
             <div class="table-detail text-right">
               <span
                 data-plugin="peity-bar"
-                data-colors="#34d3eb,#ebeff2"
+                data-colors="#f9aa33,#ebeff2"
                 data-width="120"
                 data-height="45"
                 style="display: none;"
               >5,3,9,6,5,9,7,3,5,2,9,7,2,1</span>
               <svg class="peity" height="45" width="120">
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="0.8571428571428571"
                   y="20"
                   width="6.857142857142858"
@@ -158,7 +157,7 @@
                   width="6.857142857142856"
                   height="15"
                 ></rect>
-                <rect fill="#34d3eb" x="18" y="0" width="6.857142857142858" height="45"></rect>
+                <rect fill="#f9aa33" x="18" y="0" width="6.857142857142858" height="45"></rect>
                 <rect
                   fill="#ebeff2"
                   x="26.571428571428573"
@@ -167,7 +166,7 @@
                   height="30"
                 ></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="35.14285714285714"
                   y="20"
                   width="6.857142857142861"
@@ -181,7 +180,7 @@
                   height="45"
                 ></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="52.285714285714285"
                   y="10"
                   width="6.857142857142861"
@@ -195,7 +194,7 @@
                   height="15"
                 ></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="69.42857142857143"
                   y="20"
                   width="6.857142857142861"
@@ -203,7 +202,7 @@
                 ></rect>
                 <rect fill="#ebeff2" x="78" y="35" width="6.857142857142861" height="10"></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="86.57142857142857"
                   y="0"
                   width="6.857142857142861"
@@ -217,7 +216,7 @@
                   height="35"
                 ></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="103.71428571428571"
                   y="35"
                   width="6.857142857142861"
@@ -252,19 +251,19 @@
               <h4 class="m-t-0 m-b-5">
                 <b>{{revenue}}</b>
               </h4>
-              <p class="text-muted m-b-0 m-t-0">Total Revenue</p>
+              <p class="text-muted m-b-0 m-t-0">Total Delivered Revenue</p>
             </div>
             <div class="table-detail text-right">
               <span
                 data-plugin="peity-bar"
-                data-colors="#34d3eb,#ebeff2"
+                data-colors="#f9aa33,#ebeff2"
                 data-width="120"
                 data-height="45"
                 style="display: none;"
               >5,3,9,6,5,9,7,3,5,2,9,7,2,1</span>
               <svg class="peity" height="45" width="120">
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="0.8571428571428571"
                   y="20"
                   width="6.857142857142858"
@@ -277,7 +276,7 @@
                   width="6.857142857142856"
                   height="15"
                 ></rect>
-                <rect fill="#34d3eb" x="18" y="0" width="6.857142857142858" height="45"></rect>
+                <rect fill="#f9aa33" x="18" y="0" width="6.857142857142858" height="45"></rect>
                 <rect
                   fill="#ebeff2"
                   x="26.571428571428573"
@@ -286,7 +285,7 @@
                   height="30"
                 ></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="35.14285714285714"
                   y="20"
                   width="6.857142857142861"
@@ -300,7 +299,7 @@
                   height="45"
                 ></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="52.285714285714285"
                   y="10"
                   width="6.857142857142861"
@@ -314,7 +313,7 @@
                   height="15"
                 ></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="69.42857142857143"
                   y="20"
                   width="6.857142857142861"
@@ -322,7 +321,7 @@
                 ></rect>
                 <rect fill="#ebeff2" x="78" y="35" width="6.857142857142861" height="10"></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="86.57142857142857"
                   y="0"
                   width="6.857142857142861"
@@ -336,7 +335,7 @@
                   height="35"
                 ></rect>
                 <rect
-                  fill="#34d3eb"
+                  fill="#f9aa33"
                   x="103.71428571428571"
                   y="35"
                   width="6.857142857142861"
@@ -367,10 +366,7 @@ import Toasted from "vue-toasted";
 const user = browserCookies.get("user_id");
 
 export default {
-  name: "CourierOrderSummary",
-  props: {
-    productID: Number
-  },
+  name: "CourierSummaryCard",
   data() {
     return {
       available_orders: 0,
