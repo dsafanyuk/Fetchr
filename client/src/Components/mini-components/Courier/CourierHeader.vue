@@ -1,174 +1,119 @@
 <template>
-  <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-      <a class="navbar-brand brand-logo" href="index.html"><img src="../../images/fetchr_header_logo.png" class="logo_img" alt="logo"/></a>
-      <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo"/></a>
+  <div>
+    <v-navigation-drawer v-model="drawer" absolute floating temporary>
+      <v-list class="pa-1" style="cursor: pointer">
+        <v-list-tile
+          v-for="menuItem in menu"
+          :key="menuItem.title"
+          @click="menuActions(menuItem.title)"
+        >
+          <v-list-tile-action>
+            <v-icon>{{ menuItem.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              <strong>{{ menuItem.title }}</strong>
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <div>
+      <v-toolbar dark color="primary">
+        <v-toolbar-side-icon class="hidden-lg-and-up" @click.stop="drawer = !drawer" large></v-toolbar-side-icon>
+        <v-spacer class="hidden-lg-and-up"></v-spacer>
+        <img
+          :src="require('../../images/fetchr_header_logo.png')"
+          style="height:65px; width:215px;"
+        >
+        <v-spacer></v-spacer>
+        <div class="hidden-md-and-down">
+          <v-menu fixed bottom left>
+            <v-btn flat slot="activator" color="white" light>
+              Hi {{firstName}} &nbsp;&nbsp;&nbsp;
+              <v-icon>fas fa-user-alt fa-s</v-icon>
+            </v-btn>
+            <v-list dense class="pt-0" style="cursor: pointer">
+              <v-list-tile
+                v-for="menuItem in menu"
+                :key="menuItem.title"
+                @click="menuActions(menuItem.title)"
+              >
+                <v-list-tile-action>
+                  <v-icon>{{ menuItem.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>
+                    <strong>{{ menuItem.title }}</strong>
+                  </v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </div>
+      </v-toolbar>
     </div>
-    <div class="navbar-menu-wrapper d-flex align-items-stretch">
-      <div class="search-field d-none d-md-block">
-        <form class="d-flex align-items-center h-100" action="#">
-          <div class="input-group">
-            <div class="input-group-prepend bg-transparent">
-                <i class="input-group-text border-0 mdi mdi-magnify"></i>
-            </div>
-            <input type="text" class="form-control bg-transparent border-0" placeholder="Search ">
-          </div>
-        </form>
-      </div>
-      <ul class="navbar-nav navbar-nav-right">
-        <li class="nav-item dropdown">
-          <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-            <i class="mdi mdi-email-outline"></i>
-            <span class="count-symbol bg-warning"></span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-            <h6 class="p-3 mb-0">Messages</h6>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                  <img src="../../images/face4.jpg" alt="image" class="profile-pic">
-              </div>
-              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Mark send you a message</h6>
-                <p class="text-gray mb-0">
-                  1 Minutes ago
-                </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                  <img src="../../images/face2.jpg" alt="image" class="profile-pic">
-              </div>
-              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a message</h6>
-                <p class="text-gray mb-0">
-                  15 Minutes ago
-                </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                  <img src="../../images/face3.jpg" alt="image" class="profile-pic">
-              </div>
-              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Profile picture updated</h6>
-                <p class="text-gray mb-0">
-                  18 Minutes ago
-                </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <h6 class="p-3 mb-0 text-center">4 new messages</h6>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-            <i class="mdi mdi-bell-outline"></i>
-            <span class="count-symbol bg-danger"></span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-            <h6 class="p-3 mb-0">Notifications</h6>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-success">
-                  <i class="mdi mdi-calendar"></i>
-                </div>
-              </div>
-              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
-                <p class="text-gray ellipsis mb-0">
-                  Just a reminder that you have an event today
-                </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-warning">
-                  <i class="mdi mdi-settings"></i>
-                </div>
-              </div>
-              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
-                <p class="text-gray ellipsis mb-0">
-                  Update dashboard
-                </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-info">
-                  <i class="mdi mdi-link-variant"></i>
-                </div>
-              </div>
-              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
-                <p class="text-gray ellipsis mb-0">
-                  New admin wow!
-                </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <h6 class="p-3 mb-0 text-center">See all notifications</h6>
-          </div>
-        </li>
-        <li class="nav-item nav-profile dropdown">
-          <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-            <div class="nav-profile-img">
-              <img src="../../images/face1.jpg" alt="image">
-              <span class="availability-status online"></span>
-            </div>
-            <div class="nav-profile-text">
-
-
-
-              <p class="mb-1 text-black">Hi Kesney</p>
-            </div>
-          </a>
-          <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-            <a class="dropdown-item" href="#">
-              <i class="mdi mdi-account mr-2 text-success"></i>
-              Account
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="mdi mdi-shopping mr-2 text-success"></i>
-              Orders
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="mdi mdi-square-inc-cash mr-2 text-success"></i>
-              Wallet
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <i class="mdi mdi-logout mr-2 text-primary"></i>
-              Signout
-            </a>
-          </div>
-        </li>
-
-
-      </ul>
-      <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-        <span class="mdi mdi-menu"></span>
-      </button>
-    </div>
-  </nav>
+  </div>
 </template>
 
 <script>
+import browserCookies from "browser-cookies";
+export default {
+  data() {
+    return {
+      drawer: false,
+      firstName: browserCookies.get("first_name"),
+      items: [
+        { title: "Home", icon: "dashboard" },
+        { title: "About", icon: "question_answer" }
+      ],
+      menu: [
+        { title: "Switch to Shopping Mode", icon: "shopping_cart " },
+        {
+          title: "Logout",
+          icon: "fas fa-sign-out-alt fa-s"
+        }
+      ]
+    };
+  },
+  methods: {
+    showWallet: function(value) {
+      this.$store.commit("wallet/toggleWallet", value);
+    },
 
+    showShoppingCart: function(value) {
+      this.$store.commit("cart/toggleCart", value);
+    },
+    menuActions: function(menuItem) {
+      switch (menuItem) {
+        case "Switch to Shopping Mode": {
+          this.$router.push("/dashboard");
+          break;
+        }
+        case "Logout":
+          {
+            let allCookies = browserCookies.all();
+            for (let cookieName in allCookies) {
+              browserCookies.erase(cookieName);
+            }
+            this.$store.dispatch("login/logout");
+            window.location.href = "http://127.0.0.1:8080/login";
+          }
+          break;
+      }
+    }
+  }
+};
 </script>
 
 <style scoped="true">
-@import "../../assets/courier/css/materialdesignicons.css";
+/* @import "../../assets/courier/css/materialdesignicons.css";
 @import "../../assets/courier/css/vendor.bundle.base.css";
 @import "../../assets/courier/css/style.css";
-.logo_img{ height: 55px !important}
-.d-flex>* {
-flex: none !important;
+.logo_img {
+  height: 55px !important;
 }
+.d-flex > * {
+  flex: none !important;
+} */
 </style>
