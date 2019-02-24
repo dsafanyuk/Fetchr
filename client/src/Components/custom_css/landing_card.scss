@@ -1,3 +1,8 @@
+@keyframes shakeNbake{
+  0% { transform: translateX(0px);}
+  50% { transform: translateX(6px);}
+  100% { transform: translateX(0px);}
+}
 .btn_container {
   height: 75px;
 }
@@ -35,6 +40,9 @@
     max-height: 250px;
     max-width: 250px;
     min-height: 250px;
+    animation-name: shakeNbake;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
     min-height: 250px;
     padding-top: 29px;
   top: 50%;
