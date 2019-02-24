@@ -29,7 +29,7 @@
                   :selected="active" 
                   placeholder="$" 
                   v-model="selectedAmount" 
-                  class="otherAmount">
+                  class="otherAmount blurin">
                 <v-chip v-else slot-scope="{ active }" :selected="active" @click="customAmount">other</v-chip>
               </v-item>
             </v-item-group>
@@ -139,6 +139,11 @@
   </script>
   
   <style scoped>
+    .blurin {
+      animation-name: blurin;
+      animation-duration: .4s;
+      animation-fill-mode: forwards;
+    }
     .otherAmount {
       border-style: solid;
       display: inline-block;
@@ -149,6 +154,10 @@
       height: 32px;
       border-color: #e0e0e0;
       outline: none;
+  }
+  @keyframes blurin {
+    0% { opacity: 0;}
+    100% { opacity: 1;}
   }
   </style>
   
