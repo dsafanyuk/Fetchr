@@ -44,7 +44,7 @@
           </template>
         </v-data-table>
         <div class="text-xs-center">
-          <v-btn color="gray">Continue Shopping</v-btn>
+          <v-btn @click="show = !show" color="gray">Continue Shopping</v-btn>
 
           <v-btn v-on:click="checkout(false)" dark color="green">Checkout &nbsp;&nbsp;
             <v-icon>check</v-icon>
