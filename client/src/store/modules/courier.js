@@ -1,7 +1,6 @@
 const browserCookies = require('browser-cookies')
 const user = browserCookies.get("user_id");
 import axios from '../../axios'
-
 let blankOrder = {
     order_id: "",
     first_name: "",
@@ -118,18 +117,21 @@ const actions = {
             });
     },
     socket_updateOpenOrders: ({state, getters, commit, dispatch}) =>{
-        console.log('EVENT RECEIVED: UPDATE_OPEN_ORDERS')
-        dispatch('clearAllOrders').then(()=>{
+            dispatch('clearAllOrders').then(()=>{
             dispatch('refreshAllOrders')
         })
     },
-    socket_updateAcceptedOrders: ({ state, getters, commit, dispatch }) => {
+    socket_updateAcceptedOrders: ({ state, getters, commit, dispatch }, data) => {
+        let notifyData = data
+        commit('notification/NOTIFY_ACCEPTED', notifyData, {root:true})
         console.log('EVENT RECEIVED: UPDATE_ACCEPTED_ORDERS')
         dispatch('clearAllOrders').then(() => {
             dispatch('refreshAllOrders')
         })
     },
-    socket_updateDeliveredOrders: ({ state, getters, commit, dispatch }) => {
+    socket_updateDeliveredOrders: ({ state, getters, commit, dispatch }, data) => {
+        let notifyData = data
+        commit('notification/NOTIFY_DELIVERED', notifyData, {root:true})
         console.log('EVENT RECEIVED: UPDATE_DELIVERED_ORDERS')
         dispatch('clearAllOrders').then(() => {
             dispatch('refreshAllOrders')

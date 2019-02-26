@@ -27,11 +27,9 @@ const mutations = {
     },
     loginSuccess(state) {
     state.isLoggedIn = true;
-    console.log("login status changed to true");
     state.pending = false;
     },
     logoutSuccess(state) {
-    console.log("login status changed to false");
     state.isLoggedIn = false;
     },
 }

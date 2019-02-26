@@ -124,7 +124,6 @@ export default {
           if (response.status == 200) {
             this.isFavorite = "false";
             this.product.is_favorite = "false";
-            console.log(`After unfavoriting, isFavorite = ${this.isFavorite}`);
             this.$toasted.success("Removed from favorites!").goAway(1000);
           }
         })

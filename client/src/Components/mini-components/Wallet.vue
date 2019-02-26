@@ -99,9 +99,7 @@
               amount: this.selectedAmount
             })
             .then(response => {
-              console.log(response.status);
               if (response.status == 200) {
-                console.log("transaction successful");
                 this.$store.dispatch("wallet/getWalletBalance");
               }
               this.transactionIsProcessing = false;
