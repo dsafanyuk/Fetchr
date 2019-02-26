@@ -197,7 +197,6 @@ import Toasted from 'vue-toasted';
                             })
                             .then((response) => {
                                 if (response.status == 200) {
-                                    console.log('logged in');
                                     this.$router.push('/login');
                                 }
                             })
@@ -219,9 +218,6 @@ import Toasted from 'vue-toasted';
                                 }
                             });
 
-                        console.log('Send HTTP Request to the API ');
-                    } else {
-                        console.log(' Password not equal');
                     }
                 } else {
                     this.$validator.validateAll();

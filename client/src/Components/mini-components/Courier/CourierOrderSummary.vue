@@ -101,7 +101,10 @@ export default {
                 position: "top-center",
                 duration: 5000
               });
-              this.$socket.emit("ORDER_ACCEPTED");
+              this.$socket.emit("ORDER_ACCEPTED", {
+                user: this.order.user_id,
+                order: this.order.order_id
+              });
             } else {
               this.$toasted.error(
                 "Oops! This order has already been accepted. :(",
@@ -133,7 +136,10 @@ export default {
               position: "top-center",
               duration: 5000
             });
-            this.$socket.emit("ORDER_DELIVERED");
+            this.$socket.emit("ORDER_DELIVERED", {
+              user: this.order.user_id,
+              order: this.order.order_id
+            });
           } else {
             this.$toasted.error("Oops! :(", {
               position: "top-center",

@@ -6,6 +6,7 @@ const moment = require('moment');
 function availableOrders(req, res) {
   knex('orders').innerJoin('users', 'orders.customer_id', 'users.user_id')
     .select(
+      'user_id',
       'order_id',
       'first_name',
       'room_num',
@@ -33,6 +34,7 @@ function availableOrders(req, res) {
 function acceptedOrders(req, res) {
   knex('orders').innerJoin('users', 'orders.customer_id', 'users.user_id')
     .select(
+      'user_id',
       'order_id',
       'first_name',
       'room_num',
@@ -61,6 +63,7 @@ function acceptedOrders(req, res) {
 function deliveredOrders(req, res) {
   knex('orders').innerJoin('users', 'orders.customer_id', 'users.user_id')
     .select(
+      'user_id',
       'order_id',
       'first_name',
       'room_num',
