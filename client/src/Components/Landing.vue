@@ -80,23 +80,16 @@ export default {
     axios
       .get(`/api/products`)
       .then(response => {
-        console.log(response);
         this.products = response.data;
         loadingProductsToast.text("Products loaded!").goAway(500);
+        this.sortProducts();
       })
       .catch(error => {
         if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message);
+          console.log(error);
+          loadingProductsToast.goAway();
+          this.$toasted.error("Something went wrong");
         }
-        loadingProductsToast.goAway();
-        this.$toasted.error("Something went wrong");
       });
   },
   computed: {
@@ -168,7 +161,6 @@ export default {
         return product.category == "personal";
       });
       this.electronicsProducts = allProducts.filter(product => {
-        console.log(allProducts.indexOf(allProducts[product]));
         return product.category == "electronics";
       });
       this.school_suppliesProducts = allProducts.filter(product => {
@@ -179,7 +171,6 @@ export default {
         return product.category == "school_supplies";
       });
       this.miscProducts = allProducts.filter(product => {
-        console.log(allProducts.indexOf(allProducts[product]));
         return product.category == "misc";
       });
     }
