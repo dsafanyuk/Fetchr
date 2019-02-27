@@ -97,9 +97,12 @@
         </v-menu>
       </div>
       <div class="text-xs-right col-xs-1" id="shopping_cart" @click="showShoppingCart(true)">
-        <v-btn fab color="#f9aa33">
-          <v-icon color="white">shopping_cart</v-icon>
-        </v-btn>
+        <v-badge color="red" right overlap>
+          <span slot="badge" v-if="numOfItemsInCart>0">{{numOfItemsInCart}}</span>
+          <v-btn fab color="#f9aa33" icon class="ma-0">
+            <v-icon medium color="white">shopping_cart</v-icon>
+          </v-btn>
+        </v-badge>
       </div>
     </div>
   </nav>
@@ -141,6 +144,9 @@ export default {
   computed: {
     walletBalance: function() {
       return this.$store.getters["wallet/walletBalance"];
+    },
+    numOfItemsInCart: function() {
+      return this.$store.getters["cart/totalCartItems"];
     }
   },
   methods: {
