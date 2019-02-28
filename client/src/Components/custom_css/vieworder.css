@@ -1,0 +1,19 @@
+.checkout {
+    padding-top: 3em;
+    padding-bottom: 3em;
+    padding-left: 10em;
+    padding-right: 10em;
+  }
+.checkout-img{
+    max-height: 75px;
+    margin: 10px;
+}
+.courierInfoHeader{
+    text-align: center;
+}
+.courierInfo{
+    padding:15px 0;
+}
+.courierInfo div {
+    margin-bottom: 20px;
+}
