@@ -12,6 +12,7 @@ import Login from './Components/Login.vue';
 import Register from './Components/Register.vue';
 import Dashboard from './Components/Landing.vue';
 import Orders from './Components/Orders.vue';
+import ViewOrder from './Components/ViewOrder.vue';
 import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
 import CourierDashboard from './Components/Courier/CourierDashboard.vue';
@@ -38,6 +39,7 @@ const routes = [
   {path: '/login', component: Login},
   {path: '/register', component: Register},
   {path: '/orders', component: Orders},
+  {path: '/vieworder', component: ViewOrder},
   {path: '/confirmation', component: Confirmation},
   {path: '/checkout', component: Checkout},
   {path: '/courier', component : CourierDashboard},
