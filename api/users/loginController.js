@@ -23,7 +23,6 @@ function loginUser(req, res) {
 
       // Creates token and send it as a response
       if (passwordIsCorrect) {
-        console.log('password correct');
         // The payload
         user = {
           user_id: `${users[0].user_id}`,
@@ -33,10 +32,8 @@ function loginUser(req, res) {
         // Create jwt, expires in 1 hour
         jwt.sign({ user }, 'secretkey', (err, token) => {
           if (err) {
-            console.log('error in login');
             res.status(500).send(err);
           } else {
-            console.log('creating cookies..')
             Object.keys(users[0]).forEach((userDetail)=>{
               if(userDetail !== 'password') {
                 let userValue = `${users[0][userDetail]}`;

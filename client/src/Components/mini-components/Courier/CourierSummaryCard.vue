@@ -119,7 +119,7 @@
     </div>
 
     <!-- Ban 2 -->
-    <div class="col-lg-4">
+    <div class="col-lg-4 hidden-md-and-down">
       <div class="card-box">
         <div class="bar-widget">
           <div class="table-box">

@@ -61,7 +61,7 @@ import axios from "../../../../axios.js";
 export default {
   data() {
     return {
-      status: null,
+      status: "",
       items: [],
       courierInfo: {},
       total: 0.0

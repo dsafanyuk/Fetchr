@@ -5,6 +5,7 @@ import cart from './modules/cart'
 import wallet from './modules/wallet'
 import courier from './modules/courier'
 import login from './modules/login'
+import notification from './modules/notification'
 
 Vue.use(Vuex)
 
@@ -27,6 +28,7 @@ export default new Vuex.Store({
         courier,
         wallet,
         login,
+        notification,
     },
     strict: debug,
 });
