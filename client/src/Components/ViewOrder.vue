@@ -4,7 +4,12 @@
       <div class="checkout">
           <v-layout row>
               <v-flex md7>
-                <h3>Order {{this.$route.query.order}}</h3>
+                <div class="orderHeader">
+                    <h3>Order {{this.$route.query.order}}</h3>
+                    <div>
+                        <h4>Status: </h4><h5>{{status}}</h5>
+                    </div>
+                </div>
                 <v-data-table
                 :items="items"
                 hide-headers
@@ -24,13 +29,13 @@
                     <td class="text-xs-right" :colspan="2">
                     <strong>Total</strong>
                     </td>
-                    <td class="text-xs-left" :colspan="4">${{total}}</td>
+                    <td class="text-xs-left" :colspan="4">${{total.toFixed(2)}}</td>
                 </template>
             </v-data-table>
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex md4>
-              <h3 class="courierInfoHeader">Courier Information</h3>
+          <v-flex md4 v-if="courierInfo">
+                <h3 class="courierInfoHeader">Courier Information</h3>
                 <v-card class="text-xs-center courierInfo">
                     <div>
                         <span>{{courierInfo.first_name}} {{courierInfo.last_name}}</span>
@@ -41,14 +46,15 @@
                     <div>
                         <span>Delivered Orders: {{courierInfo.delivered}}</span>
                     </div>
+                    <v-divider></v-divider>
                     <v-btn
                         type="submit"
                         color="success"
                         class="chatButton"
                     >Chat with me!</v-btn>
-                    <span></span>
                 </v-card>
             </v-flex>
+            <div v-else></div>
         </v-layout>
       </div>
       <LandingFooter></LandingFooter>
@@ -64,6 +70,7 @@
   export default {
     data() {
       return {
+          status: null,
           items: [],
           courierInfo: {},
           total: 0.0,
@@ -73,7 +80,8 @@
             axios
                 .get(`/api/orders/${this.$route.query.order}/summary`)
                 .then((response) => {
-                    this.items = response.data;
+                    this.items = response.data.productList;
+                    this.status = response.data.delivery_status[0].delivery_status;
                     this.items.forEach(item => {
                         item.item_total = item.price * item.quantity;
                         this.total += item.item_total;
@@ -82,8 +90,13 @@
             axios
                 .get(`/api/courier/${this.$route.query.order}/courierInfo`)
                 .then((response) => {
-                    this.courierInfo = response.data[0][0];
-                    this.courierInfo.phone_number = this.fixNumber(this.courierInfo.phone_number);
+                    console.log(response)
+                    if (response.data[0].length == 0) {
+                        this.courierInfo = false;
+                    } else {
+                        this.courierInfo = response.data[0][0];
+                        this.courierInfo.phone_number = this.fixNumber(this.courierInfo.phone_number);
+                    }
                 });
     },
     methods: {
