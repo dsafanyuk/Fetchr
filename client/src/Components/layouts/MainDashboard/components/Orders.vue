@@ -19,7 +19,7 @@
             <td>{{order.delivery_status}}</td>
             <td>${{order.order_total.toFixed(2)}}</td>
             <td>
-              <OrderSummary :productID="order.order_id"></OrderSummary>
+                <button @click="viewOrder(order.order_id)" class="btn btn-outline-dark my-2 my-sm-0" type="button">View</button>
             </td>
           </tr>
         </tbody>
@@ -50,6 +50,9 @@ export default {
     OrderSummary: OrderSummary
   },
   methods: {
+    viewOrder: function(order_id) {
+      this.$router.push("/view?order=" + order_id);
+    },
     fixDate: function(date) {
       date = new Date(date);
       let months = [

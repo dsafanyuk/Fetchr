@@ -15,6 +15,7 @@ import Dashboard from './Components/layouts/MainDashboard/components/Landing.vue
 import Orders from './Components/layouts/MainDashboard/components/Orders.vue';
 import Checkout from './Components/layouts/MainDashboard/components/Checkout.vue';
 import Confirmation from './Components/layouts/MainDashboard/components/Confirmation.vue';
+import View from './Components/layouts/MainDashboard/components/ViewOrder.vue';
 import CourierDashboard from './Components/Courier/CourierDashboard.vue';
 import Account from './Components/layouts/MainDashboard/components/Account.vue';
 import store from './store'
@@ -58,6 +59,10 @@ const routes = [
     {
       path: '/checkout',
       component: Checkout,
+    },
+    {
+      path: '/view',
+      component: View,
     }
    ]
   },
