@@ -20,7 +20,6 @@ api.interceptors.request.use((config) => {
         config.headers['user_id'] = browserCookies.get('user_id');
         config.headers['token'] = browserCookies.get('token');
     }
-    
     return config
   }, error => {
     return Promise.reject(error)

@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <LandingHeader></LandingHeader>
     <div class="checkout">
       <h3>Checkout</h3>
       <v-layout row>
@@ -74,15 +73,12 @@
         </v-flex>
       </v-layout>
     </div>
-    <LandingFooter></LandingFooter>
   </v-app>
 </template>
     
     <script>
-import LandingHeader from "./mini-components/LandingHeader.vue";
-import LandingFooter from "./mini-components/LandingFooter.vue";
 import browserCookies from "browser-cookies";
-import axios from "../axios";
+import axios from "../../../../axios";
 import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
@@ -159,13 +155,9 @@ export default {
     showWallet: function(value) {
       this.$store.commit("wallet/toggleWallet", value);
     }
-  },
-  components: {
-    LandingHeader: LandingHeader,
-    LandingFooter: LandingFooter
   }
 };
 </script>
-    <style scoped lang="css" src='./custom_css/checkout.css'>
+    <style scoped lang="css" src='../../../custom_css/checkout.css'>
 </style>
     

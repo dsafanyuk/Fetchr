@@ -1,6 +1,5 @@
 <template >
   <v-app>
-    <LandingHeader v-on:showcart="displayCart"></LandingHeader>
     <br>
     <div class="container">
       <h3 class="v-primary">
@@ -41,13 +40,10 @@
         </div>
       </div>
     </div>
-    <LandingFooter></LandingFooter>
   </v-app>
 </template>
 
 <script>
-import LandingHeader from "./mini-components/LandingHeader.vue";
-import LandingFooter from "./mini-components/LandingFooter.vue";
 import browsercookies from "browser-cookies";
 
 export default {
@@ -60,11 +56,6 @@ export default {
       emailAddress: browsercookies.get("email_address")
     };
   },
-
-  components: {
-    LandingHeader: LandingHeader,
-    LandingFooter: LandingFooter
-  }
 };
 </script>
 
