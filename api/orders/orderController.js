@@ -127,9 +127,9 @@ function showOneOrderSummary(req, res) {
       });
       knex('orders')
         .where('orders.order_id', req.params.order_id)
-        .select('delivery_status')
-        .then((delivery_status) => {
-          res.send({productList, delivery_status}).status(200)
+        .select('delivery_status', 'customer_id')
+        .then((orderInfo) => {
+          res.send({productList, orderInfo}).status(200)
         })
     })
     .catch((err) => {

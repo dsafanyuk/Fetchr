@@ -5,9 +5,9 @@
           <v-layout row>
               <v-flex md7>
                 <div class="orderHeader">
-                    <h3>Order {{this.$route.query.order}}</h3>
+                    <h3>Order: #{{this.$route.query.order}}</h3>
                     <div>
-                        <h4>Status: </h4><h5>{{status}}</h5>
+                        <h4>Status: </h4><h5 class="status">{{status}}</h5>
                     </div>
                 </div>
                 <v-data-table
@@ -80,8 +80,13 @@
             axios
                 .get(`/api/orders/${this.$route.query.order}/summary`)
                 .then((response) => {
+                    let orderInfo = response.data.orderInfo[0];
+                    if (orderInfo.customer_id != browserCookies.get('user_id')) {
+                        this.$router.push("/orders");
+                    }
                     this.items = response.data.productList;
-                    this.status = response.data.delivery_status[0].delivery_status;
+                    this.status = orderInfo.delivery_status;
+                    document.querySelector('.status').classList.add(this.status)
                     this.items.forEach(item => {
                         item.item_total = item.price * item.quantity;
                         this.total += item.item_total;
@@ -90,7 +95,6 @@
             axios
                 .get(`/api/courier/${this.$route.query.order}/courierInfo`)
                 .then((response) => {
-                    console.log(response)
                     if (response.data[0].length == 0) {
                         this.courierInfo = false;
                     } else {
