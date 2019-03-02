@@ -1,0 +1,43 @@
+.checkout {
+  padding-top: 3em;
+  padding-bottom: 3em;
+  padding-left: 10em;
+  padding-right: 10em;
+}
+.checkout-img {
+  max-height: 75px;
+  margin: 10px;
+}
+.orderHeader {
+  display: flex;
+  flex-direction: column;
+}
+.orderHeader div {
+  display: flex;
+  flex-direction: row;
+}
+.courierInfoHeader {
+  text-align: center;
+  margin: 19px 0;
+}
+.courierInfo {
+  padding: 15px 0;
+}
+.courierInfo div {
+  margin-bottom: 1.5em;
+}
+.status {
+  font-size: 1em;
+  margin: 0;
+  text-transform: uppercase;
+  padding: 0.4em;
+}
+.delivered {
+  color: green;
+}
+.pending {
+  color: #666666;
+}
+.in-progress {
+  color: rgb(249, 170, 51);
+}

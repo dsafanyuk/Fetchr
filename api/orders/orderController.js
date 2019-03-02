@@ -125,7 +125,12 @@ function showOneOrderSummary(req, res) {
       productList.forEach((product) => {
         product.price *= product.quantity; // eslint-disable-line no-param-reassign
       });
-      res.send(productList).status(200);
+      knex('orders')
+        .where('orders.order_id', req.params.order_id)
+        .select('delivery_status', 'customer_id')
+        .then((orderInfo) => {
+          res.send({productList, orderInfo}).status(200)
+        })
     })
     .catch((err) => {
       res.status(500).send({
