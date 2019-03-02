@@ -12,8 +12,9 @@ const router = express.Router({
 
 router.post('/register', [
   check('email_address', 'Not an email address').isEmail().trim(),
-  check('password', 'Password must have at least one lowercase, one uppercase, a number,  and a minimum of 8 characters')
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/, 'i').trim(),
+  check('password', 'Password must have a minimum of 8 characters').
+    isLength({min: 8})
+    .trim(),
   check('phone', 'Only digits').isMobilePhone().trim(),
   check('room_num', 'Please enter 4 digits, no more no less').isLength({
     min: 4,

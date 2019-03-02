@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <LandingHeader></LandingHeader>
     <div class="orders">
       <h3>Recent Orders</h3>
       <table class="order table-responsive-md">
@@ -26,16 +25,13 @@
         </tbody>
       </table>
     </div>
-    <LandingFooter></LandingFooter>
   </v-app>
 </template>
 
 <script>
-import LandingHeader from "./mini-components/LandingHeader.vue";
-import LandingFooter from "./mini-components/LandingFooter.vue";
-import OrderSummary from "./mini-components/OrderSummary.vue";
+import OrderSummary from "../../../mini-components/OrderSummary.vue";
 import browserCookies from "browser-cookies";
-import axios from "../axios";
+import axios from "../../../../axios";
 
 export default {
   data() {
@@ -51,8 +47,6 @@ export default {
       });
   },
   components: {
-    LandingHeader: LandingHeader,
-    LandingFooter: LandingFooter,
     OrderSummary: OrderSummary
   },
   methods: {
@@ -85,5 +79,5 @@ export default {
 };
 </script>
 
-<style scoped lang="css" src='./custom_css/orders.css'>
+<style scoped lang="css" src='../../../custom_css/orders.css'>
 </style>
