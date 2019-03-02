@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <!-- Product list -->
-    {{search}}
     <div class="category-wrapper shadow">
       <v-tabs centered light icons-and-text v-model.lazy="active" show-arrows max>
         <v-tabs-slider color="orange"></v-tabs-slider>

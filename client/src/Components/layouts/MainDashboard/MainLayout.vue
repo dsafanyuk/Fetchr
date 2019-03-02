@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <MainHeader v-model="search"></MainHeader>
-    {{search}}
     <router-view :search="search"></router-view>
     <MainFooter></MainFooter>
   </v-app>
