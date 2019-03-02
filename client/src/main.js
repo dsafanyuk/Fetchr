@@ -69,10 +69,6 @@ const routes = [
   {path: '/home', component: Home},
   {path: '/login', component: Login},
   {path: '/register', component: Register},
-  {path: '/orders', component: Orders},
-  {path: '/view', component: View},
-  {path: '/confirmation', component: Confirmation},
-  {path: '/checkout', component: Checkout},
   {path: '/courier', component : CourierDashboard},
 ];
 
