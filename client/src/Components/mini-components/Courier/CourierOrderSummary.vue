@@ -16,7 +16,7 @@
           v-on:click="acceptOrder"
         >Accept</v-btn>
         <v-btn
-          v-if="order.delivery_status == 'in progress'"
+          v-if="order.delivery_status == 'in-progress'"
           color="green"
           v-on:click="deliverOrder"
         >Deliver</v-btn>
@@ -55,7 +55,6 @@ export default {
   },
   computed: {
     order: function() {
-      console.log(this.selectedOrder);
       return this.selectedOrder;
     },
     dialog: {
@@ -74,8 +73,7 @@ export default {
           .get(`/api/orders/${this.order.order_id}/summary`)
           .then(response => {
             let prod = [];
-            console.log("hello");
-            prod = response.data.map(product => {
+            prod = response.data.productList.map(product => {
               product.price = "$" + product.price.toFixed(2);
               product.value = false;
               return product;
@@ -101,7 +99,10 @@ export default {
                 position: "top-center",
                 duration: 5000
               });
-              this.$socket.emit("ORDER_ACCEPTED");
+              this.$socket.emit("ORDER_ACCEPTED", {
+                user: this.order.user_id,
+                order: this.order.order_id
+              });
             } else {
               this.$toasted.error(
                 "Oops! This order has already been accepted. :(",
@@ -133,7 +134,10 @@ export default {
               position: "top-center",
               duration: 5000
             });
-            this.$socket.emit("ORDER_DELIVERED");
+            this.$socket.emit("ORDER_DELIVERED", {
+              user: this.order.user_id,
+              order: this.order.order_id
+            });
           } else {
             this.$toasted.error("Oops! :(", {
               position: "top-center",

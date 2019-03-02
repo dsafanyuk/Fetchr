@@ -9,18 +9,14 @@ const socketApi = {};
 socketApi.io = io;
 
 io.on('connection', function (socket) {
-    console.log('connected')
-    socket.on('disconnect',function(data){
-        console.log('disconnected')
+    socket.on('ORDER_CREATED', (data) => {
+        updateOpenOrders(data,socket)
     })
-    socket.on('ORDER_CREATED', function(client){
-        updateOpenOrders(client,socket)
+    socket.on('ORDER_ACCEPTED', (data) => {
+        updateAcceptedOrders(data,socket)
     })
-    socket.on('ORDER_ACCEPTED', function (client){
-        updateAcceptedOrders(client,socket)
-    })
-    socket.on('ORDER_DELIVERED', function (client){
-        updateDeliveredOrders(client, socket)
+    socket.on('ORDER_DELIVERED', (data) => {
+        updateDeliveredOrders(data, socket)
     })
 });
 

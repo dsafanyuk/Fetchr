@@ -89,7 +89,6 @@
               password: this.cPassword
           })
             .then((response) => {
-              console.log(response.status);
               if (response.status == 200) {
                 // Change login status, returns a promise
                 this.$store.dispatch('login/login').then(response => {
@@ -110,7 +109,6 @@
             });
         } else {
           this.$validator.validateAll();
-          console.log('at least 1 null field');
         }
       },
       goToRegister: function () {

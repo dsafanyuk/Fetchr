@@ -16,7 +16,6 @@ function verifyToken(req, res, next) {
           req.token = decoded;
 
           if(req.token.user.user_id == user_id) {
-            console.log("authorized");
             next();
           }
           else {

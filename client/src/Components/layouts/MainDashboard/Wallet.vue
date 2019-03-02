@@ -26,7 +26,12 @@
           <v-progress-linear :indeterminate="true" height="15" color="success"></v-progress-linear>
         </div>
         <div v-else class="text-xs-center">
-          <v-btn :disabled="validAmountChosen" @click="addToWallet" round color="success">Refill &nbsp; &nbsp;
+          <v-btn
+            :disabled="validAmountChosen"
+            @click="addToWallet"
+            round
+            color="success"
+          >Refill &nbsp; &nbsp;
             <v-icon>fas fa-money-bill-wave</v-icon>
           </v-btn>
         </div>
@@ -61,16 +66,12 @@ export default {
     addToWallet() {
       this.transactionIsProcessing = true;
       if (this.refillAmounts.includes(this.selectedAmount)) {
-        console.log("true");
         axios
           .post("/api/users/" + browserCookies.get("user_id") + "/wallet", {
             amount: this.selectedAmount
           })
           .then(response => {
-            console.log(response.status);
             if (response.status == 200) {
-              console.log("transaction successful");
-
               this.$store.dispatch("wallet/getWalletBalance");
             }
             this.transactionIsProcessing = false;

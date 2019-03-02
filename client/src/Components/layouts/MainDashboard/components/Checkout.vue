@@ -100,8 +100,6 @@ export default {
     },
     sufficientFunds: function() {
       if (parseFloat(this.walletBalance, 10) >= parseFloat(this.total, 10)) {
-        console.log(this.walletBalance, 10);
-        console.log(this.total);
         return true;
       } else {
         return false;
@@ -135,7 +133,6 @@ export default {
             router.push("/confirmation?order=" + response.data.message);
           });
       } else {
-        console.log("not enough money");
       }
     },
     // Remove an item from cart
