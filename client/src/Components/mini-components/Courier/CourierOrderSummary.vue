@@ -55,7 +55,6 @@ export default {
   },
   computed: {
     order: function() {
-      console.log(this.selectedOrder);
       return this.selectedOrder;
     },
     dialog: {
@@ -74,7 +73,6 @@ export default {
           .get(`/api/orders/${this.order.order_id}/summary`)
           .then(response => {
             let prod = [];
-            console.log(response.data.productList);
             prod = response.data.productList.map(product => {
               product.price = "$" + product.price.toFixed(2);
               product.value = false;
