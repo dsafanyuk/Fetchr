@@ -17,7 +17,6 @@
             <td class="text-xs-right">
               <v-btn icon v-on:click="decQuantity(props.item)">
                 <v-icon color="primary">remove_circle</v-icon>
-
               </v-btn>
               {{ props.item.quantity }}
               <v-btn icon v-on:click="incQuantity(props.item)">
@@ -46,7 +45,11 @@
         <div class="text-xs-center">
           <v-btn color="gray">Continue Shopping</v-btn>
 
-          <v-btn :disabled="isEmpty" v-on:click="checkout(false)" color="success">Checkout &nbsp;&nbsp;
+          <v-btn
+            :disabled="isEmpty"
+            v-on:click="checkout(false)"
+            color="success"
+          >Checkout &nbsp;&nbsp;
             <v-icon>check</v-icon>
           </v-btn>
         </div>
@@ -72,8 +75,7 @@ export default {
       numberOfItems: "totalCartItems"
     }),
     isEmpty() {
-      console.log("called", this.$store.getters["cart/totalCartItems"]);
-      if(this.$store.getters["cart/totalCartItems"]) {
+      if (this.$store.getters["cart/totalCartItems"]) {
         return false;
       } else {
         return true;
