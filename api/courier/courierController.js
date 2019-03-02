@@ -43,7 +43,7 @@ function acceptedOrders(req, res) {
     )
     .where({
       'courier_id': req.params.user_id,
-      'delivery_status': 'in progress'
+      'delivery_status': 'in-progress'
     })
     .then((orders) => {
       orders.forEach(order => {
@@ -116,7 +116,7 @@ function acceptOrder(req, res) {
     .whereNull('courier_id')
     .andWhere('order_id', req.body.order_id)
     .update({
-      delivery_status: 'in progress',
+      delivery_status: 'in-progress',
       courier_id: req.body.courier_id,
     })
     .then((rows) => {

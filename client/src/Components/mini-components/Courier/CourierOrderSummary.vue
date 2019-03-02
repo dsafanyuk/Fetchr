@@ -16,7 +16,7 @@
           v-on:click="acceptOrder"
         >Accept</v-btn>
         <v-btn
-          v-if="order.delivery_status == 'in progress'"
+          v-if="order.delivery_status == 'in-progress'"
           color="green"
           v-on:click="deliverOrder"
         >Deliver</v-btn>
@@ -74,8 +74,8 @@ export default {
           .get(`/api/orders/${this.order.order_id}/summary`)
           .then(response => {
             let prod = [];
-            console.log("hello");
-            prod = response.data.map(product => {
+            console.log(response.data.productList);
+            prod = response.data.productList.map(product => {
               product.price = "$" + product.price.toFixed(2);
               product.value = false;
               return product;

@@ -1,5 +1,6 @@
 import  Toasted from 'vue-toasted';
 import Vue from 'vue'
+import {router} from '../../main'
 const browserCookies = require('browser-cookies')
 const user = parseInt(browserCookies.get("user_id")); 
 Vue.use(Toasted)
@@ -15,6 +16,7 @@ const mutations = {
                     {
                         text: 'SHOW',
                         onClick: (e, toastObject) => {
+                            router.push(`/view?order=${message.order}`)
                             toastObject.goAway(0);
                         },
                     },
@@ -37,6 +39,7 @@ const mutations = {
                     {
                         text: 'SHOW',
                         onClick: (e, toastObject) => {
+                            router.push(`/view?order=${message.order}`)
                             toastObject.goAway(0);
                         },
                     },
