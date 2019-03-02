@@ -44,9 +44,9 @@
           </template>
         </v-data-table>
         <div class="text-xs-center">
-          <v-btn @click="show = !show" color="gray">Continue Shopping</v-btn>
+          <v-btn color="gray">Continue Shopping</v-btn>
 
-          <v-btn v-on:click="checkout(false)" dark color="green">Checkout &nbsp;&nbsp;
+          <v-btn :disabled="isEmpty" v-on:click="checkout(false)" color="success">Checkout &nbsp;&nbsp;
             <v-icon>check</v-icon>
           </v-btn>
         </div>
@@ -71,6 +71,14 @@ export default {
       total: "totalCartPrice",
       numberOfItems: "totalCartItems"
     }),
+    isEmpty() {
+      console.log("called", this.$store.getters["cart/totalCartItems"]);
+      if(this.$store.getters["cart/totalCartItems"]) {
+        return false;
+      } else {
+        return true;
+      }
+    },
     show: {
       get() {
         return this.$store.getters["cart/cartIsActive"];
@@ -105,5 +113,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../custom_css/ShoppingCart.scss";
+@import "../../custom_css/ShoppingCart.scss";
 </style>

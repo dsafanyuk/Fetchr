@@ -154,6 +154,22 @@ function deliverOrder(req, res) {
       console.log(err);
     });
 }
+
+function courierInfo(req, res) {
+    knex.raw(
+    `select count(*) as delivered, cid.first_name, cid.last_name, cid.phone_number
+       from (select courier_id, first_name, last_name, phone_number
+               from orders
+              inner join users on orders.courier_id = users.user_id
+              where order_id = ${req.params.order_id}) cid
+      inner join orders on orders.courier_id = cid.courier_id
+      where orders.delivery_status = 'delivered'
+      group by cid.courier_id, cid.first_name, cid.last_name, cid.phone_number`
+    )
+    .then((courierInfo) => {
+      res.send(courierInfo);
+    })
+}
 module.exports = {
   availableOrders,
   acceptedOrders,
@@ -163,4 +179,5 @@ module.exports = {
   countAvailableOrder,
   countDelivered,
   getRevenue,
+  courierInfo,
 };
