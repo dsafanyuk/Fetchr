@@ -9,6 +9,8 @@ const mutations = {
         if (message.user == user)
         {
             Vue.toasted.show(`Order #${message.order} has been accepted.`, {
+                theme: 'bubble',
+                duration: 2000,
                 action: [
                     {
                         text: 'SHOW',
@@ -29,10 +31,11 @@ const mutations = {
         if (message.user == user)
         {
             Vue.toasted.show(`Order #${message.order} has been delivered.`, {
+                theme: 'bubble',
+                duration: 2000,
                 action: [
                     {
                         text: 'SHOW',
-                        // TODO: insert route to order details
                         onClick: (e, toastObject) => {
                             toastObject.goAway(0);
                         },
