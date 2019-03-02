@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     viewOrder: function(order_id) {
-      this.$router.push("/viewOrder?order=" + order_id);
+      this.$router.push("/view?order=" + order_id);
     },
     fixDate: function(date) {
       date = new Date(date);
