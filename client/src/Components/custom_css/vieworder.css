@@ -16,17 +16,28 @@
     display: flex;
     flex-direction: row;
 }
-.orderHeader div h5{
-    text-transform: uppercase;
-    margin: 0;
-    padding: 0;
-}
 .courierInfoHeader{
     text-align: center;
+    margin: 19px 0;
 }
 .courierInfo{
-    padding:15px 0;
+    padding: 15px 0;
 }
 .courierInfo div {
-    margin-bottom: 20px;
+    margin-bottom: 1.5em;
+}
+.status{
+    font-size: 1em;
+    margin: 0;
+    text-transform: uppercase;
+    padding: .4em;
+}
+.delivered{
+    color: green;
+}
+.pending{
+    color: #666666;
+}
+.in-progress{
+    color: rgb(249, 170, 51);
 }
