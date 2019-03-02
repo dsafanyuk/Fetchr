@@ -11,13 +11,13 @@ const mutations = {
         {
             Vue.toasted.show(`Order #${message.order} has been accepted.`, {
                 theme: 'bubble',
-                duration: 2000,
+                duration: 4000,
                 action: [
                     {
+                        class: 'toast-action',
                         text: 'SHOW',
                         onClick: (e, toastObject) => {
                             router.push(`/view?order=${message.order}`)
-                            toastObject.goAway(0);
                         },
                     },
                     {
@@ -34,13 +34,12 @@ const mutations = {
         {
             Vue.toasted.show(`Order #${message.order} has been delivered.`, {
                 theme: 'bubble',
-                duration: 2000,
+                duration: 4000,
                 action: [
                     {
                         text: 'SHOW',
                         onClick: (e, toastObject) => {
                             router.push(`/view?order=${message.order}`)
-                            toastObject.goAway(0);
                         },
                     },
                     {

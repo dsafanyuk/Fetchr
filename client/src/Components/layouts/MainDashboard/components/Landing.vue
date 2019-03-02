@@ -168,7 +168,4 @@ export default {
 a {
   text-decoration: none !important;
 }
-a:hover {
-  color: #4a6572 !important;
-}
 </style>
