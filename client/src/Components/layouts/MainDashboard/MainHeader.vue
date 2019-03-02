@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="visible-xs text-xs-center" @click="showShoppingCart(true)">
+    <div class="visible-xs text-xs-center" @click="showShoppingCart()">
       <v-btn fixed light round bottom raised color="lightened" class="floating-cart navbar-toggler">
         <span class="text--lighten-1 btn-text">Shopping Cart&nbsp;&nbsp;</span>
         <v-icon color="white">shopping_cart</v-icon>
@@ -8,7 +8,7 @@
     </div>
     <router-link to="/dashboard">
       <img
-        src="../images/fetchr_header_logo.png"
+        src="../../images/fetchr_header_logo.png"
         height="70"
         class="d-inline-block align-top navbar-brand"
         align="left"
@@ -53,6 +53,7 @@
     <div class="collapse navbar-collapse col-md-6 offset-md-3" id="navbarTogglerDemo03">
       <div class="col-md-6">
         <input
+          v-if="isLanding"
           class="form-control mr-sm-2"
           size="30"
           type="search"
@@ -62,7 +63,6 @@
           @input="$emit('input', $event.target.value)"
         >
       </div>
-
       <div class="text-xs-right col-xs-1 offset-md-5">
         <v-menu fixed>
           <v-btn
@@ -97,26 +97,22 @@
         </v-menu>
       </div>
       <div class="text-xs-right col-xs-1" id="shopping_cart" @click="showShoppingCart(true)">
-        <v-badge color="red" right overlap>
-          <span slot="badge" v-if="numOfItemsInCart>0">{{numOfItemsInCart}}</span>
-          <v-btn fab color="#f9aa33" icon class="ma-0">
-            <v-icon medium color="white">shopping_cart</v-icon>
-          </v-btn>
-        </v-badge>
+        <v-btn fab color="#f9aa33">
+          <v-icon color="white">shopping_cart</v-icon>
+        </v-btn>
       </div>
     </div>
   </nav>
 </template>
 <script>
-import Landing from "../Landing.vue";
 import ShoppingCart from "./ShoppingCart.vue";
-import Wallet from "./Wallet";
+import Wallet from "./Wallet.vue";
 import browserCookies from "browser-cookies";
 
 export default {
   props: ["search"],
   data() {
-    name: "LandingHeader";
+    name: "MainHeader";
     return {
       firstName: browserCookies.get("first_name"),
       showCart: false,
@@ -145,8 +141,8 @@ export default {
     walletBalance: function() {
       return this.$store.getters["wallet/walletBalance"];
     },
-    numOfItemsInCart: function() {
-      return this.$store.getters["cart/totalCartItems"];
+    isLanding: function() {
+      return this.$route.path == "/dashboard";
     }
   },
   methods: {
@@ -191,7 +187,7 @@ export default {
 </script>
 
 <style lang='css'>
-@import "../custom_css/landing.scss";
+@import "../../custom_css/landing.scss";
 @import "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css";
 @import "https://use.fontawesome.com/releases/v5.4.1/css/all.css";
 .icons_div {

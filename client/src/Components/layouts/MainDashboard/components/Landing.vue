@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <LandingHeader v-on:showcart="displayCart" v-model="search_input"></LandingHeader>
-    <ShoppingCart v-if="seen"></ShoppingCart>
+    <!-- Product list -->
+    {{search}}
     <div class="category-wrapper shadow">
       <v-tabs centered light icons-and-text v-model.lazy="active" show-arrows max>
         <v-tabs-slider color="orange"></v-tabs-slider>
@@ -44,28 +44,23 @@
         ></LandingCard>
       </div>
     </div>
-
-    <LandingFooter></LandingFooter>
   </v-app>
 </template>
 
 <script>
-import LandingHeader from "./mini-components/LandingHeader.vue";
-import LandingFooter from "./mini-components/LandingFooter.vue";
-import LandingCard from "./mini-components/LandingCard.vue";
-import ShoppingCart from "./mini-components/ShoppingCart.vue";
+import LandingCard from "../../../mini-components/LandingCard.vue";
+import ShoppingCart from "../ShoppingCart.vue";
 import browserCookies from "browser-cookies";
-import axios from "../axios";
+import axios from "../../../../axios";
 import Toasted from "vue-toasted";
 
 export default {
+  props: ["search"],
   data() {
     return {
       active: "Popular",
-      seen: false,
       products: [],
       interval: null,
-      search_input: "",
       snacksProducts: [],
       drinksProducts: [],
       personalProducts: [],
@@ -75,41 +70,32 @@ export default {
       favoriteProducts: []
     };
   },
-  created: function loadProducts() {
+  mounted: function loadProducts() {
     let loadingProductsToast = this.$toasted.show("Loading products...");
     axios
       .get(`/api/products`)
       .then(response => {
-        console.log(response);
         this.products = response.data;
         loadingProductsToast.text("Products loaded!").goAway(500);
+        this.sortProducts();
       })
       .catch(error => {
         if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message);
+          console.log(error);
+          loadingProductsToast.goAway();
+          this.$toasted.error("Something went wrong");
         }
-        loadingProductsToast.goAway();
-        this.$toasted.error("Something went wrong");
       });
   },
   computed: {
     filteredProducts() {
-      if (this.search_input) {
+      if (this.search) {
         return this.products.filter(product => {
           return (
             product.product_name
               .toLowerCase()
-              .includes(this.search_input.toLowerCase()) ||
-            product.category
-              .toLowerCase()
-              .includes(this.search_input.toLowerCase())
+              .includes(this.search.toLowerCase()) ||
+            product.category.toLowerCase().includes(this.search.toLowerCase())
           );
         });
       }
@@ -131,18 +117,10 @@ export default {
     }
   },
   components: {
-    LandingHeader: LandingHeader,
-    LandingFooter: LandingFooter,
     LandingCard: LandingCard,
     ShoppingCart: ShoppingCart
   },
   methods: {
-    displayCart(show) {
-      if (this.seen) this.seen = false;
-      else {
-        this.seen = true;
-      }
-    },
     sortProducts() {
       let allProducts = this.products;
       this.snacksProducts = allProducts.filter(product => {
@@ -168,7 +146,6 @@ export default {
         return product.category == "personal";
       });
       this.electronicsProducts = allProducts.filter(product => {
-        console.log(allProducts.indexOf(allProducts[product]));
         return product.category == "electronics";
       });
       this.school_suppliesProducts = allProducts.filter(product => {
@@ -179,7 +156,6 @@ export default {
         return product.category == "school_supplies";
       });
       this.miscProducts = allProducts.filter(product => {
-        console.log(allProducts.indexOf(allProducts[product]));
         return product.category == "misc";
       });
     }
@@ -188,7 +164,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "custom_css/landing.scss";
+@import "../../../custom_css/landing.scss";
 a {
   text-decoration: none !important;
 }

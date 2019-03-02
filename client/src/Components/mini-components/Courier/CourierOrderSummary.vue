@@ -1,6 +1,5 @@
 <template>
   <v-dialog v-model="dialog" width="570">
-    <button slot="activator" class="btn btn-outline-dark my-2 my-sm-0" type="button">View</button>
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>Order Summary</v-card-title>
       <v-data-table :headers="headers" :items="products">
@@ -10,9 +9,17 @@
           <td class="text-xs-left">{{ props.item.quantity }}</td>
         </template>
       </v-data-table>
-      <div class="text-xs-center pt-2">
-        <v-btn v-if="accept" color="orange" v-on:click="acceptOrder">Accept</v-btn>
-        <v-btn v-if="deliver" color="green" v-on:click="deliverOrder">Deliver</v-btn>
+      <div class="text-xs-center pt-2" v-if="order.delivery_status">
+        <v-btn
+          v-if="order.delivery_status == 'pending'"
+          color="orange"
+          v-on:click="acceptOrder"
+        >Accept</v-btn>
+        <v-btn
+          v-if="order.delivery_status == 'in progress'"
+          color="green"
+          v-on:click="deliverOrder"
+        >Deliver</v-btn>
       </div>
     </v-card>
   </v-dialog>
@@ -26,9 +33,15 @@ import Toasted from "vue-toasted";
 export default {
   name: "CourierOrderSummary",
   props: {
-    orderID: Number,
-    accept: Boolean,
-    deliver: Boolean
+    selectedOrder: {
+      delivery_status: String,
+      first_name: String,
+      order_id: Number,
+      order_total: String,
+      room_num: String,
+      time_created: String
+    },
+    summaryIsActive: Boolean
   },
   data() {
     return {
@@ -37,17 +50,49 @@ export default {
         { text: "Total", align: "left", value: "price" },
         { text: "Quantity", align: "left", value: "quantity" }
       ],
-      products: [],
-      dialog: false
+      products: []
     };
   },
+  computed: {
+    order: function() {
+      console.log(this.selectedOrder);
+      return this.selectedOrder;
+    },
+    dialog: {
+      get() {
+        return this.summaryIsActive;
+      },
+      set(value) {
+        this.$emit("input", value);
+      }
+    }
+  },
   methods: {
+    getProducts: function() {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`/api/orders/${this.order.order_id}/summary`)
+          .then(response => {
+            let prod = [];
+            console.log("hello");
+            prod = response.data.map(product => {
+              product.price = "$" + product.price.toFixed(2);
+              product.value = false;
+              return product;
+            });
+            resolve(prod);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      });
+    },
     acceptOrder: function(event) {
       if (event) {
         axios
           .post(`/api/courier/accept`, {
             courier_id: browserCookies.get("user_id"),
-            order_id: this.orderID
+            order_id: this.order.order_id
           })
           .then(response => {
             if (response.data == "success") {
@@ -79,7 +124,7 @@ export default {
       axios
         .post(`/api/courier/deliver`, {
           courier_id: browserCookies.get("user_id"),
-          order_id: this.orderID
+          order_id: this.order.order_id
         })
         .then(response => {
           if (response.data == "success") {
@@ -104,15 +149,16 @@ export default {
         });
     }
   },
-  mounted: function() {
-    if (this.orderID != "") {
-      axios.get(`/api/orders/${this.orderID}/summary`).then(response => {
-        this.products = response.data.map(product => {
-          product.price = "$" + product.price.toFixed(2);
-          product.value = false;
-          return product;
-        });
-      });
+  watch: {
+    selectedOrder: {
+      immediate: true,
+      handler() {
+        if (this.order) {
+          this.getProducts().then(value => {
+            this.products = value;
+          });
+        }
+      }
     }
   }
 };

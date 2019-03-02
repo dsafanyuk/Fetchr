@@ -35,7 +35,7 @@ const getters = {
         return Object.values(state.cart);
     },
     totalCartItems(state) {
-        return state.cart.length;
+        return Object.keys(state.cart).length;
     },
     totalCartPrice(state) {
         var total = 0;
