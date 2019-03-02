@@ -40,6 +40,7 @@ app.use('/api', apiRouter);
 
 app.get('*', (req, res, next) => {
   const err = new Error('Page Not Found');
+  console.log(req.url)
   err.statusCode = 404;
   next(err);
 });

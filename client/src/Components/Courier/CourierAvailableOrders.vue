@@ -1,21 +1,19 @@
 <template>
   <v-card>
     <v-data-table :headers="headers" :items="orders" v-bind:pagination.sync="pagination">
-      <template slot="items" slot-scope="props" >
-        <tr @click="toggleDialog(props.item)" >
+      <template slot="items" slot-scope="props">
+        <tr @click="toggleDialog(props.item)">
           <td>{{props.item.order_id}}</td>
           <td>{{props.item.first_name}}</td>
           <td>{{props.item.room_num}}</td>
           <td>{{props.item.time_created}}</td>
         </tr>
       </template>
-
     </v-data-table>
   </v-card>
 </template>
     
 <script>
-
 export default {
   name: "CourierAvailableOrders",
   data() {
@@ -26,21 +24,21 @@ export default {
         { text: "Order #", align: "left", value: "order_id" },
         { text: "Name", align: "left", value: "first_name" },
         { text: "Room #", align: "left", value: "room_num" },
-        { text: "Delivery Status", align: "left", value: "delivery_status" }
-      ],
+        { text: "Time Created", align: "left", value: "time_created" }
+      ]
     };
   },
   props: {
     orders: Array
   },
   computed: {
-    isDialog(){
-      return this.activeDialog
+    isDialog() {
+      return this.activeDialog;
     }
   },
   methods: {
     toggleDialog(value) {
-      this.$emit("toggleSummary", value)
+      this.$emit("toggleSummary", value);
     }
   }
 };

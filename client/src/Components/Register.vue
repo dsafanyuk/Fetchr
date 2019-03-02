@@ -92,7 +92,7 @@
                             ></v-text-field>
                             <div class="alert alert-info alert-dismissable">
                               <a class="panel-close close" data-dismiss="alert">×</a>
-                              Password <strong>must have at least</strong>.<br>- 8 characters<br>- an uppercse letter<br>- a special character.
+                              Password <strong>must have at least</strong>.<br>- 8 characters
                             </div>
                         </form>
                         <div class="form-group text-center">
