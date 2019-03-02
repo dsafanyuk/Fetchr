@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <LandingHeader v-on:showcart="displayCart" v-model="search_input"></LandingHeader>
-    <ShoppingCart v-if="seen"></ShoppingCart>
+    <!-- Product list -->
+    {{search}}
     <div class="category-wrapper shadow">
       <v-tabs centered light icons-and-text v-model.lazy="active" show-arrows max>
         <v-tabs-slider color="orange"></v-tabs-slider>
@@ -44,28 +44,23 @@
         ></LandingCard>
       </div>
     </div>
-
-    <LandingFooter></LandingFooter>
   </v-app>
 </template>
 
 <script>
-import LandingHeader from "./mini-components/LandingHeader.vue";
-import LandingFooter from "./mini-components/LandingFooter.vue";
-import LandingCard from "./mini-components/LandingCard.vue";
-import ShoppingCart from "./mini-components/ShoppingCart.vue";
+import LandingCard from "../../../mini-components/LandingCard.vue";
+import ShoppingCart from "../ShoppingCart.vue";
 import browserCookies from "browser-cookies";
-import axios from "../axios";
+import axios from "../../../../axios";
 import Toasted from "vue-toasted";
 
 export default {
+  props: ["search"],
   data() {
     return {
       active: "Popular",
-      seen: false,
       products: [],
       interval: null,
-      search_input: "",
       snacksProducts: [],
       drinksProducts: [],
       personalProducts: [],
@@ -75,7 +70,7 @@ export default {
       favoriteProducts: []
     };
   },
-  created: function loadProducts() {
+  mounted: function loadProducts() {
     let loadingProductsToast = this.$toasted.show("Loading products...");
     axios
       .get(`/api/products`)
@@ -94,15 +89,13 @@ export default {
   },
   computed: {
     filteredProducts() {
-      if (this.search_input) {
+      if (this.search) {
         return this.products.filter(product => {
           return (
             product.product_name
               .toLowerCase()
-              .includes(this.search_input.toLowerCase()) ||
-            product.category
-              .toLowerCase()
-              .includes(this.search_input.toLowerCase())
+              .includes(this.search.toLowerCase()) ||
+            product.category.toLowerCase().includes(this.search.toLowerCase())
           );
         });
       }
@@ -124,18 +117,10 @@ export default {
     }
   },
   components: {
-    LandingHeader: LandingHeader,
-    LandingFooter: LandingFooter,
     LandingCard: LandingCard,
     ShoppingCart: ShoppingCart
   },
   methods: {
-    displayCart(show) {
-      if (this.seen) this.seen = false;
-      else {
-        this.seen = true;
-      }
-    },
     sortProducts() {
       let allProducts = this.products;
       this.snacksProducts = allProducts.filter(product => {
@@ -179,7 +164,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "custom_css/landing.scss";
+@import "../../../custom_css/landing.scss";
 a {
   text-decoration: none !important;
 }
