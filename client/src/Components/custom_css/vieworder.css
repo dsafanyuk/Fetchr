@@ -8,6 +8,19 @@
     max-height: 75px;
     margin: 10px;
 }
+.orderHeader{
+    display: flex;
+    flex-direction: column;
+}
+.orderHeader div{
+    display: flex;
+    flex-direction: row;
+}
+.orderHeader div h5{
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+}
 .courierInfoHeader{
     text-align: center;
 }
