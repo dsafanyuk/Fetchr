@@ -26,7 +26,7 @@
 </template>
         
 <script>
-import axios from "../../../axios";
+import axios from "../../../../axios";
 import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
 
@@ -73,7 +73,7 @@ export default {
           .get(`/api/orders/${this.order.order_id}/summary`)
           .then(response => {
             let prod = [];
-            prod = response.data.productList.map(product => {
+            prod = response.data.map(product => {
               product.price = "$" + product.price.toFixed(2);
               product.value = false;
               return product;
@@ -99,10 +99,7 @@ export default {
                 position: "top-center",
                 duration: 5000
               });
-              this.$socket.emit("ORDER_ACCEPTED", {
-                user: this.order.user_id,
-                order: this.order.order_id
-              });
+              this.$socket.emit("ORDER_ACCEPTED");
             } else {
               this.$toasted.error(
                 "Oops! This order has already been accepted. :(",
@@ -134,10 +131,7 @@ export default {
               position: "top-center",
               duration: 5000
             });
-            this.$socket.emit("ORDER_DELIVERED", {
-              user: this.order.user_id,
-              order: this.order.order_id
-            });
+            this.$socket.emit("ORDER_DELIVERED");
           } else {
             this.$toasted.error("Oops! :(", {
               position: "top-center",
