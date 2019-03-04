@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import LandingCard from "../../../mini-components/LandingCard.vue";
+import LandingCard from "./LandingCard.vue";
 import ShoppingCart from "../ShoppingCart.vue";
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";

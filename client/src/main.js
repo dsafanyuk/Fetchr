@@ -16,7 +16,7 @@ import Orders from './Components/layouts/MainDashboard/components/Orders.vue';
 import Checkout from './Components/layouts/MainDashboard/components/Checkout.vue';
 import Confirmation from './Components/layouts/MainDashboard/components/Confirmation.vue';
 import View from './Components/layouts/MainDashboard/components/ViewOrder.vue';
-import CourierDashboard from './Components/Courier/CourierDashboard.vue';
+import CourierLayout from './Components/layouts/CourierDashboard/CourierLayout.vue';
 import Account from './Components/layouts/MainDashboard/components/Account.vue';
 import store from './store'
 import 'vuetify/dist/vuetify.min.css';
@@ -38,8 +38,9 @@ Vue.use(Vuetify, {
 Vue.use(Vuex);
 /*----------------------- Routes Declaration -----------------*/
 const routes = [
-  {path: '/', component: MainLayout,
-   children: [
+  {
+    path: '/', component: MainLayout,
+    children: [
     {
       path: '/account',
       component: Account,
@@ -69,7 +70,7 @@ const routes = [
   {path: '/home', component: Home},
   {path: '/login', component: Login},
   {path: '/register', component: Register},
-  {path: '/courier', component : CourierDashboard},
+  {path: '/courier', component : CourierLayout},
 ];
 
 export const router = new VueRouter({

@@ -21,17 +21,18 @@ export default {
         { text: "Order #", align: "left", value: "order_id" },
         { text: "Name", align: "left", value: "first_name" },
         { text: "Room #", align: "left", value: "room_num" },
-        { text: "Time Delivered", align: "left", value: "time_delivered" }
-      ]
-    };
+        { text: "Time Delivered", align: "left", value: "time_delivered" },
+      ],
+     };
   },
   props: {
     orders: Array
   },
   computed: {},
   methods: {
-    toggleDialog(value) {
-      this.$emit("toggleSummary", value);
+  toggleDialog(value) {
+      console.log('emit')
+      this.$emit("toggleSummary", value)
     }
   }
 };
