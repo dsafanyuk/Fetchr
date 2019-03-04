@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import axios from "../../axios";
+import axios from "../../../../axios";
 import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
 
@@ -124,6 +124,7 @@ export default {
           if (response.status == 200) {
             this.isFavorite = "false";
             this.product.is_favorite = "false";
+            console.log(`After unfavoriting, isFavorite = ${this.isFavorite}`);
             this.$toasted.success("Removed from favorites!").goAway(1000);
           }
         })
@@ -149,7 +150,7 @@ export default {
 };
 </script>
 
-<style scoped lang="css" src="../custom_css/landing_card.scss">
+<style scoped lang="css" src="../../../custom_css/landing_card.scss">
 .btn-floating {
   background-color: #344955 !important;
 }

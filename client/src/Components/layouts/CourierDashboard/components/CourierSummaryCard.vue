@@ -119,7 +119,7 @@
     </div>
 
     <!-- Ban 2 -->
-    <div class="col-lg-4 hidden-md-and-down">
+    <div class="col-lg-4">
       <div class="card-box">
         <div class="bar-widget">
           <div class="table-box">
@@ -720,7 +720,7 @@
 </template>
 
 <script>
-import axios from "../../../axios";
+import axios from "../../../../axios";
 import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
 const user = browserCookies.get("user_id");
@@ -765,7 +765,7 @@ export default {
 </script>
 
 <style scoped="true">
-@import "../../assets/courier/css/core.css";
-@import "../../assets/courier/css/materialdesignicons.css";
-@import "../../assets/courier/css/components.css";
+@import "../../../assets/courier/css/core.css";
+@import "../../../assets/courier/css/materialdesignicons.css";
+@import "../../../assets/courier/css/components.css";
 </style>
