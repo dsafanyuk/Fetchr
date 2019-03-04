@@ -31,7 +31,6 @@ export default {
   computed: {},
   methods: {
   toggleDialog(value) {
-      console.log('emit')
       this.$emit("toggleSummary", value)
     }
   }
