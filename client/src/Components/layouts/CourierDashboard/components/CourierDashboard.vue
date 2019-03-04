@@ -1,5 +1,4 @@
 <template>
-<body>
   <v-app>
     <CourierOrderSummary
       v-if="summaryOrder.order_id"
@@ -8,7 +7,6 @@
       v-model="summaryIsActive"
       @closeDialog="summaryIsActive"
     ></CourierOrderSummary>
-    <CourierHeader></CourierHeader>
     <CourierSummaryCard class="summarycard"></CourierSummaryCard>
 
     <!-- MOBILE AND TABLETS -->
@@ -78,19 +76,17 @@
       </div>
     </div>
   </v-app>
-</body>
 </template>
 
 <script>
-import CourierOrderSummary from "../mini-components/Courier/CourierOrderSummary";
-import CourierHeader from "../mini-components/Courier/CourierHeader.vue";
+import CourierOrderSummary from "./CourierOrderSummary";
 import CourierDeliveredOrders from "./CourierDeliveredOrders";
-import CourierSummaryCard from "../mini-components/Courier/CourierSummaryCard.vue";
+import CourierSummaryCard from "./CourierSummaryCard.vue";
 import CourierAvailableOrders from "./CourierAvailableOrders";
 import CourierAcceptedOrders from "./CourierAcceptedOrders";
 import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
-import axios from "../../axios";
+import axios from "../../../../axios";
 
 export default {
   data() {
@@ -101,7 +97,6 @@ export default {
     };
   },
   components: {
-    CourierHeader: CourierHeader,
     CourierSummaryCard: CourierSummaryCard,
     CourierAvailableOrders: CourierAvailableOrders,
     CourierAcceptedOrders: CourierAcceptedOrders,

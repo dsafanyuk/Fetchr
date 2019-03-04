@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import OrderSummary from "../../../mini-components/OrderSummary.vue";
+import OrderSummary from "./OrderSummary.vue";
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";
 
