@@ -20,6 +20,19 @@
             <v-item v-for="n in refillAmounts" :key="n">
               <v-chip slot-scope="{ active }" :selected="active" @click="selectAmount(n)">${{ n }}</v-chip>
             </v-item>
+            <v-item>
+              <input
+                v-if="otherChosen"
+                autofocus
+                slot-scope="{ active }"
+                v-on:keypress="isNumber"
+                :selected="active"
+                placeholder="$"
+                v-model="selectedAmount"
+                class="otherAmount"
+              >
+              <v-chip v-else slot-scope="{ active }" :selected="active" @click="customAmount">other</v-chip>
+            </v-item>
           </v-item-group>
         </v-card-actions>
         <div v-if="transactionIsProcessing">
@@ -28,9 +41,9 @@
         <div v-else class="text-xs-center">
           <v-btn
             :disabled="validAmountChosen"
-            @click="addToWallet"
             round
             color="success"
+            @click="addToWallet"
           >Refill &nbsp; &nbsp;
             <v-icon>fas fa-money-bill-wave</v-icon>
           </v-btn>
@@ -39,11 +52,12 @@
     </v-dialog>
   </div>
 </template>
-
-<script>
+  
+  <script>
 import browserCookies from "browser-cookies";
 import axios from "../../../axios";
 import { mapGetters } from "vuex";
+import toasted from "vue-toasted";
 
 export default {
   props: {
@@ -53,19 +67,48 @@ export default {
     return {
       refillAmounts: [5, 10, 15, 25],
       selectedAmount: null,
-      transactionIsProcessing: false
+      transactionIsProcessing: false,
+      otherChosen: false
     };
   },
   created: function() {
     this.$store.dispatch("wallet/getWalletBalance");
   },
   methods: {
+    // so they cant type letters into the other amount field if we care about that kind of thing
+    // from stack overflow
+    isNumber: function(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
+    customAmount() {
+      this.selectedAmount = null;
+      this.otherChosen = true;
+      //set focus
+      setTimeout(() => {
+        document.getElementsByClassName("otherAmount")[0].focus();
+      }, 20);
+    },
     selectAmount(n) {
       this.selectedAmount = n;
+      this.otherChosen = false;
     },
     addToWallet() {
       this.transactionIsProcessing = true;
-      if (this.refillAmounts.includes(this.selectedAmount)) {
+      this.selectedAmount = parseFloat(this.selectedAmount).toFixed(2);
+      if (
+        parseFloat(this.selectedAmount) + parseFloat(this.walletBalance) <
+        1000
+      ) {
         axios
           .post("/api/users/" + browserCookies.get("user_id") + "/wallet", {
             amount: this.selectedAmount
@@ -75,19 +118,17 @@ export default {
               this.$store.dispatch("wallet/getWalletBalance");
             }
             this.transactionIsProcessing = false;
+            this.selectAmount(null);
           })
           .catch(error => {
-            if (error.response) {
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-            } else if (error.request) {
-              console.log(error.request);
-            } else {
-              // Something happened in setting up the request that triggered an Error
-              console.log("Error", error.message);
-            }
+            console.log(error);
           });
+      } else {
+        this.$toasted
+          .error("You're Too Rich! Give More To Charity pls")
+          .goAway(3000);
+        this.transactionIsProcessing = false;
+        this.selectAmount(null);
       }
     }
   },
@@ -111,3 +152,17 @@ export default {
   }
 };
 </script>
+  
+  <style scoped>
+.otherAmount {
+  border-style: solid;
+  display: inline-block;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  width: 62px;
+  height: 32px;
+  border-color: #e0e0e0;
+  outline: none;
+}
+</style>
