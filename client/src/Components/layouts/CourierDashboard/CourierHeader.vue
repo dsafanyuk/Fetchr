@@ -97,7 +97,7 @@ export default {
               browserCookies.erase(cookieName);
             }
             this.$store.dispatch("login/logout");
-            window.location.href = "http://127.0.0.1:8080/login";
+            this.$router.push("/login");
           }
           break;
       }
@@ -107,13 +107,4 @@ export default {
 </script>
 
 <style scoped="true">
-/* @import "../../assets/courier/css/materialdesignicons.css";
-@import "../../assets/courier/css/vendor.bundle.base.css";
-@import "../../assets/courier/css/style.css";
-.logo_img {
-  height: 55px !important;
-}
-.d-flex > * {
-  flex: none !important;
-} */
 </style>

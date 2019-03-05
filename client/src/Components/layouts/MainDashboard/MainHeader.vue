@@ -96,7 +96,14 @@
       </v-layout>
     </v-toolbar>
 
-    <v-tabs centered light icons-and-text v-model.lazy="active" show-arrows v-if="isLanding ">
+    <v-tabs
+      centered
+      light
+      icons-and-text
+      v-model.lazy="activeCategory"
+      show-arrows
+      v-if="isLanding "
+    >
       <v-tabs-slider color="orange"></v-tabs-slider>
       <v-tab href="#Popular">Popular
         <v-icon>fas fa-fire-alt</v-icon>
@@ -141,7 +148,6 @@ export default {
     return {
       firstName: browserCookies.get("first_name"),
       showCart: false,
-      extended: true,
       active: null,
       menu: [
         { title: "Account", icon: "fas fa-user-alt fa-s" },
@@ -176,9 +182,6 @@ export default {
     }
   },
   methods: {
-    toggleExtension: function() {
-      this.extended = !this.extended;
-    },
     showWallet: function(value) {
       this.$store.commit("wallet/toggleWallet", value);
     },
@@ -217,7 +220,7 @@ export default {
     }
   },
   watch: {
-    active: function(active) {
+    activeCategory: function(active) {
       this.$emit("selectedCategory", active);
     }
   }
