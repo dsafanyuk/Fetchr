@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <MainHeader v-model="search"></MainHeader>
-    <router-view :search="search"></router-view>
+    <MainHeader v-model="search" @selectedCategory="selectedCategory = $event"></MainHeader>
+    <router-view :search="search" :selectedCategory="selectedCategory"></router-view>
     <MainFooter></MainFooter>
   </v-app>
 </template>
@@ -13,12 +13,18 @@ import MainFooter from "./MainFooter.vue";
 export default {
   data() {
     return {
-      search: ""
+      search: "",
+      selectedCategory: "Popular"
     };
   },
   components: {
     MainHeader: MainHeader,
     MainFooter: MainFooter
+  },
+  methods: {
+    console: function(value) {
+      console.log(value);
+    }
   }
 };
 </script>

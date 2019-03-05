@@ -142,6 +142,7 @@ export default {
       firstName: browserCookies.get("first_name"),
       showCart: false,
       extended: true,
+      active: null,
       menu: [
         { title: "Account", icon: "fas fa-user-alt fa-s" },
         { title: "Orders", icon: "far fa-list-alt fa-s" },
@@ -214,6 +215,11 @@ export default {
     goToDashboard: function() {
       this.$router.push("/dashboard");
     }
+  },
+  watch: {
+    active: function(active) {
+      this.$emit("selectedCategory", active);
+    }
   }
 };
 </script>
@@ -228,9 +234,6 @@ export default {
 
 .btn_space {
   margin-right: 10px;
-}
-nav {
-  background-color: #232f34;
 }
 
 #shopping_cart {
