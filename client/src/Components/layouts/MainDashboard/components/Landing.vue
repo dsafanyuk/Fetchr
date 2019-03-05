@@ -1,16 +1,16 @@
 <template>
-  <v-app id="main-landing" class="scroll-y">
+  <v-app class="scroll-y">
     <!-- Product list -->
     <!-- <div class="category-wrapper shadow"></div> -->
-    <div class="container main-layout">
-      <div class="row">
+    <v-container>
+      <v-layout class="row">
         <LandingCard
           v-for="product in filteredProducts"
           :key="product.product_id"
           :product="product"
         ></LandingCard>
-      </div>
-    </div>
+      </v-layout>
+    </v-container>
   </v-app>
 </template>
 
@@ -22,10 +22,9 @@ import axios from "../../../../axios";
 import Toasted from "vue-toasted";
 
 export default {
-  props: ["search"],
+  props: ["search", "selectedCategory"],
   data() {
     return {
-      active: "Popular",
       products: [],
       interval: null,
       snacksProducts: [],
@@ -66,7 +65,7 @@ export default {
           );
         });
       }
-      var category = this.active
+      var category = this.selectedCategory
         .toLowerCase()
         .split(" ")
         .join("_");
