@@ -1,7 +1,6 @@
 <template>
   <v-app class="scroll-y">
     <!-- Product list -->
-    <!-- <div class="category-wrapper shadow"></div> -->
     <v-container>
       <v-layout class="row">
         <LandingCard

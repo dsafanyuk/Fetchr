@@ -20,11 +20,6 @@ export default {
   components: {
     MainHeader: MainHeader,
     MainFooter: MainFooter
-  },
-  methods: {
-    console: function(value) {
-      console.log(value);
-    }
   }
 };
 </script>
