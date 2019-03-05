@@ -1,26 +1,15 @@
 <template>
-  <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+  <div class="col-lg-3 col-md-4 col-sm-6 col-6">
     <div class="product-card">
-      <div class="card z-depth-4">
+      <div class="card z-depth-4 shadow">
+        <div class="card-content">
+          <span class="card-title text-center text-truncate heading">{{product.product_name}}</span>
+        </div>
         <div class="card-img">
-          <span
-            href="#"
-            class="btn-floating btn-large price waves-effect waves-light custom"
-          >${{product.price.toFixed(2)}}</span>
           <img :src="product.product_url" :alt="product.product_name">
         </div>
-        <div class="card-content">
-          <div class="row">
-            <div class="col s12">
-              <p>
-                <span class="card-title text-center">
-                  <span>{{product.product_name}}</span>
-                </span>
-                <br>
-              </p>
-            </div>
-          </div>
-        </div>
+        <hr>
+        <h5 class="text-center headline">${{product.price.toFixed(2)}}</h5>
         <div style="display:flex" class="btn_container">
           <div class="favorite_button">
             <v-btn
@@ -45,8 +34,15 @@
               <v-icon medium>favorite_border</v-icon>
             </v-btn>
           </div>
-          <div class="cart_button">
-            <v-btn id="cart_btn" block color="accent" v-on:click="addItem" :ripple="false">
+          <div style="display:flex" class="cart_button">
+            <v-btn
+              id="cart_btn"
+              depressed
+              block
+              color="accent"
+              v-on:click="addItem"
+              :ripple="false"
+            >
               <v-icon medium v-if="inCart">check</v-icon>
               <v-icon medium v-if="!inCart">add_shopping_cart</v-icon>
             </v-btn>
