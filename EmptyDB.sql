@@ -298,8 +298,8 @@ INSERT INTO `products` VALUES (216, 'Wallet', 33.91, 'personal', 'https://fetchr
 INSERT INTO `products` VALUES (218, 'Watch', 14.81, 'electronics', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/watch.jpg');
 INSERT INTO `products` VALUES (219, 'Water Bottle', 37.11, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/water_bottle.jpg');
 INSERT INTO `products` VALUES (220, 'White Out', 35.42, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/white_out.jpg');
-INSERT INTO `products` VALUES (222, 'Zipper', 21.87, 'personal', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/zipper.jpg')
-;/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+INSERT INTO `products` VALUES (222, 'Zipper', 21.87, 'personal', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/zipper.jpg');
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

@@ -1,4 +1,4 @@
-const {validationResult} = require('express-validator/check');
+const { validationResult } = require('express-validator/check');
 
 const bcrypt = require('bcryptjs');
 const knex = require('knex')(require('../db'));
@@ -9,7 +9,7 @@ async function registerUser(req, res) {
 
   // If errors is not empty, return error messages
   if (!errors.isEmpty()) {
-    return res.status(422).json({errors: errors.array()});
+    return res.status(422).json({ errors: errors.array() });
   }
 
   // new user with information from the request
