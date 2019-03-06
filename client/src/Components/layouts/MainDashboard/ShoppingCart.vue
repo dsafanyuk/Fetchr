@@ -14,13 +14,13 @@
         <v-data-table :items="items" hide-headers :total-items="10" hide-actions>
           <template slot="items" slot-scope="props">
             <td>{{ props.item.product_name }}</td>
-            <td class="text-xs-right">
-              <v-btn icon v-on:click="decQuantity(props.item)">
-                <v-icon color="primary">remove_circle</v-icon>
-              </v-btn>
-              {{ props.item.quantity }}
+            <td class="text-xs-center">
               <v-btn icon v-on:click="incQuantity(props.item)">
                 <v-icon color="primary">add_circle</v-icon>
+              </v-btn>
+              {{ props.item.quantity }}
+              <v-btn icon v-on:click="decQuantity(props.item)">
+                <v-icon color="primary">remove_circle</v-icon>
               </v-btn>
             </td>
 
@@ -43,7 +43,7 @@
           </template>
         </v-data-table>
         <div class="text-xs-center">
-          <v-btn color="gray">Continue Shopping</v-btn>
+          <v-btn color="gray" @click="show = !show">Continue Shopping</v-btn>
 
           <v-btn
             :disabled="isEmpty"
