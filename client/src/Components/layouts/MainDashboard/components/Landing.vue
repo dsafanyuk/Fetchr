@@ -2,13 +2,13 @@
   <v-app class="scroll-y">
     <!-- Product list -->
     <v-container>
-      <v-layout class="row">
+      <div class="row">
         <LandingCard
           v-for="product in filteredProducts"
           :key="product.product_id"
           :product="product"
         ></LandingCard>
-      </v-layout>
+      </div>
     </v-container>
   </v-app>
 </template>
