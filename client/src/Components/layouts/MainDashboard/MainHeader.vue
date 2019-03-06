@@ -148,7 +148,7 @@ export default {
     return {
       firstName: browserCookies.get("first_name"),
       showCart: false,
-      active: null,
+      activeCategory: null,
       menu: [
         { title: "Account", icon: "fas fa-user-alt fa-s" },
         { title: "Orders", icon: "far fa-list-alt fa-s" },

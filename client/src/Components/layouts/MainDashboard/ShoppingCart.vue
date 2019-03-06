@@ -43,7 +43,7 @@
           </template>
         </v-data-table>
         <div class="text-xs-center">
-          <v-btn color="gray">Continue Shopping</v-btn>
+          <v-btn color="gray" @click="show = !show">Continue Shopping</v-btn>
 
           <v-btn
             :disabled="isEmpty"
