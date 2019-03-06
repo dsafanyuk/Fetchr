@@ -228,8 +228,7 @@ export default {
 </script>
 
 <style lang='css'>
-@import "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css";
-@import "https://use.fontawesome.com/releases/v5.4.1/css/all.css";
+@import "../../custom_css/landing.scss";
 
 .btn-txt {
   color: #fff !important;

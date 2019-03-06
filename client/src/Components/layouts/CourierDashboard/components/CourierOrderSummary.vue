@@ -72,8 +72,9 @@ export default {
         axios
           .get(`/api/orders/${this.order.order_id}/summary`)
           .then(response => {
+            console.log(response.data);
             let prod = [];
-            prod = response.data.map(product => {
+            prod = response.data.productList.map(product => {
               product.price = "$" + product.price.toFixed(2);
               product.value = false;
               return product;

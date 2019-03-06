@@ -19,7 +19,11 @@
             <td>{{order.delivery_status}}</td>
             <td>${{order.order_total.toFixed(2)}}</td>
             <td>
-                <button @click="viewOrder(order.order_id)" class="btn btn-outline-dark my-2 my-sm-0" type="button">View</button>
+              <button
+                @click="viewOrder(order.order_id)"
+                class="btn btn-outline-dark my-2 my-sm-0"
+                type="button"
+              >View</button>
             </td>
           </tr>
         </tbody>
@@ -29,7 +33,6 @@
 </template>
 
 <script>
-import OrderSummary from "./OrderSummary.vue";
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";
 
@@ -45,9 +48,6 @@ export default {
       .then(response => {
         this.orders = response.data;
       });
-  },
-  components: {
-    OrderSummary: OrderSummary
   },
   methods: {
     viewOrder: function(order_id) {
