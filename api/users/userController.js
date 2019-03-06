@@ -140,33 +140,33 @@ function favorites(req, res) {
     });
 }
 // POST /users/:user_id/wallet
-function addBalance(req,res){
+function addBalance(req, res) {
   knex('users')
-  .where('user_id', req.params.user_id)
-  .increment(
-    'wallet',req.body.amount)
-  .then(()=>{
-    res.send('success').status(200)
-  })
-  .catch((err)=>{
-    res.status(500).send({
-      message: `${err}`
+    .where('user_id', req.params.user_id)
+    .increment('wallet', req.body.amount)
+    .then(() => {
+      res.send('success').status(200);
     })
-  })
+    .catch((err) => {
+      res.status(500).send({
+        message: `${err}`,
+      });
+    });
 }
 
 // GET /users/{user_id}/wallet
 function checkBalance(req, res) {
-  knex('users').select('wallet')
+  knex('users')
+    .select('wallet')
     .where('user_id', req.params.user_id)
     .then((balance) => {
-      res.send(balance).status(200)
+      res.send(balance).status(200);
     })
     .catch((err) => {
       res.status(500).send({
-        message: `${err}`
-      })
-    })
+        message: `${err}`,
+      });
+    });
 }
 module.exports = {
   showOneUser,
@@ -178,5 +178,5 @@ module.exports = {
   favorites,
   unfavorite,
   addBalance,
-  checkBalance
+  checkBalance,
 };
