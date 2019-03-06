@@ -125,7 +125,7 @@ INSERT INTO `products` VALUES (10, 'Pringles', 2.57, 'snacks', 'https://fetchrap
 INSERT INTO `products` VALUES (11, 'Oreos', 3.57, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Oreo.png');
 INSERT INTO `products` VALUES (12, 'Pretzels', 3.08, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Pretzels.png');
 INSERT INTO `products` VALUES (13, 'Cheetos', 2.70, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Cheetos.png');
-INSERT INTO `products` VALUES (14, 'Cheez-It', 1.21, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Cheez-It.jp2');
+INSERT INTO `products` VALUES (14, 'Cheez-It', 1.21, 'snacks', 'https://s3.us-east-2.amazonaws.com/fetchrapp/Product+Photos/cheeze-it.jpeg');
 INSERT INTO `products` VALUES (16, 'Snickers', 2.30, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Snickers.png');
 INSERT INTO `products` VALUES (17, 'Chex Mix', 4.35, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Chex%20Mix.png');
 INSERT INTO `products` VALUES (18, 'Popcorn', 2.46, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Popcorn.png');
