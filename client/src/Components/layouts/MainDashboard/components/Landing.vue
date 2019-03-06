@@ -1,40 +1,7 @@
 <template>
-  <v-app>
+  <v-app class="scroll-y">
     <!-- Product list -->
-    <div class="category-wrapper shadow">
-      <v-tabs centered light icons-and-text v-model.lazy="active" show-arrows max>
-        <v-tabs-slider color="orange"></v-tabs-slider>
-        <v-tab href="#Popular">Popular
-          <v-icon>fas fa-fire-alt</v-icon>
-        </v-tab>
-
-        <v-tab href="#Snacks">Snacks
-          <v-icon>fas fa-hamburger</v-icon>
-        </v-tab>
-
-        <v-tab href="#Drinks">Drinks
-          <v-icon>fas fa-mug-hot</v-icon>
-        </v-tab>
-
-        <v-tab href="#Personal">Personal
-          <v-icon>fas fa-toilet-paper</v-icon>
-        </v-tab>
-        <v-tab href="#Electronics">Electronics
-          <v-icon>fas fa-headphones-alt</v-icon>
-        </v-tab>
-        <v-tab href="#School Supplies">School Supplies
-          <v-icon>fas fa-paperclip</v-icon>
-        </v-tab>
-        <v-tab href="#Misc">Misc
-          <v-icon>fas fa-random</v-icon>
-        </v-tab>
-
-        <v-tab href="#Favorites">Favorites
-          <v-icon>fas fa-heart</v-icon>
-        </v-tab>
-      </v-tabs>
-    </div>
-    <div class="container-fluid">
+    <v-container>
       <div class="row">
         <LandingCard
           v-for="product in filteredProducts"
@@ -42,7 +9,7 @@
           :product="product"
         ></LandingCard>
       </div>
-    </div>
+    </v-container>
   </v-app>
 </template>
 
@@ -54,10 +21,9 @@ import axios from "../../../../axios";
 import Toasted from "vue-toasted";
 
 export default {
-  props: ["search"],
+  props: ["search", "selectedCategory"],
   data() {
     return {
-      active: "Popular",
       products: [],
       interval: null,
       snacksProducts: [],
@@ -98,7 +64,7 @@ export default {
           );
         });
       }
-      var category = this.active
+      var category = this.selectedCategory
         .toLowerCase()
         .split(" ")
         .join("_");

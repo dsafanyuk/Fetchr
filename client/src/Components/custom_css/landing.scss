@@ -1,107 +1,11 @@
-/* Header properties */
-.icons_div i {
-  color: #495057;
-}
-.icons_div {
-  display: -webkit-inline-box;
-}
-.icons_div li {
-  list-style-type: none;
-}
-.icons_div a {
-  padding: 2px;
-}
-
 * {
   box-sizing: border-box;
-}
-
-.card {
-  border: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0px;
-}
-
-.card h6 {
-  color: 333;
-}
-
-.categoryZone {
-  padding: 0px;
-}
-
-.filter_zone {
-  margin-top: 100px;
-}
-
-.cat_menu {
-  border-bottom: 1px solid transparent;
-  display: block;
-}
-
-.cat_menu:hover {
-  border-bottom: 1px solid #999;
-}
-
-.custom_url {
-  margin: 0;
-}
-
-.icons_div {
-  text-align: right;
-  font-size: 32px;
-}
-
-/*------*/
-ul.dropdown-cart {
-  min-width: 250px;
-}
-ul.dropdown-cart li .item {
-  display: block;
-  padding: 3px 10px;
-  margin: 3px 0;
-}
-ul.dropdown-cart li .item:hover {
-  background-color: #f3f3f3;
-}
-ul.dropdown-cart li .item:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: ' ';
-  clear: both;
-  height: 0;
-}
-
-ul.dropdown-cart li .item-left {
-  float: left;
-}
-ul.dropdown-cart li .item-left img,
-ul.dropdown-cart li .item-left span.item-info {
-  float: left;
-}
-ul.dropdown-cart li .item-left span.item-info {
-  margin-left: 10px;
-}
-ul.dropdown-cart li .item-left span.item-info span {
-  display: block;
-}
-ul.dropdown-cart li .item-right {
-  float: right;
-}
-ul.dropdown-cart li .item-right button {
-  margin-top: 14px;
 }
 
 /* Tabs */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
-.category-wrapper {
-  text-align: center;
-}
-
-*,
 *::before,
 *::after {
   margin: 0;
