@@ -1,5 +1,5 @@
 <template>
-  <div class="main-toolbar">
+  <div class="main-toolbar shadow">
     <ShoppingCart v-model="showCart"></ShoppingCart>
     <Wallet v-model="showWallet" :walletBalance="walletBalance"></Wallet>
     <v-toolbar color="primary">
