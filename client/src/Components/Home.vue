@@ -486,13 +486,10 @@
 </template>
 
 <script>
-import Navigation from "./Navigation.vue";
-
 export default {
   data() {
     return {};
-  },
-  components: { Navigation: Navigation }
+  }
 };
 </script>
 
