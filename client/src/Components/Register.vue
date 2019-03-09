@@ -4,7 +4,7 @@
             <div class="col-md-12 mx-auto register-right">
                 <div class="row register-form">
                     <div class="col-md-6 mx-auto">
-                        <img class="center_img" width="300px" height="300px" src="./images/logo.png">
+                        <img @click="goToLogin" class="center_img" width="300px" height="300px" src="./images/logo.png">
                     </div>
                     <div class="col-md-6 mx-auto">
                         <div class="form-group">
@@ -223,6 +223,9 @@ import Toasted from 'vue-toasted';
                     this.$validator.validateAll();
                 }
             },
+            goToLogin () {
+                this.$router.push('\login');
+            }
         },
     };
 </script>
