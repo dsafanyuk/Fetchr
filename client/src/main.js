@@ -4,15 +4,18 @@ import Vuetify from 'vuetify';
 import VeeValidate from 'vee-validate';
 import VueToast from 'vue-toasted';
 import VueRouter from 'vue-router';
-import VueSocketio from 'vue-socket.io-extended'
-import io from 'socket.io-client'
-import store from './store'
-import router from './router'
+import VueSocketio from 'vue-socket.io-extended';
+import io from 'socket.io-client';
+import App from './App.vue';
+import store from './store';
+import router from './router';
 import 'vuetify/dist/vuetify.min.css';
 
-Vue.use(VueSocketio, 
-        io(process.env.NODE_ENV === 'production' ? 'http://fetchrapp.com:3000'  : 'http://127.0.0.1:3000'),
-        {store});
+Vue.use(
+  VueSocketio,
+  io(process.env.NODE_ENV === 'production' ? 'http://fetchrapp.com:3000' : 'http://127.0.0.1:3000'),
+  { store },
+);
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
 Vue.use(VueToast);
