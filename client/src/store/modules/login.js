@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '../../store'
 import browserCookies from 'browser-cookies'
 const api = axios.create();
 
@@ -19,6 +20,7 @@ const actions = {
     },
     logout: (state) => {
         state.commit('logoutSuccess');
+        store.commit("cart/clearCart");
     }
 }
 const mutations = {

@@ -150,6 +150,7 @@ export default {
       showCart: false,
       activeCategory: null,
       menu: [
+        { title: "Switch To Courier", icon: "fa fa-bicycle"},
         { title: "Account", icon: "fas fa-user-alt fa-s" },
         { title: "Orders", icon: "far fa-list-alt fa-s" },
         {
@@ -191,6 +192,10 @@ export default {
     },
     menuActions: function(menuItem) {
       switch (menuItem) {
+        case "Switch To Courier": {
+          this.$router.push("/courier");
+          break;
+        }
         case "Account": {
           this.$router.push("/account");
           break;

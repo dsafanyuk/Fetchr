@@ -1,6 +1,6 @@
 import  Toasted from 'vue-toasted';
 import Vue from 'vue'
-import {router} from '../../main'
+import router from '../../router'
 const browserCookies = require('browser-cookies')
 const user = parseInt(browserCookies.get("user_id")); 
 Vue.use(Toasted)

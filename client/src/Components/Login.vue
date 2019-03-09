@@ -41,8 +41,13 @@
               <v-btn 
                 round color="cyan" dark
                 type="submit"
-                @click="loginCustomer"
-              >Login</v-btn>
+                @click="login('dashboard')"
+              >Login as Customer</v-btn>
+              <v-btn 
+                round color="cyan" dark
+                type="submit"
+                @click="login('courier')"
+              >Login as Courier</v-btn>
             </div>
             <div class="form-group text-center">
                 Don't have an account? <a v-on:click="goToRegister">Sign up here</a>
@@ -82,7 +87,7 @@
     },
 
     methods: {
-      loginCustomer(e) {
+      login(value) {
         if (this.cEmail && this.cPassword) {
           axios.post('api/users/login', {
               email_address: this.cEmail,
@@ -92,7 +97,7 @@
               if (response.status == 200) {
                 // Change login status, returns a promise
                 this.$store.dispatch('login/login').then(response => {
-                  this.$router.push('/dashboard');
+                  this.$router.push('/' + value);
                 },
                   error => {
                     console.error("Login action failed");
