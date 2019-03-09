@@ -101,6 +101,7 @@
                 },
                   error => {
                     console.error("Login action failed");
+                    this.$store.commit('login/loginFailed');
                   });
               }
             })

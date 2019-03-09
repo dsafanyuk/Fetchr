@@ -214,8 +214,11 @@ export default {
             for (let cookieName in allCookies) {
               browserCookies.erase(cookieName);
             }
-            this.$store.dispatch("login/logout");
-            this.$router.push("/login");
+            this.$store.dispatch("login/logout").then( response => {
+              this.$router.push("/login");
+            }, error => {
+              this.$store.commit("login/logoutFailed");
+            });
           }
           break;
       }
