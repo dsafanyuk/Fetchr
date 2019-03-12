@@ -6,7 +6,7 @@
           <h3>Order: #{{this.$route.query.order}}</h3>
           <div>
             <h4>Status:</h4>
-            <h5 class="status">{{status}}</h5>
+            <h5 v-bind:class="orderStatus" class="status">{{this.orderStatus}}</h5>
           </div>
         </div>
         <v-data-table
@@ -33,23 +33,23 @@
         </v-data-table>
       </v-flex>
       <v-spacer></v-spacer>
-      <v-flex md4 v-if="courierInfo">
+      <div v-if="!updatedCourierInfo"></div>
+      <v-flex md4 v-else>
         <h3 class="courierInfoHeader">Courier Information</h3>
         <v-card class="text-xs-center courierInfo">
           <div>
-            <span>{{courierInfo.first_name}} {{courierInfo.last_name}}</span>
+            <span>{{updatedCourierInfo.first_name}} {{updatedCourierInfo.last_name}}</span>
           </div>
           <div>
-            <span>{{courierInfo.phone_number}}</span>
+            <span>{{updatedCourierInfo.phone_number}}</span>
           </div>
           <div>
-            <span>Delivered Orders: {{courierInfo.delivered}}</span>
+            <span>Delivered Orders: {{updatedCourierInfo.delivered}}</span>
           </div>
           <v-divider></v-divider>
           <v-btn type="submit" color="success" class="chatButton">Chat with me!</v-btn>
         </v-card>
       </v-flex>
-      <div v-else></div>
     </v-layout>
   </div>
 </template>
@@ -61,14 +61,24 @@ import axios from "../../../../axios.js";
 export default {
   data() {
     return {
-      status: "",
       items: [],
-      courierInfo: {},
-      total: 0.0
-    };
+      total: 0.0,
+    }
+  },
+  computed: {
+    orderStatus() {
+      return this.$store.getters["orders/status"];
+    },
+    updatedCourierInfo() {
+      return this.$store.getters["orders/info"];
+    },
   },
   mounted: function() {
-    axios
+    this.getOrderSummary();
+  },
+  methods: {
+    getOrderSummary: function() {
+      axios
       .get(`/api/orders/${this.$route.query.order}/summary`)
       .then(response => {
         let orderInfo = response.data.orderInfo[0];
@@ -76,37 +86,15 @@ export default {
           this.$router.push("/orders");
         }
         this.items = response.data.productList;
-        this.status = orderInfo.delivery_status;
-        document.querySelector(".status").classList.add(this.status);
+        this.$store.commit('orders/changeStatus', orderInfo.delivery_status);
         this.items.forEach(item => {
           item.item_total = item.price * item.quantity;
           this.total += item.item_total;
         });
+        this.$store.commit('orders/changeOrder', this.$route.query.order);
+        this.$store.dispatch('orders/getInfo', this.$route.query.order, {root:true})
       });
-    axios
-      .get(`/api/courier/${this.$route.query.order}/courierInfo`)
-      .then(response => {
-        if (response.data[0].length == 0) {
-          this.courierInfo = false;
-        } else {
-          this.courierInfo = response.data[0][0];
-          this.courierInfo.phone_number = this.fixNumber(
-            this.courierInfo.phone_number
-          );
-        }
-      });
-  },
-  methods: {
-    fixNumber: function(number) {
-      return (
-        "(" +
-        number.substring(0, 3) +
-        ") " +
-        number.substring(3, 6) +
-        "-" +
-        number.substring(6)
-      );
-    }
+    },
   }
 };
 </script>
