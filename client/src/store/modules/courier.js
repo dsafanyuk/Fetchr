@@ -131,61 +131,6 @@ const actions = {
         this.$toasted.error('Something went wrong');
       });
   },
-  refreshAllOrders: ({
-    state, getters, commit, dispatch,
-  }) => {
-    dispatch('getAvailableOrders');
-    dispatch('getAcceptedOrders');
-    dispatch('getDeliveredOrders');
-  },
-  getAvailableOrders: ({ state, getters, commit }) => {
-    axios
-      .get(`/api/courier/${user}/order/`)
-      .then((response) => {
-        response.data.forEach((order) => {
-          commit('addAvailableOrder', order);
-        });
-        // Add blank 'orders' to even set data table rows to 5
-        for (let i = getters.availableOrders.length; i < 5; i++) {
-          commit('addAvailableOrder', blankOrder);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
-  getAcceptedOrders: ({ state, getters, commit }) => {
-    axios
-      .get(`/api/courier/${user}/order/accepted`)
-      .then((response) => {
-        response.data.forEach((order) => {
-          commit('addAcceptedOrder', order);
-        });
-        // Add blank 'orders' to even set data table rows to 5
-        for (let i = getters.acceptedOrders.length; i < 5; i++) {
-          commit('addAcceptedOrder', blankOrder);
-        }
-      })
-      .catch(error => console.log(error));
-  },
-  getDeliveredOrders: ({ state, getters, commit }) => {
-    axios
-      .get(`/api/courier/${user}/order/delivered`)
-      .then((response) => {
-        response.data.forEach((order) => {
-          commit('addDeliveredOrder', order);
-        });
-        // Add blank 'orders' to even set data table rows to 5
-        for (let i = getters.deliveredOrders.length; i < 5; i++) {
-          commit('addDeliveredOrder', blankDeliveredOrder);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        loadingOrdersToast.goAway();
-        this.$toasted.error('Something went wrong');
-      });
-  },
   socket_updateOpenOrders: ({
     state, getters, commit, dispatch,
   }) => {
