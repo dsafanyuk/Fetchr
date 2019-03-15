@@ -9,6 +9,9 @@
     transform: translateX(0px);
   }
 }
+@keyframes faded {
+  0% {opacity: 0;} 100% {opacity: 1;}
+}
 .btn_container {
   height: 75px;
 }
@@ -45,13 +48,15 @@
   max-height: 174px;
   max-width: 100%;
   min-height: 174px;
-  animation-name: shakeNbake;
-  animation-duration: 0.5s;
-  animation-fill-mode: forwards;
   top: 50%;
   object-fit: contain;
   display: block;
   margin: auto;
+  opacity: 0;
+}
+.card .card-img img[src] {
+  animation: shakeNbake 0.5s ease 0s 1 normal forwards running,
+    faded 0.24s linear 0s 1 normal forwards running;
 }
 .product-card .card .card-content {
   padding: 5px;
