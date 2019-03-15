@@ -13,6 +13,7 @@
     "acorn": "^6.1.1",
     "axios": "^0.18.0",
     "browser-cookies": "^1.2.0",
+    "lozad": "^1.9.0",
     "socket.io-client": "^2.2.0",
     "vee-validate": "^2.1.7",
     "vue": "^2.6.8",

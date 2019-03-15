@@ -6,7 +6,7 @@
           <span class="card-title text-center text-truncate heading">{{product.product_name}}</span>
         </div>
         <div class="card-img">
-          <img :src="product.product_url" :alt="product.product_name">
+          <img class="lozad" :data-src="product.product_url" :alt="product.product_name">
         </div>
         <hr>
         <h5 class="text-center headline">${{product.price.toFixed(2)}}</h5>
@@ -57,6 +57,7 @@
 import axios from "../../../../axios";
 import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
+import lozad from 'lozad';
 
 export default {
   props: {
@@ -72,11 +73,16 @@ export default {
   data() {
     return {
       isFavorite: this.product.is_favorite,
-      productDetail: this.product.is_favorite
+      productDetail: this.product.is_favorite,
     };
   },
   components: {},
   watch: {},
+  mounted() {
+    // lazy load the image
+    const observer = lozad();
+    observer.observe();
+  },
   computed: {
     // Check if item is in cart, returns boolean value
     inCart: function() {
