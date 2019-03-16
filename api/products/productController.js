@@ -20,10 +20,11 @@ function showAllProducts(req, res) {
         `
     select *, 'true' as 'is_favorite'
         from products
+        where is_active = 'true'
     having product_id in 
         (select product_id 
           from favorites 
-        where user_id = ${user_id})
+        where user_id = ${user_id} )
     UNION
     SELECT *, 'false' as 'is_favorite'
         FROM products
@@ -66,7 +67,7 @@ function showOneProduct(req, res) {
 
 // GET /products/filter/{:category}
 function showItemByCategory(req, res) {
-  const category = req.params.category;
+  const { category } = req.params;
   sortParams = req.sortParams;
   const productOrderQuery = (queryBuilder, sortParams) => {
     if (sortParams) {

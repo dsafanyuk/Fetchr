@@ -24,6 +24,7 @@ export default {
 };
 </script>
 <style>
+@import "/src/Components/assets/css/bootstrap.min.css";
 .toasted.bubble .action {
   color: white;
 }

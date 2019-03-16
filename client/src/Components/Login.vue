@@ -124,8 +124,9 @@
   };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
   @import 'custom_css/registration.scss';
+  @import '/src/Components/assets/css/bootstrap.min.css';
 
   a:hover {
     color:darkcyan!important;
