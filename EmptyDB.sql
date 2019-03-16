@@ -316,17 +316,18 @@ CREATE TABLE `users` (
   `email_address` varchar(75) NOT NULL,
   `password` varchar(60) NOT NULL,
   `room_num` varchar(4) NOT NULL,
-  `is_courier` tinyint(4) NOT NULL DEFAULT 0,
+  `is_admin` varchar(5) NOT NULL DEFAULT 'false',
   `wallet` decimal(5,2) NOT NULL DEFAULT '0.00',
   `first_name` varchar(45) NOT NULL,
   `last_name` varchar(45) NOT NULL,
-  `is_active` tinyint(4) NOT NULL DEFAULT 1,
-  `phone_number` varchar(11),
+  `is_active` varchar(5) NOT NULL DEFAULT 'true',
+  `phone_number` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email_address` (`email_address`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
 
 DROP TABLE IF EXISTS `users_cc`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
