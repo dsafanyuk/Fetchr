@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('fetchr:server');
 var http = require('http');
+var https = require('https');
+var fs = require('fs');
 
 /**
  * Get port from environment and store in Express.
@@ -18,9 +20,20 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-
-var server = http.createServer(app);
-
+if (process.env.NODE_ENV == 'production') {
+  const privateKey = fs.readFileSync('/etc/letsencrypt/live/fetchrapp.com/privkey.pem', 'utf8');
+  const certificate = fs.readFileSync('/etc/letsencrypt/live/fetchrapp.com/cert.pem', 'utf8');
+  const ca = fs.readFileSync('/etc/letsencrypt/live/fetchrapp.com/chain.pem', 'utf8');
+  // Certificate
+  const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca,
+  };
+  var server = https.createServer(credentials, app);
+} else {
+  var server = http.createServer(app);
+}
 
 /**
  * Set up socket.io
@@ -67,9 +80,7 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -92,8 +103,6 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }

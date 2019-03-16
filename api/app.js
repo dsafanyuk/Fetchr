@@ -7,8 +7,8 @@ const apiRouter = require('./routes/index');
 
 const whitelist = [
   'http://127.0.0.1:8080',
-  'http://fetchrapp.com',
-  'http://www.fetchrapp.com',
+  'https://fetchrapp.com',
+  'https://www.fetchrapp.com',
 ];
 var corsOptions = {
   origin: function(origin, callback) {
