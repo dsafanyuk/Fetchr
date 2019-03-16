@@ -19,7 +19,7 @@ router.post(
     check('password', 'Password must have a minimum of 8 characters')
       .isLength({ min: 8 })
       .trim(),
-    check('phone', 'Only digits')
+    check('phone_number', 'Only digits')
       .isMobilePhone()
       .trim(),
     check('room_num', 'Please enter 4 digits, no more no less')

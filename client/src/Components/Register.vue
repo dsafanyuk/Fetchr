@@ -192,7 +192,7 @@ import Toasted from 'vue-toasted';
                                 last_name: this.cLastname,
                                 email_address: this.cEmail,
                                 room_num: this.cRoom,
-                                phone: this.cPhone,
+                                phone_number: this.cPhone,
                                 password: this.cPassword,
                             })
                             .then((response) => {
@@ -201,7 +201,7 @@ import Toasted from 'vue-toasted';
                                 }
                             })
                             .catch(function (error) {
-                                if (error.response.status == 400) {
+                                if (error.response) {
                                     toasted.error(error.response.data, {
                                         theme: "primary",
                                         position: "top-center",
@@ -232,4 +232,5 @@ import Toasted from 'vue-toasted';
 
 <style>
 @import "custom_css/registration.scss";
+@import "/src/Components/assets/css/bootstrap.min.css";
 </style>
