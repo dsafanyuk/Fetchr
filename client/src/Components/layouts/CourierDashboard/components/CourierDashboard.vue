@@ -93,7 +93,7 @@ export default {
     return {
       active: "baby1",
       summaryOrder: {},
-      summaryIsActive: false
+      summaryIsActive: false,
     };
   },
   components: {
@@ -107,6 +107,7 @@ export default {
     this.$store.dispatch("courier/clearAllOrders");
   },
   mounted: function loadOrder() {
+    this.$store.commit('courier/startLoading');
     this.getAvailableOrders();
     this.getAcceptedOrders();
     this.getDeliveredOrders();

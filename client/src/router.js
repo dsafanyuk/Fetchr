@@ -41,17 +41,16 @@ function requireAuth(to, from, next) {
 
 // Determines where we should redirect the user
 function proceed(next) {
-  // Check load status
-  if (store.getters['login/getUserLoadStatus'] == 2) {
-    // Check if the user is logged in
-    if (store.getters['login/isLoggedIn']) {
-      next();
-    } else {
-      next({ path: '/login' });
+    // Check load status
+    if(store.getters["login/getUserLoadStatus"] == 2) {
+        // Check if the user is logged in
+        if(store.getters["login/isLoggedIn"]) {
+            next();
+        } else {
+            next({path:'/login'});
+        }
     }
-  }
 }
-
 /* ----------------------- Routes Declaration -----------------*/
 const routes = [
   {
@@ -113,6 +112,7 @@ const routes = [
         path: '/view',
         component: View,
         beforeEnter: requireAuth,
+
       },
     ],
   },
@@ -126,18 +126,6 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   routes,
-});
-
-// Called before every route
-router.beforeEach((to, from, next) => {
-  if (store.getters['login/isLoggedIn']) {
-    next();
-  } else if (to.path == '/login' || to.path == '/register' || to.path == '/home') {
-    next();
-  } else {
-    // Redirect to login page
-    next({ path: '/login' });
-  }
 });
 
 export default router;

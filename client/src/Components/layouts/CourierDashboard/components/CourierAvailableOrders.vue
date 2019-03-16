@@ -1,5 +1,8 @@
 <template>
   <v-card>
+    <div v-if="this.$store.getters['courier/isLoading']">
+      <v-progress-linear :indeterminate="true" height="10"></v-progress-linear>
+    </div>
     <v-data-table :headers="headers" :items="orders" v-bind:pagination.sync="pagination">
       <template slot="items" slot-scope="props">
         <tr @click="toggleDialog(props.item)">
@@ -29,7 +32,7 @@ export default {
     };
   },
   props: {
-    orders: Array
+    orders: Array,
   },
   computed: {
     isDialog() {
@@ -47,5 +50,9 @@ export default {
 <style scoped lang="css">
 .v-datatable {
   margin-top: 200px !important;
+}
+
+.v-progress-linear {
+  margin: auto !important
 }
 </style>
