@@ -39,12 +39,18 @@
             </form>
             <div class="form-group text-center">
               <v-btn 
-                round color="cyan" dark
+                :loading="loading && this.loginTo == 'dashboard'"
+                :disabled="loading && this.loginTo == 'dashboard'"
+                round color="cyan"
+                class="white--text"
                 type="submit"
                 @click="login('dashboard')"
               >Login as Customer</v-btn>
-              <v-btn 
-                round color="cyan" dark
+              <v-btn
+                :loading="loading && this.loginTo == 'courier'"
+                :disabled="loading && this.loginTo == 'courier'"
+                round color="cyan"
+                class="white--text"
                 type="submit"
                 @click="login('courier')"
               >Login as Courier</v-btn>
@@ -73,6 +79,7 @@
       return {
         cEmail: '',
         cPassword: '',
+        loginTo: '',
         dictionary: {
           attributes: {
             cEmail: 'E-mail Address',
@@ -85,9 +92,14 @@
     mounted () {
       this.$validator.localize('en', this.dictionary)
     },
-
+    computed: {
+      loading() {
+        return this.$store.getters["login/getUserLoadStatus"] == 1
+      }
+    },
     methods: {
       login(value) {
+        this.loginTo = value;
         if (this.cEmail && this.cPassword) {
           axios.post('api/users/login', {
               email_address: this.cEmail,

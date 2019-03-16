@@ -12,9 +12,13 @@
               </div>
 
               <div class="table-detail">
-                <h4 class="m-t-0 m-b-5">
-                  <b>{{available_orders}}</b>
-                </h4>
+                <v-progress-circular class="m-t-0 m-b-5" :size="23" v-if="isLoading" indeterminate color="primary">
+                </v-progress-circular>
+                <div v-if="!(isLoading)">
+                  <h4 class="m-t-0 m-b-5">
+                    <b>{{available_orders}}</b>
+                  </h4>
+                </div>
                 <p class="text-muted m-b-0 m-t-0">Total Available Orders</p>
               </div>
               <div class="table-detail text-right">
@@ -130,9 +134,13 @@
               </div>
 
               <div class="table-detail">
-                <h4 class="m-t-0 m-b-5">
-                  <b>{{delivered_orders}}</b>
-                </h4>
+                <v-progress-circular class="m-t-0 m-b-5" :size="23" v-if="isLoading" indeterminate color="primary">
+                </v-progress-circular>
+                <div v-if="!(isLoading)">
+                  <h4 class="m-t-0 m-b-5">
+                    <b>{{delivered_orders}}</b>
+                  </h4>
+                </div>
                 <p class="text-muted m-b-0 m-t-0">Total Delivered Orders</p>
               </div>
               <div class="table-detail text-right">
@@ -249,9 +257,13 @@
               </div>
 
               <div class="table-detail">
-                <h4 class="m-t-0 m-b-5">
-                  <b>{{revenue}}</b>
-                </h4>
+                <v-progress-circular class="m-t-0 m-b-5" :size="23" v-if="isLoading" indeterminate color="primary">
+                </v-progress-circular>
+                <div v-if="!(isLoading)">
+                  <h4 class="m-t-0 m-b-5">
+                    <b>{{revenue}}</b>
+                  </h4>
+                </div>
                 <p class="text-muted m-b-0 m-t-0">Total Delivered Revenue</p>
               </div>
               <div class="table-detail text-right">
@@ -731,8 +743,13 @@ export default {
     return {
       available_orders: 0,
       delivered_orders: 0,
-      revenue: 0
+      revenue: 0,
     };
+  },
+  computed: {
+    isLoading() {
+      return this.$store.getters['courier/isLoading']
+    }
   },
   methods: {
     getAvailableOrders() {

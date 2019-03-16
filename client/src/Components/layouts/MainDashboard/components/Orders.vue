@@ -43,10 +43,19 @@ export default {
     };
   },
   mounted: function() {
+    let loadingOrdersToast = this.$toasted.show("Loading orders...");
     axios
       .get("/api/users/" + browserCookies.get("user_id") + "/orders")
       .then(response => {
         this.orders = response.data;
+        loadingOrdersToast.text("Orders loaded!").goAway(500);
+      })
+      .catch(error => {
+        if (error.response) {
+          console.log(error);
+          loadingProductsToast.goAway();
+          this.$toasted.error("Something went wrong");
+        }
       });
   },
   methods: {

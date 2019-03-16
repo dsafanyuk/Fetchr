@@ -36,6 +36,18 @@
           </div>
           <div style="display:flex" class="cart_button">
             <v-btn
+              v-if="inCart"
+              id="cart_btn"
+              depressed
+              block
+              color="accent"
+              v-on:click="removeItem(product)"
+              :ripple="false"
+            >
+              <v-icon medium>check</v-icon>
+            </v-btn>
+            <v-btn
+              v-if="!(inCart)"
               id="cart_btn"
               depressed
               block
@@ -43,8 +55,7 @@
               v-on:click="addItem"
               :ripple="false"
             >
-              <v-icon medium v-if="inCart">check</v-icon>
-              <v-icon medium v-if="!inCart">add_shopping_cart</v-icon>
+              <v-icon medium>add_shopping_cart</v-icon>
             </v-btn>
           </div>
         </div>
@@ -147,6 +158,10 @@ export default {
       this.$toasted.success("Added to cart").goAway(1000);
       this.$store.commit("cart/addItem", this.product);
       this.$forceUpdate();
+    },
+    // Remove an item from cart
+    removeItem: function(product) {
+      this.$store.commit("cart/removeItem", product);
     }
   }
 };
