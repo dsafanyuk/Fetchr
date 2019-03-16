@@ -11,15 +11,15 @@ import App from './App.vue';
 import store from './store';
 import router from './router';
 import 'vuetify/dist/vuetify.min.css';
+Vue.use(
+  VueSocketio,
+  io(process.env.NODE_ENV === 'production' ? 'https://fetchrapp.com:3000' : 'http://127.0.0.1:3000'),
+  { store },
+);
 
 Vue.use(VueApexCharts);
 Vue.component('apexchart', VueApexCharts);
 
-Vue.use(
-  VueSocketio,
-  io(process.env.NODE_ENV === 'production' ? 'http://fetchrapp.com:3000' : 'http://127.0.0.1:3000'),
-  { store },
-);
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
 Vue.use(VueToast);

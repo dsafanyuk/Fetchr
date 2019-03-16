@@ -6,7 +6,7 @@ import store from './store'
 let api = axios.create();
 
 if (process.env.NODE_ENV == 'production') {
-    api.defaults.baseURL = 'http://fetchrapp.com:3000';
+    api.defaults.baseURL = 'https://fetchrapp.com:3000';
   } else {
     api.defaults.baseURL = 'http://127.0.0.1:3000';
   }
