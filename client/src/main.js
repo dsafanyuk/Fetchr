@@ -7,13 +7,32 @@ import VueRouter from 'vue-router';
 import VueSocketio from 'vue-socket.io-extended';
 import io from 'socket.io-client';
 import VueApexCharts from 'vue-apexcharts';
+import * as Sentry from '@sentry/browser';
 import App from './App.vue';
 import store from './store';
 import router from './router';
 import 'vuetify/dist/vuetify.min.css';
+
+Vue.use(VueApexCharts);
+Vue.component('apexchart', VueApexCharts);
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({
+    dsn: 'https://507d31b553f440428333350b394c62cd@sentry.io/1416825',
+    integrations: [
+      new Sentry.Integrations.Vue({
+        Vue,
+        attachProps: true,
+      }),
+    ],
+    sendDefaultPii: true,
+  });
+}
+
 Vue.use(
   VueSocketio,
-  io(process.env.NODE_ENV === 'production' ? 'https://fetchrapp.com:3000' : 'http://127.0.0.1:3000'),
+  io(
+    process.env.NODE_ENV === 'production' ? 'https://fetchrapp.com:3000' : 'http://127.0.0.1:3000',
+  ),
   { store },
 );
 

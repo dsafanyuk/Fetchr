@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Sentry = require('@sentry/node');
 const knex = require('knex')(require('../db'));
 
 // POST /users/login
@@ -29,6 +30,7 @@ function loginUser(req, res) {
         // Create jwt, expires in 1 hour
         jwt.sign({ user }, 'secretkey', (err, token) => {
           if (err) {
+            Sentry.captureException(err);
             res.status(500).send(err);
           } else {
             Object.keys(users[0]).forEach((userDetail) => {
@@ -50,6 +52,8 @@ function loginUser(req, res) {
     })
     // else send err
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).send({
         message: `${err}`,
       });

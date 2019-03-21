@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator/check');
-
+const Sentry = require('@sentry/node');
 const bcrypt = require('bcryptjs');
 const knex = require('knex')(require('../db'));
 
@@ -28,6 +28,7 @@ async function registerUser(req, res) {
     // Assign hashed password
     newUser.password = await generatedHash;
   } catch (err) {
+    Sentry.captureException(err);
     res.status(500).send(err);
   }
 
@@ -52,6 +53,7 @@ async function registerUser(req, res) {
           })
           // else send err
           .catch((err) => {
+            Sentry.captureException(err);
             res.status(500).send({
               message: `${err}`,
             }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -59,6 +61,7 @@ async function registerUser(req, res) {
       }
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send(err);
     });
 

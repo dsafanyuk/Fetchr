@@ -1,4 +1,5 @@
 /* eslint-disable consistent-return */
+const Sentry = require('@sentry/node');
 const knex = require('knex')(require('../db'));
 const upload = require('../s3');
 const { insertNewProduct, updateProduct, updateUser } = require('./adminHelper');
@@ -16,11 +17,14 @@ function showAllProducts(req, res) {
         res.json(products).status(200);
       })
       .catch((err) => {
+        Sentry.captureException(err);
+
         res.status(500).json({
           message: `${err}`,
         }); // FOR DEBUGGING ONLY, dont json exact message in prod
       });
   } else {
+    Sentry.captureException(new Error('User_id cookie not set'));
     res.status(400).send('User_id cookie not set');
   }
 }
@@ -29,6 +33,7 @@ function addProduct(req, res) {
   singleUpload(req, res, (err, some) => {
     console.log(req.body);
     if (err) {
+      Sentry.captureException(err);
       return res
         .status(422)
         .send({ errors: [{ title: 'Image Upload Error', detail: err.message }] });
@@ -38,13 +43,17 @@ function addProduct(req, res) {
     newProduct.product_url = req.file.location;
     insertNewProduct(newProduct)
       .then(result => res.json({ message: result }))
-      .catch(error => res.status(422).send({ message: error }));
+      .catch((error) => {
+        Sentry.captureException(err);
+        res.status(422).send({ message: error });
+      });
   });
 }
 
 function editProduct(req, res) {
   singleUpload(req, res, (err, some) => {
     if (err) {
+      Sentry.captureException(err);
       return res
         .status(422)
         .send({ errors: [{ title: 'Image Upload Error', detail: err.message }] });
@@ -56,7 +65,10 @@ function editProduct(req, res) {
     }
     updateProduct(newProduct)
       .then(result => res.json({ message: result }))
-      .catch(error => res.status(422).send({ message: error }));
+      .catch((error) => {
+        Sentry.captureException(err);
+        res.status(422).send({ message: error });
+      });
   });
 }
 
@@ -78,6 +90,7 @@ function showAllUsers(req, res) {
         res.json(users).status(200);
       })
       .catch((err) => {
+        Sentry.captureException(err);
         res.status(500).json({
           message: `${err}`,
         }); // FOR DEBUGGING ONLY, dont json exact message in prod
