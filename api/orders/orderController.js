@@ -1,3 +1,4 @@
+const Sentry = require('@sentry/node');
 const knex = require('knex')(require('../db'));
 
 // GET /order
@@ -8,6 +9,7 @@ function showAllOrders(req, res) {
       res.send(rows).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -22,6 +24,7 @@ function showOneOrder(req, res) {
       res.send(rows).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -38,7 +41,7 @@ function createOrder(req, res) {
     order_total: request.order_total,
   };
 
-  const productsWithQuantity = request.productsWithQuantity;
+  const { productsWithQuantity } = request;
 
   knex('orders')
     .insert(order)
@@ -57,6 +60,7 @@ function createOrder(req, res) {
         .insert(orderProducts)
         .then(() => {})
         .catch((err) => {
+          Sentry.captureException(err);
           res.status(500).send({
             message: `${err}`,
           });
@@ -73,6 +77,7 @@ function createOrder(req, res) {
           res.send({ status: 'success', message: orderProducts }).status(200);
         })
         .catch((err) => {
+          Sentry.captureException(err);
           res.status(500).send({
             message: `${err}`,
           });
@@ -100,8 +105,8 @@ function updateOrder(req, res) {
     .then(() => {
       res.send('success').status(200);
     })
-
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -128,6 +133,7 @@ function showOneOrderSummary(req, res) {
         });
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod

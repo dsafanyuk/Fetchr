@@ -1,4 +1,5 @@
 const express = require('express');
+const Sentry = require('@sentry/node');
 
 const router = express.Router();
 const knex = require('knex')(require('../db'));
@@ -37,6 +38,7 @@ function showAllProducts(req, res) {
         res.json(products[0]).status(200);
       })
       .catch((err) => {
+        Sentry.captureException(err);
         res.status(500).json({
           message: `${err}`,
         }); // FOR DEBUGGING ONLY, dont json exact message in prod
@@ -59,6 +61,7 @@ function showOneProduct(req, res) {
       }
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).json({
         message: err,
       }); // FOR DEBUGGING ONLY, dont json exact message in prod
@@ -87,6 +90,8 @@ function showItemByCategory(req, res) {
       }
     })
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).json({
         message: err,
       }); // FOR DEBUGGING ONLY, dont json exact message in prod
