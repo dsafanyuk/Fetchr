@@ -1,4 +1,5 @@
 import VueRouter from 'vue-router';
+import browserCookies from 'browser-cookies';
 import MainLayout from './Components/layouts/MainDashboard/MainLayout.vue';
 import Home from './Components/Home.vue';
 import Login from './Components/Login.vue';
@@ -29,11 +30,14 @@ function requireAuth(to, from, next) {
     store.commit('login/pending');
 
     // Watch user to be loaded
-    store.watch(store.getters['login/getUserLoadStatus'], () => {
-      if (store.getters['login/getUserLoadStatus'] == 2) {
-        proceed(next);
-      }
-    });
+    store.watch(
+      () => store.getters['login/getUserLoadStatus'],
+      () => {
+        if (store.getters['login/getUserLoadStatus'] == 2) {
+          proceed(next);
+        }
+      },
+    );
   } else {
     proceed(next);
   }
@@ -41,16 +45,21 @@ function requireAuth(to, from, next) {
 
 // Determines where we should redirect the user
 function proceed(next) {
-    // Check load status
-    if(store.getters["login/getUserLoadStatus"] == 2) {
-        // Check if the user is logged in
-        if(store.getters["login/isLoggedIn"]) {
-            next();
-        } else {
-            next({path:'/login'});
-        }
+  // Check load status
+  if (store.getters['login/getUserLoadStatus'] === 2) {
+    // Check if the user is logged in & cookies have not expired
+    if (
+      store.getters['login/isLoggedIn']
+      && browserCookies.get('token')
+      && browserCookies.get('user_id')
+    ) {
+      next();
+    } else {
+      next({ path: '/login' });
     }
+  }
 }
+
 /* ----------------------- Routes Declaration -----------------*/
 const routes = [
   {
@@ -82,6 +91,17 @@ const routes = [
   {
     path: '/',
     component: MainLayout,
+    beforeEnter: (to, from, next) => {
+      if (to.path == '/') {
+        if (window.localStorage.vuex) {
+          next({ path: '/dashboard' });
+        } else {
+          next({ path: '/home' });
+        }
+      } else {
+        next();
+      }
+    },
     children: [
       {
         path: '/account',
@@ -112,7 +132,6 @@ const routes = [
         path: '/view',
         component: View,
         beforeEnter: requireAuth,
-
       },
     ],
   },
