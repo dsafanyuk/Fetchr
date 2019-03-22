@@ -105,32 +105,40 @@
       v-if="isLanding "
     >
       <v-tabs-slider color="orange"></v-tabs-slider>
-      <v-tab href="#Popular">Popular
+      <v-tab href="#Popular">
+        Popular
         <v-icon>fas fa-fire-alt</v-icon>
       </v-tab>
 
-      <v-tab href="#Snacks">Snacks
+      <v-tab href="#Snacks">
+        Snacks
         <v-icon>fas fa-hamburger</v-icon>
       </v-tab>
 
-      <v-tab href="#Drinks">Drinks
+      <v-tab href="#Drinks">
+        Drinks
         <v-icon>fas fa-mug-hot</v-icon>
       </v-tab>
 
-      <v-tab href="#Personal">Personal
+      <v-tab href="#Personal">
+        Personal
         <v-icon>fas fa-toilet-paper</v-icon>
       </v-tab>
-      <v-tab href="#Electronics">Electronics
+      <v-tab href="#Electronics">
+        Electronics
         <v-icon>fas fa-headphones-alt</v-icon>
       </v-tab>
-      <v-tab href="#School Supplies">School Supplies
+      <v-tab href="#School Supplies">
+        School Supplies
         <v-icon>fas fa-paperclip</v-icon>
       </v-tab>
-      <v-tab href="#Misc">Misc
+      <v-tab href="#Misc">
+        Misc
         <v-icon>fas fa-random</v-icon>
       </v-tab>
 
-      <v-tab href="#Favorites">Favorites
+      <v-tab href="#Favorites">
+        Favorites
         <v-icon>fas fa-heart</v-icon>
       </v-tab>
     </v-tabs>
@@ -150,13 +158,15 @@ export default {
       showCart: false,
       activeCategory: null,
       menu: [
-        { title: "Switch To Courier", icon: "fa fa-bicycle"},
+        { title: "Switch To Courier", icon: "fa fa-bicycle" },
         { title: "Account", icon: "fas fa-user-alt fa-s" },
         { title: "Orders", icon: "far fa-list-alt fa-s" },
         {
           title: "Wallet",
           icon: "fas fa-wallet fa-s"
         },
+        { title: "Leave Feedback", icon: "feedback" },
+
         {
           title: "Logout",
           icon: "fas fa-sign-out-alt fa-s"
@@ -196,6 +206,10 @@ export default {
           this.$router.push("/courier");
           break;
         }
+        case "Leave Feedback": {
+          window.open("https://goo.gl/forms/Q1EzTiaBkPZwepb62");
+          break;
+        }
         case "Account": {
           this.$router.push("/account");
           break;
@@ -214,11 +228,14 @@ export default {
             for (let cookieName in allCookies) {
               browserCookies.erase(cookieName);
             }
-            this.$store.dispatch("login/logout").then( response => {
-              this.$router.push("/login");
-            }, error => {
-              this.$store.commit("login/logoutFailed");
-            });
+            this.$store.dispatch("login/logout").then(
+              response => {
+                this.$router.push("/login");
+              },
+              error => {
+                this.$store.commit("login/logoutFailed");
+              }
+            );
           }
           break;
       }
