@@ -13,7 +13,7 @@
               <h4 class="text-center form_h"> Login in on our Platform </h4>
             </div>
             <br>
-            <form>
+            <form @keyup.enter="login('dashboard')">
               <v-text-field
                 v-validate="'required|email'"
                 type="email"
