@@ -117,6 +117,7 @@
 <script>
 import axios from "../axios";
 import Toasted from 'vue-toasted';
+import Vue from 'vue'
 
     export default {
         $_veeValidate: {
@@ -202,13 +203,15 @@ import Toasted from 'vue-toasted';
                             })
                             .catch(function (error) {
                                 if (error.response) {
-                                    toasted.error(error.response.data, {
-                                        theme: "primary",
-                                        position: "top-center",
-                                        duration : 5000
-                                    });
+                                    error.response.data.errors.map( (error) => {
+                                        Vue.toasted.show(error.param + " " + error.msg, {
+                                            theme: 'bubble',
+                                            duration: 4000,
+                                            position: 'top-center',
+                                            icon: 'report_problem'
+                                        });
+                                    })
                                 }
-                                console.log(error);
                                 if (error.response) {
                                     // The request was made and the server responded with a status code
                                     // that falls out of the range of 2xx

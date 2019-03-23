@@ -52,7 +52,10 @@
                 <br>
                 <strong>Remaing Balance after order:</strong>
                 <h5>{{walletAfterTransaction}}</h5>
-                <v-btn type="submit" v-on:click="checkout" color="accent">Submit Order</v-btn>
+                <v-btn 
+                :loading="loading"
+                :disabled="loading"
+                type="submit" v-on:click="checkout" color="accent">Submit Order</v-btn>
               </v-alert>
             </div>
             <div v-else-if="sufficientFunds == false" class="text-xs-center">
@@ -83,7 +86,9 @@ import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
   data() {
-    return {};
+    return {
+      loading: false,
+    };
   },
   // Returns an array of objects
   computed: {
@@ -111,6 +116,9 @@ export default {
       let socket = this.$socket;
       let router = this.$router;
       let productsWithQuantity = [];
+
+      this.loading = true;
+      
       this.items.map(product => {
         //put all the products into a json array
         productsWithQuantity.push({
