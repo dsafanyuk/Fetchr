@@ -9,6 +9,9 @@
             <h5 v-bind:class="orderStatus" id="status">{{this.orderStatus}}</h5>
           </div>
         </div>
+        <div v-if="isLoading">
+          <v-progress-linear :indeterminate="true" height="10"></v-progress-linear>
+        </div>
         <v-data-table
           :items="items"
           hide-headers
@@ -54,7 +57,7 @@
   </div>
 </template>
       
-      <script>
+<script>
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios.js";
 
@@ -63,7 +66,8 @@ export default {
     return {
       items: [],
       total: 0.0,
-    }
+      isLoading: false
+    };
   },
   computed: {
     orderStatus() {
@@ -71,30 +75,34 @@ export default {
     },
     updatedCourierInfo() {
       return this.$store.getters["orders/info"];
-    },
+    }
   },
   mounted: function() {
     this.getOrderSummary();
   },
   methods: {
     getOrderSummary: function() {
+      this.isLoading = true;
       axios
-      .get(`/api/orders/${this.$route.query.order}/summary`)
-      .then(response => {
-        let orderInfo = response.data.orderInfo[0];
-        if (orderInfo.customer_id != browserCookies.get("user_id")) {
-          this.$router.push("/orders");
-        }
-        this.items = response.data.productList;
-        this.$store.commit('orders/changeStatus', orderInfo.delivery_status);
-        this.items.forEach(item => {
-          item.item_total = item.price * item.quantity;
-          this.total += item.item_total;
+        .get(`/api/orders/${this.$route.query.order}/summary`)
+        .then(response => {
+          this.isLoading = false;
+          let orderInfo = response.data.orderInfo[0];
+          if (orderInfo.customer_id != browserCookies.get("user_id")) {
+            this.$router.push("/orders");
+          }
+          this.items = response.data.productList;
+          this.$store.commit("orders/changeStatus", orderInfo.delivery_status);
+          this.items.forEach(item => {
+            item.item_total = item.price * item.quantity;
+            this.total += item.item_total;
+          });
+          this.$store.commit("orders/changeOrder", this.$route.query.order);
+          this.$store.dispatch("orders/getInfo", this.$route.query.order, {
+            root: true
+          });
         });
-        this.$store.commit('orders/changeOrder', this.$route.query.order);
-        this.$store.dispatch('orders/getInfo', this.$route.query.order, {root:true})
-      });
-    },
+    }
   }
 };
 </script>
