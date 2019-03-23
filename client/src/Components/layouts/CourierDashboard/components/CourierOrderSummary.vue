@@ -13,11 +13,13 @@
         <v-btn
           v-if="order.delivery_status == 'pending'"
           color="orange"
+          dark
           v-on:click="acceptOrder"
         >Accept</v-btn>
         <v-btn
           v-if="order.delivery_status == 'in-progress'"
           color="green"
+          dark
           v-on:click="deliverOrder"
         >Deliver</v-btn>
       </div>
