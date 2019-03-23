@@ -11,7 +11,7 @@
                             <h4 class="text-center form_h">Sign Up on our Platform</h4>
                         </div>
                         <br>
-                        <form>
+                        <form @keyup.enter="registerCustomer">
                             <v-text-field
                                 v-validate="'required|max:15'"
                                 v-model="cFirstname"
