@@ -1,35 +1,34 @@
 <template>
-  <v-app>
-    <div class="orders">
-      <h3>Recent Orders</h3>
-      <table class="order table-responsive-md">
-        <thead>
-          <tr>
-            <th>Order #</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Total</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="order in orders" :key="order.order_id">
-            <td>{{order.order_id}}</td>
-            <td>{{fixDate(order.time_created)}}</td>
-            <td>{{order.delivery_status}}</td>
-            <td>${{order.order_total.toFixed(2)}}</td>
-            <td>
-              <button
-                @click="viewOrder(order.order_id)"
-                class="btn btn-outline-dark my-2 my-sm-0"
-                type="button"
-              >View</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </v-app>
+  <v-container>
+    <v-card>
+      <v-card-title class="headline lighten-2 text-align-center" primary-title>Orders</v-card-title>
+      <div v-if="isLoading">
+        <v-progress-linear :indeterminate="true" height="10"></v-progress-linear>
+      </div>
+      <v-data-table
+        :headers="headers"
+        :items="orders"
+        v-bind:pagination.sync="pagination"
+        :rows-per-page-items="rowsPerPage"
+      >
+        <template slot="items" slot-scope="props">
+          <td class="text-xs-center">{{ props.item.order_id }}</td>
+          <td class="text-xs-center">{{ fixDate(props.item.time_created) }}</td>
+          <td class="text-xs-center">{{ props.item.delivery_status }}</td>
+          <td class="text-xs-center">{{ props.item.order_total.toFixed(2) }}</td>
+          <td>
+            <v-btn
+              @click="viewOrder(props.item.order_id)"
+              round
+              dark
+              color="#616161"
+              type="button"
+            >View</v-btn>
+          </td>
+        </template>
+      </v-data-table>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -39,18 +38,35 @@ import axios from "../../../../axios";
 export default {
   data() {
     name: return {
-      orders: {}
+      orders: [],
+      isLoading: false,
+      pagination: { sortBy: "order_id", descending: true, rowsPerPage: 15 },
+      rowsPerPage: [
+        5,
+        15,
+        50,
+        { text: "$vuetify.dataIterator.rowsPerPageAll", value: -1 }
+      ],
+      headers: [
+        { text: "Order #", align: "center", value: "order_id" },
+        { text: "Date", align: "center", value: "time_created" },
+        { text: "Status", align: "center", value: "status" },
+        { text: "Order Total", align: "center", value: "order_total" },
+        { text: "", align: "center", value: "" }
+      ]
     };
   },
   mounted: function() {
-    let loadingOrdersToast = this.$toasted.show("Loading orders...");
+    this.isLoading = true;
     axios
       .get("/api/users/" + browserCookies.get("user_id") + "/orders")
       .then(response => {
         this.orders = response.data;
         loadingOrdersToast.text("Orders loaded!").goAway(500);
+        this.isLoading = false;
       })
       .catch(error => {
+        this.isLoading = false;
         if (error.response) {
           console.log(error);
           loadingProductsToast.goAway();
