@@ -56,7 +56,7 @@
               >Login as Courier</v-btn>
             </div>
             <div class="form-group text-center">
-                Don't have an account? <a v-on:click="goToRegister">Sign up here</a>
+                Don't have an account? <router-link to="/register">Sign up here</router-link>
             </div>
           </div>
         </div>
@@ -129,9 +129,6 @@
           this.$validator.validateAll();
         }
       },
-      goToRegister: function () {
-        this.$router.push('/register');
-      }
     }
   };
 </script>
@@ -139,9 +136,4 @@
 <style lang="css" scoped>
   @import 'custom_css/registration.scss';
   @import '/src/Components/assets/css/bootstrap.min.css';
-
-  a:hover {
-    color:darkcyan!important;
-    cursor: pointer;
-  }
 </style>
