@@ -20,6 +20,8 @@ export default {
   data() {
     return {
       countdownTime: 10,
+      countdownInterval: null,
+      countdownTimeout: null,
     };
   },
   created: function emptyCart() {
@@ -27,12 +29,12 @@ export default {
       this.$store.commit("cart/removeItem", product);
     })
 
-    var countdownTimer = setInterval(() => {
+    this.countdownInterval = setInterval(() => {
       this.countdownTime--;
     }, 1000);
 
-    setTimeout(() => {
-      clearInterval(countdownTimer);
+    this.countdownTimeout = setTimeout(() => {
+      clearInterval(this.countdownInterval);
 
       this.$router.push('/view?order=' + this.$route.query.order);
     }, 10000);
@@ -41,6 +43,10 @@ export default {
     goToView() {
       this.$router.push('/view?order=' + this.$route.query.order);
     }
+  },
+  beforeDestroy: function () {
+    clearInterval(this.countdownInterval);
+    clearTimeout(this.countdownTimeout);
   }
 };
 </script>

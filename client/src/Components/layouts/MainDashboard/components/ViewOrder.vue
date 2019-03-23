@@ -6,7 +6,7 @@
           <h3>Order: #{{this.$route.query.order}}</h3>
           <div>
             <h4>Status:</h4>
-            <h5 v-bind:class="orderStatus" class="status">{{this.orderStatus}}</h5>
+            <h5 v-bind:class="orderStatus" id="status">{{this.orderStatus}}</h5>
           </div>
         </div>
         <v-data-table
@@ -127,7 +127,7 @@ export default {
 .courierInfo div {
   margin-bottom: 1.5em;
 }
-.status {
+#status {
   font-size: 1em;
   margin: 0;
   text-transform: uppercase;

@@ -37,8 +37,12 @@
           to="/dashboard"
         >
       </router-link>
-      <v-spacer class="hidden-sm-and-down"></v-spacer>
-      <v-spacer></v-spacer>
+      <v-spacer></v-spacer> 
+      <v-flex align-self-center style="margin-right:10px" class="hidden-sm-and-down">
+        <transition name="fade" v-on:enter="enter" v-on:leave="leave">
+          <h4 class="white--text" style="margin-top: 20px" v-if="show">{{showText}}</h4>
+        </transition>
+      </v-flex>
       <div class="hidden-sm-and-down">
         <v-menu fixed>
           <v-btn
@@ -171,7 +175,12 @@ export default {
           title: "Logout",
           icon: "fas fa-sign-out-alt fa-s"
         }
-      ]
+      ],
+      textLists: [ "Remember, you cannot change your password", "You can go to shopping page by clicking Fetchr icon", "All items are non refundable", "Subscribe to PewDiePie", "Unsubscribe from T-series", "Follow us on instagram at @fecthr_app" ],
+      showText: "",
+      textTimeout: null,
+      show: false,
+      indexText: 0,
     };
   },
   components: {
@@ -180,6 +189,10 @@ export default {
   },
   created: function() {
     this.$store.dispatch("wallet/getWalletBalance");
+    this.showText = this.textLists[this.randomIndex()];
+    this.textTimeout = setTimeout(() => {
+      this.show = true;
+    },3000);
   },
   computed: {
     numOfItemsInCart: function() {
@@ -193,10 +206,23 @@ export default {
     }
   },
   methods: {
+    enter: function() {
+      this.textTimeout = setTimeout(() => {
+        this.show = false;
+      }, 6000);
+    },
+    leave: function() {
+      this.textTimeout = setTimeout(() => {
+        this.showText = this.textLists[this.randomIndex()];
+        this.show = true;
+      }, 3000);
+    },
+    randomIndex: function () {
+      return Math.floor(Math.random() * this.textLists.length)
+    },
     showWallet: function(value) {
       this.$store.commit("wallet/toggleWallet", value);
     },
-
     showShoppingCart: function(value) {
       this.$store.commit("cart/toggleCart", value);
     },
@@ -271,5 +297,11 @@ export default {
   position: sticky;
   top: 0;
   z-index: 1;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
