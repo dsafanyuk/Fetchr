@@ -1,63 +1,57 @@
 <template>
-    <div class="checkout">
-      <v-layout row>
-        <v-flex md7>
-          <div class="orderHeader">
-            <h3>Order: #{{this.$route.query.order}}</h3>
-            <div>
-              <h4>Status:</h4>
-              <h5 v-bind:class="orderStatus" id="status">{{this.orderStatus}}</h5>
-            </div>
+  <v-container>
+    <v-layout row class="pa-3 mb-2">
+      <v-flex md7 sm12>
+        <div class="orderHeader">
+          <h3>Order: #{{this.$route.query.order}}</h3>
+          <div>
+            <h4>Status:</h4>
+            <h5 v-bind:class="orderStatus" id="status">{{this.orderStatus}}</h5>
           </div>
-          <div v-if="isLoading">
-            <v-progress-linear :indeterminate="true" height="10"></v-progress-linear>
+        </div>
+        <div v-if="isLoading">
+          <v-progress-linear :indeterminate="true" height="10"></v-progress-linear>
+        </div>
+        <v-data-table :items="items" hide-headers class="elevation-1">
+          <template slot="items" slot-scope="props">
+            <td align="center" class="hidden-sm-and-down">
+              <img :src="props.item.product_url" class="checkout-img">
+            </td>
+            <td class="body-2">{{ props.item.product_name }}</td>
+            <td class="text-xs-left">${{ (props.item.item_total).toFixed(2) }}</td>
+            <td class="text-xs-left">{{ props.item.quantity }}</td>
+          </template>
+          <template slot="footer">
+            <td class="text-xs-right" :colspan="2">
+              <strong>Total</strong>
+            </td>
+            <td class="text-xs-left" :colspan="4">${{total.toFixed(2)}}</td>
+          </template>
+        </v-data-table>
+      </v-flex>
+      <v-spacer></v-spacer>
+      <div v-if="!updatedCourierInfo"></div>
+      <v-flex md4 sm12 lg4 v-else>
+        <h3 class="courierInfoHeader">Courier Information</h3>
+        <v-card class="text-xs-center courierInfo">
+          <div>
+            <span>{{updatedCourierInfo.first_name}} {{updatedCourierInfo.last_name}}</span>
           </div>
-          <v-data-table
-            :items="items"
-            hide-headers
-            :total-items="items.length"
-            hide-actions
-            class="elevation-1"
-          >
-            <template slot="items" slot-scope="props">
-              <td align="center">
-                <img :src="props.item.product_url" class="checkout-img">
-              </td>
-              <td class="body-2">{{ props.item.product_name }}</td>
-              <td class="text-xs-left">${{ (props.item.item_total).toFixed(2) }}</td>
-              <td class="text-xs-left">{{ props.item.quantity }}</td>
-            </template>
-            <template slot="footer">
-              <td class="text-xs-right" :colspan="2">
-                <strong>Total</strong>
-              </td>
-              <td class="text-xs-left" :colspan="4">${{total.toFixed(2)}}</td>
-            </template>
-          </v-data-table>
-        </v-flex>
-        <v-spacer></v-spacer>
-        <div v-if="!updatedCourierInfo"></div>
-        <v-flex md4 v-else>
-          <h3 class="courierInfoHeader">Courier Information</h3>
-          <v-card class="text-xs-center courierInfo">
-            <div>
-              <span>{{updatedCourierInfo.first_name}} {{updatedCourierInfo.last_name}}</span>
-            </div>
-            <div>
-              <span>{{updatedCourierInfo.phone_number}}</span>
-            </div>
-            <div>
-              <span>Delivered Orders: {{updatedCourierInfo.delivered}}</span>
-            </div>
-            <v-divider></v-divider>
-            <v-btn type="submit" color="success" class="chatButton">Chat with me!</v-btn>
-          </v-card>
-        </v-flex>
-      </v-layout>
-      <v-btn  color="#F5F5F5"  @click="$router.go(-1)">
-        <v-icon black>arrow_back</v-icon>&nbsp; &nbsp;Back to Orders
-      </v-btn>
-    </div>
+          <div>
+            <span>{{updatedCourierInfo.phone_number}}</span>
+          </div>
+          <div>
+            <span>Delivered Orders: {{updatedCourierInfo.delivered}}</span>
+          </div>
+          <v-divider></v-divider>
+          <v-btn type="submit" color="success" class="chatButton">Chat with me!</v-btn>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <v-btn color="#F5F5F5" @click="$router.go(-1)">
+      <v-icon black>arrow_back</v-icon>&nbsp; &nbsp;Back to Orders
+    </v-btn>
+  </v-container>
 </template>
       
 <script>
@@ -110,12 +104,6 @@ export default {
 };
 </script>
 <style scoped lang="css">
-.checkout {
-  padding-top: 3em;
-  padding-bottom: 3em;
-  padding-left: 10em;
-  padding-right: 10em;
-}
 .checkout-img {
   max-height: 75px;
   margin: 10px;

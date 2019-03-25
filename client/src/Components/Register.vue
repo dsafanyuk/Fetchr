@@ -8,7 +8,7 @@
                     </div>
                     <div class="col-md-6 mx-auto">
                         <div class="form-group">
-                            <h4 class="text-center form_h">Sign Up on our Platform</h4>
+                            <h4 class="text-center form_h">Start your Fetchr experience!</h4>
                         </div>
                         <br>
                         <form @keyup.enter="registerCustomer">

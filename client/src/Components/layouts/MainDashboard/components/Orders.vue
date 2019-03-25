@@ -107,5 +107,5 @@ export default {
 };
 </script>
 
-<style scoped lang="css" src='../../../custom_css/orders.css'>
+<style scoped lang="css">
 </style>
