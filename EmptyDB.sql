@@ -365,6 +365,23 @@ SELECT products.*,  ifnull(sum(order_summary.quantity),0) as 'total_sold'
   FROM fetchr_db.products left OUTER JOIN fetchr_db.order_summary
     ON order_summary.product_id = products.product_id
  group by product_id;
+
+drop procedure if exists fetchr_db.prodsSoldByCat;
+delimiter //
+create procedure fetchr_db.prodsSoldByCat()
+begin
+select group_concat( concat( 'sum(if(category = ''', t.category, ''', quantity, 0)) as ', t.category))
+  into @pivot
+  from (select distinct category from fetchr_db.products) t;
+  
+set @pivot = concat('select ', @pivot, ' from fetchr_db.products join fetchr_db.order_summary on products.product_id = order_summary.product_id');
+
+PREPARE statement FROM @pivot;
+EXECUTE statement;
+DEALLOCATE PREPARE statement;
+end//
+delimiter ;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

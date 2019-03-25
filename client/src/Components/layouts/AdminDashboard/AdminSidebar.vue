@@ -24,6 +24,7 @@
         :active-class="'action-tile'"
       >
         <v-list-tile-title color="white" :active-class="'action-tile'" v-text="'Dashboard'"/>
+        <i class="material-icons" @click="$store.dispatch('admin/getDashboard')">refresh</i>
       </v-list-tile>
       <v-list-group
         value="true"
@@ -31,24 +32,13 @@
         :key="i"
         no-action
         :active-class="color"
+        append-icon=""
       >
         <template slot="activator">
           <v-list-tile :to="link.to" avatar class="v-list-item" :active-class="'action-tile'">
             <v-list-tile-title color="white" :active-class="'action-tile'" v-text="link.text"/>
           </v-list-tile>
         </template>
-
-        <v-list-tile
-          :to="actions.to"
-          avatar
-          class="v-list-item"
-          v-for="(actions, i) in link.actions"
-          :key="i"
-          dark
-          :active-class="color"
-        >
-          <v-list-tile-title :to="actions.to" append v-text="actions.text"/>
-        </v-list-tile>
       </v-list-group>
     </v-layout>
   </v-navigation-drawer>
@@ -59,26 +49,14 @@ export default {
   data: () => ({
     links: [
       {
-        to: "/admin/products",
+        to: "/admin/products/manage",
         icon: "mdi-account",
         text: "Products",
-        actions: [
-          {
-            to: "/admin/products/manage",
-            text: "Manage"
-          }
-        ]
       },
       {
-        to: "/admin/users",
+        to: "/admin/users/manage",
         icon: "mdi-clipboard-outline",
         text: "Users",
-        actions: [
-          {
-            to: "/admin/users/manage",
-            text: "Manage"
-          }
-        ]
       }
     ],
     responsive: false,

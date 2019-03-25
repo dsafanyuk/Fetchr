@@ -14,8 +14,6 @@ import Account from './Components/layouts/MainDashboard/components/Account.vue';
 /*                 ADMIN                */
 import AdminLayout from './Components/layouts/AdminDashboard/AdminLayout.vue';
 import AdminDashboard from './Components/layouts/AdminDashboard/components/AdminDashboard.vue';
-import AdminProducts from './Components/layouts/AdminDashboard/components/AdminProducts.vue';
-import AdminUsers from './Components/layouts/AdminDashboard/components/AdminUsers.vue';
 import AdminManageUsers from './Components/layouts/AdminDashboard/components/AdminManageUsers.vue';
 import AdminManageProducts from './Components/layouts/AdminDashboard/components/AdminManageProducts.vue';
 
@@ -71,16 +69,8 @@ const routes = [
         component: AdminDashboard,
       },
       {
-        path: 'users',
-        component: AdminUsers,
-      },
-      {
         path: 'users/manage',
         component: AdminManageUsers,
-      },
-      {
-        path: 'products',
-        component: AdminProducts,
       },
       {
         path: 'products/manage',

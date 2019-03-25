@@ -11,4 +11,16 @@ router.get('/users', adminController.showAllUsers);
 router.post('/users', adminController.addUser);
 router.put('/user/:user_id', adminController.editUser);
 
+router.get('/total/orders', adminController.totalOrders);
+router.get('/total/delivered', adminController.totalDelivered);
+router.get('/total/users', adminController.totalUsers);
+router.get('/total/amountOrdered', adminController.totalAmountOrdered);
+
+router.get('/orders/recent', adminController.recentOrders);
+
+router.get('/couriers/topThree', adminController.topThreeCouriers);
+
+router.get('/graphs/ordersPerDay', adminController.ordersPerDay);
+router.get('/graphs/productsPerDay', adminController.productsPerDay);
+router.get('/graphs/prodsSoldByCat', adminController.prodsSoldByCat);
 module.exports = router;
