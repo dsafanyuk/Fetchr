@@ -1,60 +1,63 @@
 <template>
-  <div class="checkout">
-    <v-layout row>
-      <v-flex md7>
-        <div class="orderHeader">
-          <h3>Order: #{{this.$route.query.order}}</h3>
-          <div>
-            <h4>Status:</h4>
-            <h5 v-bind:class="orderStatus" id="status">{{this.orderStatus}}</h5>
+    <div class="checkout">
+      <v-layout row>
+        <v-flex md7>
+          <div class="orderHeader">
+            <h3>Order: #{{this.$route.query.order}}</h3>
+            <div>
+              <h4>Status:</h4>
+              <h5 v-bind:class="orderStatus" id="status">{{this.orderStatus}}</h5>
+            </div>
           </div>
-        </div>
-        <div v-if="isLoading">
-          <v-progress-linear :indeterminate="true" height="10"></v-progress-linear>
-        </div>
-        <v-data-table
-          :items="items"
-          hide-headers
-          :total-items="items.length"
-          hide-actions
-          class="elevation-1"
-        >
-          <template slot="items" slot-scope="props">
-            <td align="center">
-              <img :src="props.item.product_url" class="checkout-img">
-            </td>
-            <td class="body-2">{{ props.item.product_name }}</td>
-            <td class="text-xs-left">${{ (props.item.item_total).toFixed(2) }}</td>
-            <td class="text-xs-left">{{ props.item.quantity }}</td>
-          </template>
-          <template slot="footer">
-            <td class="text-xs-right" :colspan="2">
-              <strong>Total</strong>
-            </td>
-            <td class="text-xs-left" :colspan="4">${{total.toFixed(2)}}</td>
-          </template>
-        </v-data-table>
-      </v-flex>
-      <v-spacer></v-spacer>
-      <div v-if="!updatedCourierInfo"></div>
-      <v-flex md4 v-else>
-        <h3 class="courierInfoHeader">Courier Information</h3>
-        <v-card class="text-xs-center courierInfo">
-          <div>
-            <span>{{updatedCourierInfo.first_name}} {{updatedCourierInfo.last_name}}</span>
+          <div v-if="isLoading">
+            <v-progress-linear :indeterminate="true" height="10"></v-progress-linear>
           </div>
-          <div>
-            <span>{{updatedCourierInfo.phone_number}}</span>
-          </div>
-          <div>
-            <span>Delivered Orders: {{updatedCourierInfo.delivered}}</span>
-          </div>
-          <v-divider></v-divider>
-          <v-btn type="submit" color="success" class="chatButton">Chat with me!</v-btn>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </div>
+          <v-data-table
+            :items="items"
+            hide-headers
+            :total-items="items.length"
+            hide-actions
+            class="elevation-1"
+          >
+            <template slot="items" slot-scope="props">
+              <td align="center">
+                <img :src="props.item.product_url" class="checkout-img">
+              </td>
+              <td class="body-2">{{ props.item.product_name }}</td>
+              <td class="text-xs-left">${{ (props.item.item_total).toFixed(2) }}</td>
+              <td class="text-xs-left">{{ props.item.quantity }}</td>
+            </template>
+            <template slot="footer">
+              <td class="text-xs-right" :colspan="2">
+                <strong>Total</strong>
+              </td>
+              <td class="text-xs-left" :colspan="4">${{total.toFixed(2)}}</td>
+            </template>
+          </v-data-table>
+        </v-flex>
+        <v-spacer></v-spacer>
+        <div v-if="!updatedCourierInfo"></div>
+        <v-flex md4 v-else>
+          <h3 class="courierInfoHeader">Courier Information</h3>
+          <v-card class="text-xs-center courierInfo">
+            <div>
+              <span>{{updatedCourierInfo.first_name}} {{updatedCourierInfo.last_name}}</span>
+            </div>
+            <div>
+              <span>{{updatedCourierInfo.phone_number}}</span>
+            </div>
+            <div>
+              <span>Delivered Orders: {{updatedCourierInfo.delivered}}</span>
+            </div>
+            <v-divider></v-divider>
+            <v-btn type="submit" color="success" class="chatButton">Chat with me!</v-btn>
+          </v-card>
+        </v-flex>
+      </v-layout>
+      <v-btn  color="#F5F5F5"  @click="$router.go(-1)">
+        <v-icon black>arrow_back</v-icon>&nbsp; &nbsp;Back to Orders
+      </v-btn>
+    </div>
 </template>
       
 <script>
