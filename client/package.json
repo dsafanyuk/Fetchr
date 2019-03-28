@@ -5,9 +5,9 @@
   "description": "Fetchr Client App",
   "author": "Devs That Deliver",
   "scripts": {
-    "build": "NODE_ENV=production webpack --progress --hide-modules --mode=production",
-    "dev": "webpack-dev-server --env.DEBUG=socket.io* --hot --config webpack.config.js --mode=development",
-    "dev:prod": "NODE_ENV=production webpack-dev-server --open --hot --config webpack.config.js --mode=production --compress"
+    "build": "NODE_ENV=production webpack --progress --hide-modules --config webpack.prod.js",
+    "dev": "webpack-dev-server --env.DEBUG=socket.io* --hot --config webpack.dev.js --mode=development",
+    "dev:prod": "NODE_ENV=production webpack-dev-server --open --hot --config webpack.prod.js --mode=production --compress"
   },
   "dependencies": {
     "@sentry/browser": "^4.6.4",
@@ -34,13 +34,14 @@
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-3": "^6.24.1",
+    "clean-webpack-plugin": "^2.0.1",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.4",
+    "html-webpack-plugin": "^4.0.0-beta.5",
     "node-sass": "^4.11.0",
     "sass-loader": "^6.0.6",
     "vue-loader": "^14.2.4",
     "vue-template-compiler": "^2.6.10",
-    "vuex-persistedstate": "^2.5.4",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"

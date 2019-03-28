@@ -1,13 +1,15 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'production',
   entry: './src/main.js',
   output: {
     path: path.resolve(`${__dirname}/dist`),
-    filename: process.env.NODE_ENV === 'production' ? 'build.[hash].js' : 'build.js',
+    filename: 'build.[hash].js',
   },
   module: {
     rules: [
@@ -61,30 +63,14 @@ module.exports = {
     },
     extensions: ['*', '.js', '.vue', '.json'],
   },
-  devServer: {
-    host: '127.0.0.1',
-    index: '../index.html',
-    historyApiFallback: true,
-    noInfo: false,
-    overlay: true,
-    watchOptions: {
-      poll: 1000, // Check for changes every second
-    },
-  },
   performance: {
     hints: false,
   },
-  devtool: '#eval-source-map',
-};
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map';
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
+  devtool: '#esource-map',
+  plugins: [
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"',
-        // eslint-disable-next-line comma-dangle
       },
     }),
     new webpack.LoaderOptionsPlugin({
@@ -95,5 +81,5 @@ if (process.env.NODE_ENV === 'production') {
       filename: './index.html',
       template: 'template.html',
     }),
-  ]);
-}
+  ],
+};

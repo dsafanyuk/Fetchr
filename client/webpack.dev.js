@@ -1,14 +1,17 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: './src/main.js',
   output: {
     path: path.resolve(`${__dirname}/dist`),
-    filename: process.env.NODE_ENV === 'production' ? 'build.[hash].js' : 'build.js',
+    filename: 'build.js',
+    publicPath: '/dist',
   },
+  plugins: [new CleanWebpackPlugin()],
   module: {
     rules: [
       {
@@ -76,24 +79,3 @@ module.exports = {
   },
   devtool: '#eval-source-map',
 };
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map';
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"',
-        // eslint-disable-next-line comma-dangle
-      },
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-    }),
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      filename: './index.html',
-      template: 'template.html',
-    }),
-  ]);
-}
