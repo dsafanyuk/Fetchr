@@ -18,5 +18,4 @@ export default {
 </script>
 
 <style lang="css">
-@import "/src/Components/assets/css/bootstrap.min.css";
 </style>

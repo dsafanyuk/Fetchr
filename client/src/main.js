@@ -32,10 +32,12 @@ Vue.use(
   VueSocketio,
   io(
     process.env.NODE_ENV === 'production' ? 'https://fetchrapp.com:3000' : 'http://127.0.0.1:3000',
+    {
+      transports: ['websocket'],
+    },
   ),
   { store },
 );
-
 Vue.use(VueApexCharts);
 Vue.component('apexchart', VueApexCharts);
 
