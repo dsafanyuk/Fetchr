@@ -186,6 +186,27 @@ function checkBalance(req, res) {
       });
     });
 }
+
+// PUT /users/:user_id
+function editUser(req, res) {
+  const user = req.body;
+  const { user_id } = req.params;
+  knex('users')
+    .where('user_id', user_id)
+    .update({
+      first_name: user.first_name,
+      last_name: user.last_name,
+      room_num: user.room_num,
+      phone_number: user.phone_number,
+    })
+    .then(() => {
+      res.status(200).send('success');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+}
 module.exports = {
   showOneUser,
   showUserOrders,
@@ -197,4 +218,5 @@ module.exports = {
   unfavorite,
   addBalance,
   checkBalance,
+  editUser,
 };
