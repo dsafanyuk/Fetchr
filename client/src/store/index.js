@@ -7,7 +7,8 @@ import courier from './modules/courier';
 import login from './modules/login';
 import notification from './modules/notification';
 import admin from './modules/admin';
-import orders from './modules/orders'
+import orders from './modules/orders';
+import account from './modules/account'
 
 Vue.use(Vuex);
 
@@ -35,6 +36,7 @@ export default new Vuex.Store({
     notification,
     admin,
     orders,
+    account,
   },
   strict: debug,
 });

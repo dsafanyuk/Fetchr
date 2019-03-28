@@ -57,7 +57,7 @@ router.get('/:user_id/', verifyToken, userController.showOneUser); // eslint-dis
 
 router.get('/:user_id/orders', verifyToken, userController.showUserOrders);
 
-router.patch('/:user_id', verifyToken, userController.updateUser);
+router.put('/:user_id', userController.editUser);
 
 router.post('/', verifyToken, userController.createUser);
 
