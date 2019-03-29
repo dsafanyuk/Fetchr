@@ -37,7 +37,7 @@
           to="/dashboard"
         >
       </router-link>
-      <v-spacer></v-spacer> 
+      <v-spacer></v-spacer>
       <v-flex align-self-center style="margin-right:10px" class="hidden-sm-and-down">
         <transition name="fade" v-on:enter="enter" v-on:leave="leave">
           <h4 class="white--text" style="margin-top: 20px" v-if="show">{{showText}}</h4>
@@ -176,11 +176,17 @@ export default {
           icon: "fas fa-sign-out-alt fa-s"
         }
       ],
-      textLists: [ "Remember, you cannot change your password", "You can go to shopping page by clicking Fetchr icon", "All items are non refundable", "Subscribe to PewDiePie", "Unsubscribe from T-series", "Follow us on instagram at @fecthr_app" ],
+      textLists: [
+        "Remember, you cannot change your password",
+        "You can go to shopping page by clicking Fetchr icon",
+        "All items are non refundable",
+        "Try favoriting an item",
+        "Test inputs to handle too many char/numbers"
+      ],
       showText: "",
       textTimeout: null,
       show: false,
-      indexText: 0,
+      indexText: 0
     };
   },
   components: {
@@ -192,7 +198,7 @@ export default {
     this.showText = this.textLists[this.randomIndex()];
     this.textTimeout = setTimeout(() => {
       this.show = true;
-    },3000);
+    }, 3000);
   },
   computed: {
     numOfItemsInCart: function() {
@@ -217,8 +223,8 @@ export default {
         this.show = true;
       }, 3000);
     },
-    randomIndex: function () {
-      return Math.floor(Math.random() * this.textLists.length)
+    randomIndex: function() {
+      return Math.floor(Math.random() * this.textLists.length);
     },
     showWallet: function(value) {
       this.$store.commit("wallet/toggleWallet", value);
@@ -298,7 +304,8 @@ export default {
   top: 0;
   z-index: 1;
 }
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
