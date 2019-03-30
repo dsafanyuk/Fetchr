@@ -44,7 +44,7 @@
             <span>Delivered Orders: {{updatedCourierInfo.delivered}}</span>
           </div>
           <v-divider></v-divider>
-          <v-btn type="submit" color="success" class="chatButton">Chat with me!</v-btn>
+          <CreateChat :order_id="CurrentOrderId"></CreateChat>
         </v-card>
       </v-flex>
     </v-layout>
@@ -53,18 +53,23 @@
     </v-btn>
   </v-container>
 </template>
-      
+
 <script>
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios.js";
+import CreateChat from "../../MainDashboard/components/ChatCreateConversation.vue";
 
 export default {
   data() {
     return {
+      CurrentOrderId: parseInt(this.$route.query.order),
       items: [],
       total: 0.0,
       isLoading: false
     };
+  },
+  components: {
+    CreateChat: CreateChat
   },
   computed: {
     orderStatus() {
@@ -141,5 +146,4 @@ export default {
 .in-progress {
   color: rgb(249, 170, 51);
 }
-</style> 
-  
+</style>

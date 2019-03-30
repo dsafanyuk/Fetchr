@@ -17,6 +17,9 @@
           <td class="text-xs-center">{{ props.item.delivery_status }}</td>
           <td class="text-xs-center">{{ props.item.order_total.toFixed(2) }}</td>
           <td>
+            <CreateChat :order_id="props.item.order_id"></CreateChat>
+          </td>
+          <td>
             <v-btn
               @click="viewOrder(props.item.order_id)"
               round
@@ -30,14 +33,19 @@
     </v-card>
   </v-container>
 </template>
-
 <script>
+import CreateChat from "../../MainDashboard/components/ChatCreateConversation.vue";
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";
+import { mapActions } from "vuex";
+import * as firebase from "firebase";
 
 export default {
   data() {
-    name: return {
+    return {
+      dialog: false,
+      msg_content: "",
+      user_id: browserCookies.get("user_id"),
       orders: [],
       isLoading: false,
       pagination: { sortBy: "order_id", descending: true, rowsPerPage: 15 },
@@ -55,6 +63,9 @@ export default {
         { text: "", align: "center", value: "" }
       ]
     };
+  },
+  components: {
+    CreateChat: CreateChat
   },
   mounted: function() {
     this.isLoading = true;
@@ -102,7 +113,25 @@ export default {
         ", " +
         date.getFullYear();
       return goodDate;
-    }
+    },
+    createChat: function(order_id) {
+      axios.get("/api/orders/" + order_id).then(response => {
+        var receiver_id = response.data[0]["courier_id"];
+        this.$store.dispatch("createChat", {
+          message: this.msg_content,
+          sender_id: this.user_id,
+          receiver: receiver_id,
+          or_id: order_id
+        });
+        this.$router.push("/chat/" + order_id);
+      });
+    },
+    getCourierId: function(courier_id) {
+      return axios.get("/api/orders/" + courier_id).then(response => {
+        return response.data;
+      });
+    },
+
   }
 };
 </script>

@@ -5,10 +5,11 @@ import cart from './modules/cart';
 import wallet from './modules/wallet';
 import courier from './modules/courier';
 import login from './modules/login';
+import chat from './modules/chat';
 import notification from './modules/notification';
 import admin from './modules/admin';
 import orders from './modules/orders';
-import account from './modules/account'
+import account from './modules/account';
 
 Vue.use(Vuex);
 
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     notification,
     admin,
     orders,
+    chat,
     account,
   },
   strict: debug,
