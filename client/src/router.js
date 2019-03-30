@@ -11,11 +11,14 @@ import Confirmation from './Components/layouts/MainDashboard/components/Confirma
 import View from './Components/layouts/MainDashboard/components/ViewOrder.vue';
 import CourierLayout from './Components/layouts/CourierDashboard/CourierLayout.vue';
 import Account from './Components/layouts/MainDashboard/components/Account.vue';
+import Chat from "./Components/layouts/MainDashboard/components/Chat.vue"
 /*                 ADMIN                */
 import AdminLayout from './Components/layouts/AdminDashboard/AdminLayout.vue';
 import AdminDashboard from './Components/layouts/AdminDashboard/components/AdminDashboard.vue';
 import AdminManageUsers from './Components/layouts/AdminDashboard/components/AdminManageUsers.vue';
 import AdminManageProducts from './Components/layouts/AdminDashboard/components/AdminManageProducts.vue';
+
+
 
 import NotFoundComponent from './Components/NotFoundComponent.vue';
 
@@ -123,8 +126,15 @@ const routes = [
         component: View,
         beforeEnter: requireAuth,
       },
+      {
+        path: '/chat/:order_id',
+        component: Chat,
+        beforeEnter: requireAuth,
+      },
+
     ],
   },
+
   { path: '/home', component: Home },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
