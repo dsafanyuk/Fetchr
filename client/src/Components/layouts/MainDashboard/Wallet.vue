@@ -121,6 +121,12 @@ export default {
             this.selectAmount(null);
           })
           .catch(error => {
+            Vue.toasted.error("Failed wallet transaction", {
+              theme: 'bubble',
+              duration: 4000,
+              position: 'top-center',
+              icon: 'report_problem'
+            });
             console.log(error);
           });
       } else {

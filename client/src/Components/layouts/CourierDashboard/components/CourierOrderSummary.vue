@@ -98,6 +98,7 @@ export default {
             if (response.data == "success") {
               this.dialog = false;
               this.$toasted.show("Order Accepted! Go pick it up plz", {
+                theme: 'bubble',
                 position: "top-center",
                 duration: 5000
               });
@@ -109,6 +110,7 @@ export default {
               this.$toasted.error(
                 "Oops! This order has already been accepted. :(",
                 {
+                  theme: 'bubble',
                   position: "top-center",
                   duration: 5000
                 }
@@ -133,6 +135,7 @@ export default {
           if (response.data == "success") {
             this.dialog = false;
             this.$toasted.show("Order delivered!", {
+              theme: 'bubble',
               position: "top-center",
               duration: 5000
             });
@@ -142,6 +145,7 @@ export default {
             });
           } else {
             this.$toasted.error("Oops! :(", {
+              theme: 'bubble',
               position: "top-center",
               duration: 5000
             });

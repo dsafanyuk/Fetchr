@@ -73,15 +73,17 @@ export default {
       .get("/api/users/" + browserCookies.get("user_id") + "/orders")
       .then(response => {
         this.orders = response.data;
-        loadingOrdersToast.text("Orders loaded!").goAway(500);
         this.isLoading = false;
       })
       .catch(error => {
         this.isLoading = false;
         if (error.response) {
           console.log(error);
-          loadingProductsToast.goAway();
-          this.$toasted.error("Something went wrong");
+          this.$toasted.error("Something went wrong", {
+            theme: 'bubble',
+            position: 'top-center',
+            icon: 'report_problem',
+          }).goAway(1000);
         }
       });
   },
