@@ -120,9 +120,10 @@
             .catch((error) => {
               console.log(error);
               this.$toasted.error('WRONG EMAIL OR PASSWORD', {
-                theme: "primary", 
+                theme: "bubble", 
                 position: "top-center", 
-                duration : 5000
+                duration : 5000,
+                icon: "report_problem"
               });
             });
         } else {

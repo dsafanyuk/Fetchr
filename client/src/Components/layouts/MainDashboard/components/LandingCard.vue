@@ -112,12 +112,20 @@ export default {
             console.log(response);
             this.isFavorite = "true";
             this.product.is_favorite = "true";
-            this.$toasted.success("Added to favorites!").goAway(1000);
+            this.$toasted.success("Added to favorites!", { 
+              theme: 'bubble',
+              position: 'top-center',
+              icon: 'favorite',
+            }).goAway(1000);
           }
         })
         .catch(error => {
           console.log(error);
-          this.$toasted.error("Error favoriting").goAway(1000);
+          this.$toasted.error("Error favoriting", {
+            theme: 'bubble',
+            position: 'top-center',
+            icon: 'report_problem',
+          }).goAway(1000);
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
@@ -138,12 +146,20 @@ export default {
             this.isFavorite = "false";
             this.product.is_favorite = "false";
             console.log(`After unfavoriting, isFavorite = ${this.isFavorite}`);
-            this.$toasted.success("Removed from favorites!").goAway(1000);
+            this.$toasted.success("Removed from favorites!", {
+              theme: 'bubble',
+              position: 'top-center',
+              icon: 'favorite_border',
+            }).goAway(1000);
           }
         })
         .catch(error => {
           console.log(error);
-          this.$toasted.error("Error unfavoriting").goAway(1000);
+          this.$toasted.error("Error unfavoriting", {
+            theme: 'bubble',
+            position: 'top-center',
+            icon: 'report_problem',
+          }).goAway(1000);
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
@@ -155,13 +171,22 @@ export default {
     },
     // Add item to cart
     addItem: function() {
-      this.$toasted.success("Added to cart").goAway(1000);
+      this.$toasted.success("Added to cart", {
+        theme: 'bubble',
+        position: 'top-center',
+        icon: 'shopping_cart',
+      }).goAway(1000);
       this.$store.commit("cart/addItem", this.product);
       this.$forceUpdate();
     },
     // Remove an item from cart
     removeItem: function(product) {
       this.$store.commit("cart/removeItem", product);
+      this.$toasted.success("Removed from cart", {
+        theme: 'bubble',
+        position: 'top-center',
+        icon: 'remove_shopping_cart',
+      }).goAway(1000);
     }
   }
 };

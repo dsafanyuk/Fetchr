@@ -11,6 +11,8 @@ import * as Sentry from '@sentry/browser';
 import App from './App.vue';
 import store from './store';
 import router from './router';
+import IdleVue from 'idle-vue';
+import browserCookies from "browser-cookies";
 import 'vuetify/dist/vuetify.min.css';
 import * as firebase from 'firebase';
 
@@ -57,12 +59,38 @@ Vue.use(Vuetify, {
 });
 Vue.use(Vuex);
 
+const eventsHub = new Vue();
+
+Vue.use(IdleVue, {
+  eventEmitter: eventsHub,
+  idleTime: 5 * 60 * 5000,
+});
+
 new Vue({
   el: '#app',
   template: '<App/>',
   store,
   router,
   render: h => h(App),
+  onIdle() {
+    // Check if user is logged in, then log out
+    if(
+      store.getters['login/isLoggedIn']
+      && browserCookies.get('token')
+      && browserCookies.get('user_id')
+    ) {
+        // Clear cookies
+        let allCookies = browserCookies.all();
+        for (let cookieName in allCookies) {
+          browserCookies.erase(cookieName);
+        }
+        store.dispatch('login/logout');
+        router.push('/login');
+    }
+  },
+  onActive() {
+    this.messageStr = 'Hello'
+  },
   created() {
     firebase.initializeApp({
       apiKey: 'AIzaSyAMV114OOLoOo0rIRzmLo4WR_S_Q6G-P6o',

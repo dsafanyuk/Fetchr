@@ -15,6 +15,7 @@
     "apexcharts": "^3.6.3",
     "axios": "^0.18.0",
     "browser-cookies": "^1.2.0",
+    "idle-vue": "^2.0.5",
     "json-parse-better-errors": "^1.0.2",
     "firebase": "^5.8.5",
     "graphql": "^14.1.1",
