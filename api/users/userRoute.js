@@ -29,10 +29,10 @@ router.post(
       })
       .isNumeric()
       .trim(),
-    check('first_name', 'Cannot have numbers')
+    check('first_name', 'Cannot have numbers or special characters')
       .isAlpha()
       .trim(),
-    check('last_name', 'Cannot have numbers')
+    check('last_name', 'Cannot have numbers or special characters')
       .isAlpha()
       .trim(),
   ],
