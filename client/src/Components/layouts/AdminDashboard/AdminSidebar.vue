@@ -17,26 +17,18 @@
         <v-list-tile-title class="title">Admin Panel</v-list-tile-title>
       </v-list-tile>
       <v-divider/>
-      <v-list-tile
-        :to="'/admin/dashboard'"
-        avatar
-        class="v-list-item"
-        :active-class="'action-tile'"
-      >
-        <v-list-tile-title color="white" :active-class="'action-tile'" v-text="'Dashboard'"/>
-        <i class="material-icons" @click="$store.dispatch('admin/getDashboard')">refresh</i>
+      <v-list-tile :to="'/admin'" avatar class="v-list-item" active-class="white--text">
+        <v-list-tile-title v-text="'Dashboard'"/>
+        <i
+          class="material-icons"
+          color="white"
+          @click="$store.dispatch('admin/getDashboard')"
+        >refresh</i>
       </v-list-tile>
-      <v-list-group
-        value="true"
-        v-for="(link, i) in links"
-        :key="i"
-        no-action
-        :active-class="color"
-        append-icon=""
-      >
+      <v-list-group v-for="(link, i) in links" :key="i" append-icon>
         <template slot="activator">
-          <v-list-tile :to="link.to" avatar class="v-list-item" :active-class="'action-tile'">
-            <v-list-tile-title color="white" :active-class="'action-tile'" v-text="link.text"/>
+          <v-list-tile :to="link.to" active-class="accent--text">
+            <v-list-tile-title color="white" v-text="link.text"/>
           </v-list-tile>
         </template>
       </v-list-group>
@@ -51,12 +43,12 @@ export default {
       {
         to: "/admin/products/manage",
         icon: "mdi-account",
-        text: "Products",
+        text: "Products"
       },
       {
         to: "/admin/users/manage",
         icon: "mdi-clipboard-outline",
-        text: "Users",
+        text: "Users"
       }
     ],
     responsive: false,
@@ -83,5 +75,12 @@ export default {
     padding-left: 15px;
     padding-right: 15px;
   }
+  :hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+.active-boi {
+  text-decoration: underline;
 }
 </style>
