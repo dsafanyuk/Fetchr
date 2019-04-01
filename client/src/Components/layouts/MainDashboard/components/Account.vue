@@ -166,13 +166,17 @@ export default {
         v => !!v || "First Name cannot be empty.",
         v =>
           (v && v.length <= 15) ||
-          "The First Name field may not be greater than 15 characters."
+          "The First Name field may not be greater than 15 characters.",
+        v => /^[A-Za-z]+$/.test(v) ||
+          "The First Name cannot have numbers or special characters"
       ],
       lastNameRules: [
         v => !!v || "Last Name cannot be empty.",
         v =>
           (v && v.length <= 15) ||
-          "The Last Name field may not be greater than 15 characters."
+          "The Last Name field may not be greater than 15 characters.",
+        v => /^[A-Za-z]+$/.test(v) ||
+          "The Last Name cannot have numbers or special characters"
       ],
       roomNumberRules: [
         v => !!v || "The Room Number field is required",
@@ -182,9 +186,10 @@ export default {
       ],
       phoneNumberRules: [
         v => !!v || "The Phone Number field is required.",
-        v =>
+        v => 
           (v && v.length <= 10 && v.length >= 10) ||
           "The Phone Number field must be numeric and exactly contain 10 digits."
+          
       ],
       emailRules: [
         v => !!v || "E-mail is required",
