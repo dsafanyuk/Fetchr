@@ -79,7 +79,7 @@ const routes = [
     },
     children: [
       {
-        path: 'dashboard',
+        path: '',
         component: AdminDashboard,
         beforeEnter: requireAuth,
       },

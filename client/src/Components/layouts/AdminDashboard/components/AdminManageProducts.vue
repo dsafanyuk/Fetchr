@@ -76,7 +76,8 @@
       </v-card>
     </v-dialog>
     <v-card>
-      <v-card-title>Products
+      <v-card-title>
+        Products
         <v-spacer></v-spacer>
         <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       </v-card-title>
