@@ -6,14 +6,19 @@
           <div class="bar-widget">
             <div class="table-box">
               <div class="table-detail">
-                <div class="iconbox bg-info">
+                <v-btn fab icon color="primary" :ripple="false">
                   <v-icon large color="white">shopping_basket</v-icon>
-                </div>
+                </v-btn>
               </div>
 
               <div class="table-detail">
-                <v-progress-circular class="m-t-0 m-b-5" :size="23" v-if="isLoading" indeterminate color="primary">
-                </v-progress-circular>
+                <v-progress-circular
+                  class="m-t-0 m-b-5"
+                  :size="23"
+                  v-if="isLoading"
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
                 <div v-if="!(isLoading)">
                   <h4 class="m-t-0 m-b-5">
                     <b>{{available_orders}}</b>
@@ -128,14 +133,19 @@
           <div class="bar-widget">
             <div class="table-box">
               <div class="table-detail">
-                <div class="iconbox bg-info">
-                  <v-icon large color="white" class="rounded">how_to_reg</v-icon>
-                </div>
+                <v-btn fab icon color="primary" :ripple="false">
+                  <v-icon large color="white">how_to_reg</v-icon>
+                </v-btn>
               </div>
 
               <div class="table-detail">
-                <v-progress-circular class="m-t-0 m-b-5" :size="23" v-if="isLoading" indeterminate color="primary">
-                </v-progress-circular>
+                <v-progress-circular
+                  class="m-t-0 m-b-5"
+                  :size="23"
+                  v-if="isLoading"
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
                 <div v-if="!(isLoading)">
                   <h4 class="m-t-0 m-b-5">
                     <b>{{delivered_orders}}</b>
@@ -251,14 +261,19 @@
           <div class="bar-widget">
             <div class="table-box">
               <div class="table-detail">
-                <div class="iconbox bg-info">
+                <v-btn fab icon color="primary" :ripple="false">
                   <v-icon large color="white">attach_money</v-icon>
-                </div>
+                </v-btn>
               </div>
 
               <div class="table-detail">
-                <v-progress-circular class="m-t-0 m-b-5" :size="23" v-if="isLoading" indeterminate color="primary">
-                </v-progress-circular>
+                <v-progress-circular
+                  class="m-t-0 m-b-5"
+                  :size="23"
+                  v-if="isLoading"
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
                 <div v-if="!(isLoading)">
                   <h4 class="m-t-0 m-b-5">
                     <b>{{revenue}}</b>
@@ -376,9 +391,9 @@
           <div class="bar-widget">
             <div class="table-box">
               <div class="table-detail">
-                <div class="iconbox bg-info">
-                  <i class="mdi mdi-shopping"></i>
-                </div>
+                <v-btn fab icon color="primary" :ripple="false">
+                  <v-icon large color="white">shopping_basket</v-icon>
+                </v-btn>
               </div>
 
               <div class="table-detail">
@@ -494,9 +509,9 @@
           <div class="bar-widget">
             <div class="table-box">
               <div class="table-detail">
-                <div class="iconbox bg-info">
-                  <i class="mdi mdi-shopping"></i>
-                </div>
+                <v-btn fab icon color="primary" :ripple="false">
+                  <v-icon large color="white">how_to_reg</v-icon>
+                </v-btn>
               </div>
 
               <div class="table-detail">
@@ -613,9 +628,9 @@
           <div class="bar-widget">
             <div class="table-box">
               <div class="table-detail">
-                <div class="iconbox bg-info">
-                  <i class="mdi mdi-shopping"></i>
-                </div>
+                <v-btn fab icon color="primary" :ripple="false">
+                  <v-icon large color="white">attach_money</v-icon>
+                </v-btn>
               </div>
 
               <div class="table-detail">
@@ -743,12 +758,12 @@ export default {
     return {
       available_orders: 0,
       delivered_orders: 0,
-      revenue: 0,
+      revenue: 0
     };
   },
   computed: {
     isLoading() {
-      return this.$store.getters['courier/isLoading']
+      return this.$store.getters["courier/isLoading"];
     }
   },
   methods: {
@@ -781,7 +796,5 @@ export default {
 };
 </script>
 
-<style scoped="true">
-@import "../../../assets/courier/css/core.css";
-@import "../../../assets/courier/css/components.css";
+<style scoped src="../../../assets/courier/css/core.css">
 </style>
