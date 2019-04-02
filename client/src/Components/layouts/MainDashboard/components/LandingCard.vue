@@ -106,23 +106,45 @@ export default {
         })
         .then(response => {
           if (response.status == 200) {
-            console.log(response);
             this.isFavorite = "true";
             this.product.is_favorite = "true";
-            this.$toasted.success("Added to favorites!", { 
-              theme: 'bubble',
-              position: 'top-center',
-              icon: 'favorite',
-            }).goAway(1000);
+            this.$toasted
+              .success("Added to favorites!", {
+                theme: "bubble",
+                position: "top-center",
+                icon: "favorite",
+                action: [
+                  {
+                    class: "toast-action",
+                    text: "SHOW",
+                    onClick: (e, toastObject) => {
+                      toastObject.goAway(0);
+                      this.$store.commit(
+                        "dashboard/setSelectedCategory",
+                        "Favorites"
+                      );
+                    }
+                  },
+                  {
+                    icon: "clear",
+                    onClick: (e, toastObject) => {
+                      toastObject.goAway(0);
+                    }
+                  }
+                ]
+              })
+              .goAway(5000);
           }
         })
         .catch(error => {
           console.log(error);
-          this.$toasted.error("Error favoriting", {
-            theme: 'bubble',
-            position: 'top-center',
-            icon: 'report_problem',
-          }).goAway(1000);
+          this.$toasted
+            .error("Error favoriting", {
+              theme: "bubble",
+              position: "top-center",
+              icon: "report_problem"
+            })
+            .goAway(1000);
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
@@ -142,21 +164,24 @@ export default {
           if (response.status == 200) {
             this.isFavorite = "false";
             this.product.is_favorite = "false";
-            console.log(`After unfavoriting, isFavorite = ${this.isFavorite}`);
-            this.$toasted.success("Removed from favorites!", {
-              theme: 'bubble',
-              position: 'top-center',
-              icon: 'favorite_border',
-            }).goAway(1000);
+            this.$toasted
+              .success("Removed from favorites!", {
+                theme: "bubble",
+                position: "top-center",
+                icon: "favorite_border"
+              })
+              .goAway(1000);
           }
         })
         .catch(error => {
           console.log(error);
-          this.$toasted.error("Error unfavoriting", {
-            theme: 'bubble',
-            position: 'top-center',
-            icon: 'report_problem',
-          }).goAway(1000);
+          this.$toasted
+            .error("Error unfavoriting", {
+              theme: "bubble",
+              position: "top-center",
+              icon: "report_problem"
+            })
+            .goAway(1000);
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx

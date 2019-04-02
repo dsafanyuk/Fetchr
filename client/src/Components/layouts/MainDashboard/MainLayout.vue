@@ -1,7 +1,12 @@
 <template>
   <v-app>
-    <MainHeader v-model="search" @selectedCategory="selectedCategory = $event"></MainHeader>
-    <router-view id="main" :search="search" :selectedCategory="selectedCategory"></router-view>
+    <MainHeader
+      v-model="search"
+    ></MainHeader>
+    <router-view
+      id="main"
+      :search="search"
+    ></router-view>
     <MainFooter></MainFooter>
   </v-app>
 </template>
@@ -14,9 +19,9 @@ export default {
   data() {
     return {
       search: "",
-      selectedCategory: "Popular"
     };
   },
+  watch: {},
   components: {
     MainHeader: MainHeader,
     MainFooter: MainFooter

@@ -8,11 +8,11 @@ import VueSocketio from 'vue-socket.io-extended';
 import io from 'socket.io-client';
 import VueApexCharts from 'vue-apexcharts';
 import * as Sentry from '@sentry/browser';
+import IdleVue from 'idle-vue';
+import browserCookies from 'browser-cookies';
 import App from './App.vue';
 import store from './store';
 import router from './router';
-import IdleVue from 'idle-vue';
-import browserCookies from "browser-cookies";
 import 'vuetify/dist/vuetify.min.css';
 import * as firebase from 'firebase';
 
@@ -35,10 +35,9 @@ Vue.use(
   VueSocketio,
   io(
     process.env.NODE_ENV === 'production' ? 'https://fetchrapp.com:3000' : 'http://127.0.0.1:3000',
-    // ,
-    // {
-    //   transports: ['websocket'],
-    // },
+    {
+      transports: ['websocket', 'polling'],
+    },
   ),
   { store },
 );
@@ -74,22 +73,22 @@ new Vue({
   render: h => h(App),
   onIdle() {
     // Check if user is logged in, then log out
-    if(
+    if (
       store.getters['login/isLoggedIn']
       && browserCookies.get('token')
       && browserCookies.get('user_id')
     ) {
-        // Clear cookies
-        let allCookies = browserCookies.all();
-        for (let cookieName in allCookies) {
-          browserCookies.erase(cookieName);
-        }
-        store.dispatch('login/logout');
-        router.push('/login');
+      // Clear cookies
+      const allCookies = browserCookies.all();
+      for (const cookieName in allCookies) {
+        browserCookies.erase(cookieName);
+      }
+      store.dispatch('login/logout');
+      router.push('/login');
     }
   },
   onActive() {
-    this.messageStr = 'Hello'
+    this.messageStr = 'Hello';
   },
   created() {
     firebase.initializeApp({
