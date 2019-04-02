@@ -13,7 +13,7 @@
                         <br>
                         <form @keyup.enter="registerCustomer">
                             <v-text-field
-                                v-validate="'required|max:15'"
+                                v-validate="'required|max:15|alpha'"
                                 v-model="cFirstname"
                                 :counter="15"
                                 :error-messages="errors.collect('cFirstname')"
@@ -24,7 +24,7 @@
                                 required
                             ></v-text-field>
                             <v-text-field
-                                v-validate="'required|max:15'"
+                                v-validate="'required|max:15|alpha'"
                                 v-model="cLastname"
                                 :counter="15"
                                 :error-messages="errors.collect('cLastname')"
@@ -46,8 +46,9 @@
                                 required
                             ></v-text-field>
                             <v-text-field
+                                name="room_number"
+                                mask="####"
                                 v-validate="'required|digits:4'"
-                                type="number"
                                 v-model="cRoom"
                                 :error-messages="errors.collect('cRoom')"
                                 data-vv-name="cRoom"
@@ -57,8 +58,8 @@
                                 required
                             ></v-text-field>
                             <v-text-field
+                                mask="phone"
                                 v-validate="'required|digits:10'"
-                                type="number"
                                 v-model="cPhone"
                                 :error-messages="errors.collect('cPhone')"
                                 data-vv-name="cPhone"
@@ -68,7 +69,7 @@
                                 required
                             ></v-text-field>
                             <v-text-field
-                                v-validate="'required'"
+                                v-validate="'required|min:8'"
                                 type="password"
                                 v-model="cPassword"
                                 :error-messages="errors.collect('cPassword')"
@@ -80,7 +81,7 @@
                                 required
                             ></v-text-field>
                             <v-text-field
-                                v-validate="'required|confirmed:cPassword'"
+                                v-validate="'required|min:8|confirmed:cPassword'"
                                 type="password"
                                 v-model="cRepeatPassword"
                                 :error-messages="errors.collect('cRepeatPassword')"
@@ -179,17 +180,9 @@ import Vue from 'vue'
             registerCustomer(e) {
                 let toasted = this.$toasted;
 
-                if (
-                    this.cFirstname &&
-                    this.cLastname &&
-                    this.cEmail &&
-                    this.cRoom &&
-                    this.cPhone &&
-                    this.cPassword &&
-                    this.cRepeatPassword
-                ) {
-                    // Replace with a Validator Lib
-                    if (this.cPassword === this.cRepeatPassword) {
+                this.$validator.validateAll()
+                .then((result) => {
+                    if(result) {
                         axios
                             .post('api/users/register', {
                                 first_name: this.cFirstname,
@@ -223,11 +216,11 @@ import Vue from 'vue'
                                     console.log(error.response.headers);
                                 }
                             });
-
                     }
-                } else {
-                    this.$validator.validateAll();
-                }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             },
         },
     };

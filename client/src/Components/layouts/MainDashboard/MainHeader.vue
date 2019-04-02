@@ -125,7 +125,7 @@
 import ShoppingCart from "./ShoppingCart.vue";
 import Wallet from "./Wallet.vue";
 import browserCookies from "browser-cookies";
-import Vue from "vue";
+import Vue from 'vue';
 
 export default {
   props: ["search"],
