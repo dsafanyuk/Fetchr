@@ -37,8 +37,13 @@
           to="/dashboard"
         >
       </router-link>
-      <v-spacer></v-spacer> 
-      <v-flex v-on:click="scrollToTop" align-self-center style="margin-right:10px" class="hidden-sm-and-down">
+      <v-spacer></v-spacer>
+      <v-flex
+        v-on:click="scrollToTop"
+        align-self-center
+        style="margin-right:10px"
+        class="hidden-sm-and-down"
+      >
         <transition name="fade" v-on:enter="enter" v-on:leave="leave">
           <h4 class="white--text" style="margin-top: 20px" v-if="show">{{showText}}</h4>
         </transition>
@@ -104,46 +109,14 @@
       centered
       light
       icons-and-text
-      v-model.lazy="activeCategory"
+      v-model="selectedCategory"
       show-arrows
       v-if="isLanding "
+      slider-color="accent"
     >
-      <v-tabs-slider color="orange"></v-tabs-slider>
-      <v-tab href="#Popular">
-        Popular
-        <v-icon>fas fa-fire-alt</v-icon>
-      </v-tab>
-
-      <v-tab href="#Snacks">
-        Snacks
-        <v-icon>fas fa-hamburger</v-icon>
-      </v-tab>
-
-      <v-tab href="#Drinks">
-        Drinks
-        <v-icon>fas fa-mug-hot</v-icon>
-      </v-tab>
-
-      <v-tab href="#Personal">
-        Personal
-        <v-icon>fas fa-toilet-paper</v-icon>
-      </v-tab>
-      <v-tab href="#Electronics">
-        Electronics
-        <v-icon>fas fa-headphones-alt</v-icon>
-      </v-tab>
-      <v-tab href="#School Supplies">
-        School Supplies
-        <v-icon>fas fa-paperclip</v-icon>
-      </v-tab>
-      <v-tab href="#Misc">
-        Misc
-        <v-icon>fas fa-random</v-icon>
-      </v-tab>
-
-      <v-tab href="#Favorites">
-        Favorites
-        <v-icon>fas fa-heart</v-icon>
+      <v-tab v-for="(category) in categories" :key="category.name" :href="'#' + category.name">
+        {{category.name}}
+        <v-icon>{{category.icon}}</v-icon>
       </v-tab>
     </v-tabs>
   </div>
@@ -152,7 +125,7 @@
 import ShoppingCart from "./ShoppingCart.vue";
 import Wallet from "./Wallet.vue";
 import browserCookies from "browser-cookies";
-import Vue from 'vue';
+import Vue from "vue";
 
 export default {
   props: ["search"],
@@ -161,7 +134,36 @@ export default {
     return {
       firstName: browserCookies.get("first_name"),
       showCart: false,
-      activeCategory: null,
+      categories: [
+        {
+          name: "Popular",
+          icon: "fas fa-fire-alt"
+        },
+        {
+          name: "Snacks",
+          icon: "fas fa-hamburger"
+        },
+        {
+          name: "Drinks",
+          icon: "fas fa-mug-hot"
+        },
+        {
+          name: "Personal",
+          icon: "fas fa-toilet-paper"
+        },
+        {
+          name: "Electronics",
+          icon: "fas fa-headphones-alt"
+        },
+        {
+          name: "Misc",
+          icon: "fas fa-random"
+        },
+        {
+          name: "Favorites",
+          icon: "fas fas fa-heart"
+        }
+      ],
       menu: [
         { title: "Switch To Courier", icon: "fa fa-bicycle" },
         { title: "Account", icon: "fas fa-user-alt fa-s" },
@@ -202,6 +204,15 @@ export default {
     }, 3000);
   },
   computed: {
+    selectedCategory: {
+      get() {
+        return this.$store.getters["dashboard/getSelectedCategory"];
+      },
+      set(value) {
+        this.$store.commit("dashboard/setSelectedCategory", value);
+        this.scrollToTop();
+      }
+    },
     numOfItemsInCart: function() {
       return this.$store.getters["cart/totalCartItems"];
     },
@@ -279,13 +290,8 @@ export default {
     goToDashboard: function() {
       this.$router.push("/dashboard");
     },
-    scrollToTop: function () {
+    scrollToTop: function() {
       window.scrollTo(0, 0);
-    }
-  },
-  watch: {
-    activeCategory: function(active) {
-      this.$emit("selectedCategory", active);
     }
   }
 };
