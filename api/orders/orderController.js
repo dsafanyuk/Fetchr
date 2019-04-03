@@ -34,7 +34,6 @@ function showOneOrder(req, res) {
 // POST /orders
 function createOrder(req, res) {
   const request = req.body;
-
   const order = {
     customer_id: request.customer_id,
     delivery_status: request.delivery_status,
@@ -122,9 +121,6 @@ function showOneOrderSummary(req, res) {
     .where('orders.order_id', req.params.order_id)
     .select('product_name', 'quantity', 'price', 'product_url')
     .then((productList) => {
-      productList.forEach((product) => {
-        product.price *= product.quantity; // eslint-disable-line no-param-reassign
-      });
       knex('orders')
         .where('orders.order_id', req.params.order_id)
         .select('delivery_status', 'customer_id')
@@ -139,7 +135,6 @@ function showOneOrderSummary(req, res) {
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
     });
 }
-
 
 module.exports = {
   showAllOrders,
