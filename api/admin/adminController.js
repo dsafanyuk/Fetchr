@@ -31,7 +31,6 @@ function showAllProducts(req, res) {
 
 function addProduct(req, res) {
   singleUpload(req, res, (err, some) => {
-    console.log(req.body);
     if (err) {
       Sentry.captureException(err);
       return res
@@ -112,7 +111,9 @@ function editUser(req, res) {
 }
 
 function ordersPerDay(req, res) {
-  knex.raw(`select count(if(dayofweek(time_delivered) = 1, order_id, null)) as Sunday,
+  knex
+    .raw(
+      `select count(if(dayofweek(time_delivered) = 1, order_id, null)) as Sunday,
                    count(if(dayofweek(time_delivered) = 2, order_id, null)) as Monday,
                    count(if(dayofweek(time_delivered) = 3, order_id, null)) as Tuesday,
                    count(if(dayofweek(time_delivered) = 4, order_id, null)) as Wednesday,
@@ -120,13 +121,20 @@ function ordersPerDay(req, res) {
                    count(if(dayofweek(time_delivered) = 6, order_id, null)) as Friday,
                    count(if(dayofweek(time_delivered) = 7, order_id, null)) as Saturday
               from orders
-             where time_delivered > current_date - interval 7 day`)
-   .then((response) => { res.json(response) })
-   .catch((error) => {res.status(422).send({ message: error})});
+             where time_delivered > current_date - interval 7 day`,
+    )
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      res.status(422).send({ message: error });
+    });
 }
 
 function productsPerDay(req, res) {
-  knex.raw(`select sum(if(dayofweek(time_delivered) = 1, quantity, 0)) as Sunday,
+  knex
+    .raw(
+      `select sum(if(dayofweek(time_delivered) = 1, quantity, 0)) as Sunday,
                    sum(if(dayofweek(time_delivered) = 2, quantity, 0)) as Monday,
                    sum(if(dayofweek(time_delivered) = 3, quantity, 0)) as Tuesday,
                    sum(if(dayofweek(time_delivered) = 4, quantity, 0)) as Wednesday,
@@ -135,53 +143,92 @@ function productsPerDay(req, res) {
                    sum(if(dayofweek(time_delivered) = 7, quantity, 0)) as Saturday
               from orders
               join order_summary on orders.order_id = order_summary.order_id
-             where time_delivered > current_date - interval 7 day`)
-   .then((response) => { res.json(response) })
-   .catch((error) => {res.status(422).send({ message: error})});
+             where time_delivered > current_date - interval 7 day`,
+    )
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      res.status(422).send({ message: error });
+    });
 }
 
 function prodsSoldByCat(req, res) {
-  knex.raw(`call prodsSoldByCat();`)
-   .then((response) => { res.json(response) })
-   .catch((error) => {res.status(422).send({ message: error})});
+  knex
+    .raw('call prodsSoldByCat();')
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      res.status(422).send({ message: error });
+    });
 }
 
 function totalOrders(req, res) {
-  knex.raw(`select count(*)as total from orders;`)
-    .then((response) => { res.json(response) })
-    .catch((error) => {res.status(422).send({ message: error})});
+  knex
+    .raw('select count(*)as total from orders;')
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      res.status(422).send({ message: error });
+    });
 }
 
 function totalDelivered(req, res) {
-  knex.raw(`select count(*) as total from orders where delivery_status = 'delivered'`)
-    .then((response) => { res.json(response) })
-    .catch((error) => {res.status(422).send({ message: error})});
+  knex
+    .raw('select count(*) as total from orders where delivery_status = \'delivered\'')
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      res.status(422).send({ message: error });
+    });
 }
 
 function totalUsers(req, res) {
-  knex.raw(`select count(*) as total from users`)
-    .then((response) => { res.json(response) })
-    .catch((error) => {res.status(422).send({ message: error})});
+  knex
+    .raw('select count(*) as total from users')
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      res.status(422).send({ message: error });
+    });
 }
 
 function totalAmountOrdered(req, res) {
-  knex.raw(`select sum(order_total) as total from orders`)
-    .then((response) => { res.json(response) })
-    .catch((error) => {res.status(422).send({ message: error})});
+  knex
+    .raw('select sum(order_total) as total from orders')
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      res.status(422).send({ message: error });
+    });
 }
 
 function recentOrders(req, res) {
-  knex.raw(`select order_id, first_name, last_name, order_total
+  knex
+    .raw(
+      `select order_id, first_name, last_name, order_total
               from orders
               join users on users.user_id = orders.customer_id
              order by order_id desc
-             limit 3`)
-    .then((response) => { res.json(response) })
-    .catch((error) => {res.status(422).send({ message: error})});
+             limit 3`,
+    )
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      res.status(422).send({ message: error });
+    });
 }
 
 function topThreeCouriers(req, res) {
-  knex.raw(`with info as (select user_id, first_name, last_name, delivery_status, order_id
+  knex
+    .raw(
+      `with info as (select user_id, first_name, last_name, delivery_status, order_id
                             from orders
                             join users on users.user_id = orders.courier_id)
             select first_name, last_name,
@@ -190,9 +237,14 @@ function topThreeCouriers(req, res) {
               from info
              group by user_id, first_name, last_name
              order by count(*) desc
-             limit 3;`)
-    .then((response) => { res.json(response) })
-    .catch((error) => {res.status(422).send({ message: error})});
+             limit 3;`,
+    )
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      res.status(422).send({ message: error });
+    });
 }
 
 // Make these functions available to the router

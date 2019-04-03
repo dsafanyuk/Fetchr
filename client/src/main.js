@@ -10,13 +10,11 @@ import VueApexCharts from 'vue-apexcharts';
 import * as Sentry from '@sentry/browser';
 import IdleVue from 'idle-vue';
 import browserCookies from 'browser-cookies';
+import firebase from 'firebase';
 import App from './App.vue';
 import store from './store';
 import router from './router';
-import IdleVue from 'idle-vue';
-import browserCookies from "browser-cookies";
 import 'vuetify/dist/vuetify.min.css';
-import * as firebase from 'firebase';
 
 Vue.use(VueApexCharts);
 Vue.component('apexchart', VueApexCharts);
@@ -75,7 +73,7 @@ new Vue({
   render: h => h(App),
   onIdle() {
     // Check if user is logged in, then log out
-    if(
+    if (
       store.getters['login/isLoggedIn']
       && browserCookies.get('token')
       && browserCookies.get('user_id')

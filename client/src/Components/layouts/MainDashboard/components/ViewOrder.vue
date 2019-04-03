@@ -18,7 +18,7 @@
               <img :src="props.item.product_url" class="checkout-img">
             </td>
             <td class="body-2">{{ props.item.product_name }}</td>
-            <td class="text-xs-left">${{ (props.item.item_total).toFixed(2) }}</td>
+            <td class="text-xs-left">${{ props.item.price }}</td>
             <td class="text-xs-left">{{ props.item.quantity }}</td>
           </template>
           <template slot="footer">
@@ -48,7 +48,7 @@
         </v-card>
       </v-flex>
     </v-layout>
-    <v-btn color="#F5F5F5" @click="$router.go(-1)">
+    <v-btn color="#F5F5F5" @click="$router.push('/orders')">
       <v-icon black>arrow_back</v-icon>&nbsp; &nbsp;Back to Orders
     </v-btn>
   </v-container>

@@ -9,7 +9,7 @@
               <img :src="props.item.product_url" class="checkout-img">
             </td>
             <td class="body-2 text-xs-left">{{ props.item.product_name }}</td>
-            <td class="text-xs-left">${{ (props.item.price*props.item.quantity).toFixed(2) }}</td>
+            <td class="text-xs-left">${{ (props.item.price).toFixed(2) }}</td>
             <td class="text-xs-center">
               <v-btn icon v-on:click="incQuantity(props.item)">
                 <v-icon color="primary">add_circle</v-icon>
@@ -115,6 +115,9 @@ export default {
       }
     }
   },
+  mounted: function() {
+    this.$store.dispatch("wallet/getWalletBalance");
+  },
   methods: {
     checkout: function(event) {
       let socket = this.$socket;
@@ -131,6 +134,7 @@ export default {
         });
       });
       this.$store.dispatch("wallet/getWalletBalance");
+      console.log(productsWithQuantity);
       if (this.sufficientFunds) {
         axios
           .post("/api/orders/", {
@@ -139,10 +143,11 @@ export default {
             order_total: this.$store.getters["cart/totalCartPrice"],
             productsWithQuantity: productsWithQuantity
           })
-          .then(function(response) {
+          .then(response => {
             socket.emit("ORDER_CREATED");
             //go to the confirmation page and send it the order id
             router.push("/confirmation?order=" + response.data.message);
+            this.$store.dispatch("wallet/getWalletBalance");
           });
       } else {
       }
