@@ -11,14 +11,12 @@ import Confirmation from './Components/layouts/MainDashboard/components/Confirma
 import View from './Components/layouts/MainDashboard/components/ViewOrder.vue';
 import CourierLayout from './Components/layouts/CourierDashboard/CourierLayout.vue';
 import Account from './Components/layouts/MainDashboard/components/Account.vue';
-import Chat from "./Components/layouts/MainDashboard/components/Chat.vue"
+import Chat from './Components/layouts/MainDashboard/components/Chat.vue';
 /*                 ADMIN                */
 import AdminLayout from './Components/layouts/AdminDashboard/AdminLayout.vue';
 import AdminDashboard from './Components/layouts/AdminDashboard/components/AdminDashboard.vue';
 import AdminManageUsers from './Components/layouts/AdminDashboard/components/AdminManageUsers.vue';
 import AdminManageProducts from './Components/layouts/AdminDashboard/components/AdminManageProducts.vue';
-
-
 
 import NotFoundComponent from './Components/NotFoundComponent.vue';
 
@@ -54,6 +52,8 @@ function proceed(next) {
       && browserCookies.get('token')
       && browserCookies.get('user_id')
     ) {
+      // Clear search bar
+      store.commit('dashboard/setSearchTerm', '');
       next();
     } else {
       next({ path: '/login' });
@@ -67,15 +67,15 @@ const routes = [
     path: '/admin',
     component: AdminLayout,
     beforeEnter: (to, from, next) => {
-        if(browserCookies.get('is_admin') == true) {
-            if (to.path == '/admin') {
-                next({ path: '/admin/dashboard' });
-            } else {
-                next();
-            }
+      if (browserCookies.get('is_admin') == true) {
+        if (to.path == '/admin') {
+          next({ path: '/admin/dashboard' });
         } else {
-            next({ path: '/login'});
+          next();
         }
+      } else {
+        next({ path: '/login' });
+      }
     },
     children: [
       {
@@ -145,7 +145,6 @@ const routes = [
         component: Chat,
         beforeEnter: requireAuth,
       },
-
     ],
   },
 
