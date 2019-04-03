@@ -21,7 +21,6 @@ import axios from "../../../../axios";
 import Toasted from "vue-toasted";
 
 export default {
-  props: ["search"],
   data() {
     return {
       products: [],
@@ -64,17 +63,22 @@ export default {
       });
   },
   computed: {
+    searchTerm() {
+      return this.$store.getters["dashboard/getSearchTerm"];
+    },
     selectedCategory() {
       return this.$store.getters["dashboard/getSelectedCategory"];
     },
     filteredProducts() {
-      if (this.search) {
+      if (this.searchTerm) {
         return this.products.filter(product => {
           return (
             product.product_name
               .toLowerCase()
-              .includes(this.search.toLowerCase()) ||
-            product.category.toLowerCase().includes(this.search.toLowerCase())
+              .includes(this.searchTerm.toLowerCase()) ||
+            product.category
+              .toLowerCase()
+              .includes(this.searchTerm.toLowerCase())
           );
         });
       }

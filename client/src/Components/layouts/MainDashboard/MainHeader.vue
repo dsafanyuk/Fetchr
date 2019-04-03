@@ -89,18 +89,18 @@
           </v-btn>
         </v-badge>
       </div>
-      <v-layout slot="extension" v-if="isLanding">
-        <v-flex xs8 offset-xs2>
+      <v-layout slot="extension" v-if="isLanding" height="25px">
+        <v-flex xs6 offset-xs3>
           <v-spacer></v-spacer>
-          <input
-            class="form-control"
-            size="30"
-            type="search"
-            placeholder="Search for a product"
-            aria-label="Search"
-            :value="search"
-            @input="$emit('input', $event.target.value)"
-          >
+          <v-text-field
+            name="search"
+            v-model="searchTerm"
+            label="Search for a product"
+            color="white"
+            dark
+            clearable
+            outline
+          ></v-text-field>
         </v-flex>
       </v-layout>
     </v-toolbar>
@@ -128,7 +128,6 @@ import browserCookies from "browser-cookies";
 import Vue from "vue";
 
 export default {
-  props: ["search"],
   data() {
     name: "MainHeader";
     return {
@@ -204,6 +203,15 @@ export default {
     }, 3000);
   },
   computed: {
+    searchTerm: {
+      get() {
+        return this.$store.getters["dashboard/getSearchTerm"];
+      },
+      set(value) {
+        console.log("value");
+        this.$store.commit("dashboard/setSearchTerm", value);
+      }
+    },
     selectedCategory: {
       get() {
         return this.$store.getters["dashboard/getSelectedCategory"];
