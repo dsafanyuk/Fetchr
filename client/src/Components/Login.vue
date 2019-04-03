@@ -13,7 +13,7 @@
               <h4 class="text-center form_h"> Login in on our Platform </h4>
             </div>
             <br>
-            <form>
+            <form @keyup.enter="login('dashboard')">
               <v-text-field
                 v-validate="'required|email'"
                 type="email"
@@ -39,13 +39,24 @@
             </form>
             <div class="form-group text-center">
               <v-btn 
-                round color="cyan" dark
+                :loading="loading && this.loginTo == 'dashboard'"
+                :disabled="loading && this.loginTo == 'dashboard'"
+                round color="cyan"
+                class="white--text"
                 type="submit"
-                @click="loginCustomer"
-              >Login</v-btn>
+                @click="login('dashboard')"
+              >Login as Customer</v-btn>
+              <v-btn
+                :loading="loading && this.loginTo == 'courier'"
+                :disabled="loading && this.loginTo == 'courier'"
+                round color="cyan"
+                class="white--text"
+                type="submit"
+                @click="login('courier')"
+              >Login as Courier</v-btn>
             </div>
             <div class="form-group text-center">
-                Don't have an account? <a v-on:click="goToRegister">Sign up here</a>
+                Don't have an account? <router-link to="/register">Sign up here</router-link>
             </div>
           </div>
         </div>
@@ -68,6 +79,7 @@
       return {
         cEmail: '',
         cPassword: '',
+        loginTo: '',
         dictionary: {
           attributes: {
             cEmail: 'E-mail Address',
@@ -80,9 +92,14 @@
     mounted () {
       this.$validator.localize('en', this.dictionary)
     },
-
+    computed: {
+      loading() {
+        return this.$store.getters["login/getUserLoadStatus"] == 1
+      }
+    },
     methods: {
-      loginCustomer(e) {
+      login(value) {
+        this.loginTo = value;
         if (this.cEmail && this.cPassword) {
           axios.post('api/users/login', {
               email_address: this.cEmail,
@@ -92,37 +109,32 @@
               if (response.status == 200) {
                 // Change login status, returns a promise
                 this.$store.dispatch('login/login').then(response => {
-                  this.$router.push('/dashboard');
+                  this.$router.push('/' + value);
                 },
                   error => {
                     console.error("Login action failed");
+                    this.$store.commit('login/loginFailed');
                   });
               }
             })
             .catch((error) => {
               console.log(error);
               this.$toasted.error('WRONG EMAIL OR PASSWORD', {
-                theme: "primary", 
+                theme: "bubble", 
                 position: "top-center", 
-                duration : 5000
+                duration : 5000,
+                icon: "report_problem"
               });
             });
         } else {
           this.$validator.validateAll();
         }
       },
-      goToRegister: function () {
-        this.$router.push('/register');
-      }
     }
   };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
   @import 'custom_css/registration.scss';
-
-  a:hover {
-    color:darkcyan!important;
-    cursor: pointer;
-  }
+  @import '/src/Components/assets/css/bootstrap.min.css';
 </style>

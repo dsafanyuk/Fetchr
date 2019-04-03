@@ -1,10 +1,15 @@
 import axios from 'axios'
+import store from '../../store'
 import browserCookies from 'browser-cookies'
-const api = axios.create();
 
 const state = {
+    // LOGIN STATUS
+    // 0 -> No loading has begun
+    // 1 -> Loading has started
+    // 2 -> Loading completed succesfully
+    // 3 -> Loading completed unsuccesfully
+    loadStatus: 0,
     isLoggedIn: false,
-    pending: false,
 }
 
 const actions = {
@@ -14,28 +19,47 @@ const actions = {
             setTimeout(() => {
                 state.commit('loginSuccess');
                 resolve();
-                }, 100);
+                }, 1000);
         });
     },
     logout: (state) => {
-        state.commit('logoutSuccess');
+        state.commit('pending');
+        return new Promise(resolve => {
+            setTimeout(() => {
+                state.commit('logoutSuccess');
+                store.commit("cart/clearCart");
+                resolve();
+                }, 1000);
+        });
     }
 }
 const mutations = {
     pending (state) {
-    state.pending = true;
+        state.loadStatus = 1;
     },
     loginSuccess(state) {
-    state.isLoggedIn = true;
-    state.pending = false;
+        state.isLoggedIn = true;
+        state.loadStatus = 2;
+    },
+    loginFailed(state) {
+        state.isLoggedIn = false;
+        state.loadStatus = 3;
     },
     logoutSuccess(state) {
-    state.isLoggedIn = false;
+        state.isLoggedIn = false;
+        state.loadStatus = 2;
     },
+    logoutFailed(state) {
+        state.isLoggedIn = false;
+        state.loadStatus = 3;
+    }
 }
 const getters = {
+    getUserLoadStatus(state) {
+        return state.loadStatus;
+    },
     isLoggedIn(state) {
-        return state.isLoggedIn
+        return state.isLoggedIn;
     }
 }
 export default {

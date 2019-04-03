@@ -37,8 +37,17 @@
           to="/dashboard"
         >
       </router-link>
-      <v-spacer class="hidden-sm-and-down"></v-spacer>
       <v-spacer></v-spacer>
+      <v-flex
+        v-on:click="scrollToTop"
+        align-self-center
+        style="margin-right:10px"
+        class="hidden-sm-and-down"
+      >
+        <transition name="fade" v-on:enter="enter" v-on:leave="leave">
+          <h4 class="white--text" style="margin-top: 20px" v-if="show">{{showText}}</h4>
+        </transition>
+      </v-flex>
       <div class="hidden-sm-and-down">
         <v-menu fixed>
           <v-btn
@@ -80,18 +89,18 @@
           </v-btn>
         </v-badge>
       </div>
-      <v-layout slot="extension" v-if="isLanding">
-        <v-flex xs8 offset-xs2>
+      <v-layout slot="extension" v-if="isLanding" height="25px">
+        <v-flex xs6 offset-xs3>
           <v-spacer></v-spacer>
-          <input
-            class="form-control"
-            size="30"
-            type="search"
-            placeholder="Search for a product"
-            aria-label="Search"
-            :value="search"
-            @input="$emit('input', $event.target.value)"
-          >
+          <v-text-field
+            name="search"
+            v-model="searchTerm"
+            label="Search for a product"
+            color="white"
+            dark
+            clearable
+            outline
+          ></v-text-field>
         </v-flex>
       </v-layout>
     </v-toolbar>
@@ -100,38 +109,14 @@
       centered
       light
       icons-and-text
-      v-model.lazy="activeCategory"
+      v-model="selectedCategory"
       show-arrows
       v-if="isLanding "
+      slider-color="accent"
     >
-      <v-tabs-slider color="orange"></v-tabs-slider>
-      <v-tab href="#Popular">Popular
-        <v-icon>fas fa-fire-alt</v-icon>
-      </v-tab>
-
-      <v-tab href="#Snacks">Snacks
-        <v-icon>fas fa-hamburger</v-icon>
-      </v-tab>
-
-      <v-tab href="#Drinks">Drinks
-        <v-icon>fas fa-mug-hot</v-icon>
-      </v-tab>
-
-      <v-tab href="#Personal">Personal
-        <v-icon>fas fa-toilet-paper</v-icon>
-      </v-tab>
-      <v-tab href="#Electronics">Electronics
-        <v-icon>fas fa-headphones-alt</v-icon>
-      </v-tab>
-      <v-tab href="#School Supplies">School Supplies
-        <v-icon>fas fa-paperclip</v-icon>
-      </v-tab>
-      <v-tab href="#Misc">Misc
-        <v-icon>fas fa-random</v-icon>
-      </v-tab>
-
-      <v-tab href="#Favorites">Favorites
-        <v-icon>fas fa-heart</v-icon>
+      <v-tab v-for="(category) in categories" :key="category.name" :href="'#' + category.name">
+        {{category.name}}
+        <v-icon>{{category.icon}}</v-icon>
       </v-tab>
     </v-tabs>
   </div>
@@ -140,27 +125,70 @@
 import ShoppingCart from "./ShoppingCart.vue";
 import Wallet from "./Wallet.vue";
 import browserCookies from "browser-cookies";
+import Vue from "vue";
 
 export default {
-  props: ["search"],
   data() {
     name: "MainHeader";
     return {
       firstName: browserCookies.get("first_name"),
       showCart: false,
-      activeCategory: null,
+      categories: [
+        {
+          name: "Popular",
+          icon: "fas fa-fire-alt"
+        },
+        {
+          name: "Snacks",
+          icon: "fas fa-hamburger"
+        },
+        {
+          name: "Drinks",
+          icon: "fas fa-mug-hot"
+        },
+        {
+          name: "Personal",
+          icon: "fas fa-toilet-paper"
+        },
+        {
+          name: "Electronics",
+          icon: "fas fa-headphones-alt"
+        },
+        {
+          name: "Misc",
+          icon: "fas fa-random"
+        },
+        {
+          name: "Favorites",
+          icon: "fas fas fa-heart"
+        }
+      ],
       menu: [
+        { title: "Switch To Courier", icon: "fa fa-bicycle" },
         { title: "Account", icon: "fas fa-user-alt fa-s" },
         { title: "Orders", icon: "far fa-list-alt fa-s" },
         {
           title: "Wallet",
           icon: "fas fa-wallet fa-s"
         },
+        { title: "Leave Feedback", icon: "feedback" },
+
         {
           title: "Logout",
           icon: "fas fa-sign-out-alt fa-s"
         }
-      ]
+      ],
+      textLists: [
+        "Remember, you cannot change your password",
+        "You can go to shopping page by clicking Fetchr icon",
+        "All items are non refundable",
+        "Try favoriting an item",
+        "Test inputs to handle too many char/numbers"
+      ],
+      showText: "",
+      textTimeout: null,
+      show: false,
+      indexText: 0
     };
   },
   components: {
@@ -169,8 +197,30 @@ export default {
   },
   created: function() {
     this.$store.dispatch("wallet/getWalletBalance");
+    this.showText = this.textLists[this.randomIndex()];
+    this.textTimeout = setTimeout(() => {
+      this.show = true;
+    }, 3000);
   },
   computed: {
+    searchTerm: {
+      get() {
+        return this.$store.getters["dashboard/getSearchTerm"];
+      },
+      set(value) {
+        console.log("value");
+        this.$store.commit("dashboard/setSearchTerm", value);
+      }
+    },
+    selectedCategory: {
+      get() {
+        return this.$store.getters["dashboard/getSelectedCategory"];
+      },
+      set(value) {
+        this.$store.commit("dashboard/setSelectedCategory", value);
+        this.scrollToTop();
+      }
+    },
     numOfItemsInCart: function() {
       return this.$store.getters["cart/totalCartItems"];
     },
@@ -182,15 +232,39 @@ export default {
     }
   },
   methods: {
+    enter: function() {
+      this.textTimeout = setTimeout(() => {
+        this.show = false;
+      }, 6000);
+    },
+    leave: function() {
+      this.textTimeout = setTimeout(() => {
+        do {
+          this.indexText = this.randomIndex();
+        } while (this.showText == this.textLists[this.indexText]);
+        this.showText = this.textLists[this.indexText];
+        this.show = true;
+      }, 3000);
+    },
+    randomIndex: function() {
+      return Math.floor(Math.random() * this.textLists.length);
+    },
     showWallet: function(value) {
       this.$store.commit("wallet/toggleWallet", value);
     },
-
     showShoppingCart: function(value) {
       this.$store.commit("cart/toggleCart", value);
     },
     menuActions: function(menuItem) {
       switch (menuItem) {
+        case "Switch To Courier": {
+          this.$router.push("/courier");
+          break;
+        }
+        case "Leave Feedback": {
+          window.open("https://goo.gl/forms/Q1EzTiaBkPZwepb62");
+          break;
+        }
         case "Account": {
           this.$router.push("/account");
           break;
@@ -209,19 +283,23 @@ export default {
             for (let cookieName in allCookies) {
               browserCookies.erase(cookieName);
             }
-            this.$store.dispatch("login/logout");
-            this.$router.push("/login");
+            this.$store.dispatch("login/logout").then(
+              response => {
+                this.$router.push("/login");
+              },
+              error => {
+                this.$store.commit("login/logoutFailed");
+              }
+            );
           }
           break;
       }
     },
     goToDashboard: function() {
       this.$router.push("/dashboard");
-    }
-  },
-  watch: {
-    activeCategory: function(active) {
-      this.$emit("selectedCategory", active);
+    },
+    scrollToTop: function() {
+      window.scrollTo(0, 0);
     }
   }
 };
@@ -246,5 +324,12 @@ export default {
   position: sticky;
   top: 0;
   z-index: 1;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 2s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

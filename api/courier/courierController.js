@@ -99,7 +99,7 @@ function countAvailableOrder(req, res ){
 function countDelivered(req, res ){
 
   knex.raw ('SELECT COUNT(*) as count_d FROM orders WHERE courier_id = '+ req.params.user_id +
-           ' AND delivery_status = \'pending\' ')
+           ' AND delivery_status = \'delivered\' ')
 .then((count_d) => {
      res.send(count_d);
  })
@@ -157,14 +157,10 @@ function deliverOrder(req, res) {
 
 function courierInfo(req, res) {
     knex.raw(
-    `select count(*) as delivered, cid.first_name, cid.last_name, cid.phone_number
-       from (select courier_id, first_name, last_name, phone_number
-               from orders
-              inner join users on orders.courier_id = users.user_id
-              where order_id = ${req.params.order_id}) cid
-      inner join orders on orders.courier_id = cid.courier_id
-      where orders.delivery_status = 'delivered'
-      group by cid.courier_id, cid.first_name, cid.last_name, cid.phone_number`
+    `select courier_id, first_name, last_name, phone_number
+       from orders
+      inner join users on orders.courier_id = users.user_id
+      where order_id = ${req.params.order_id}`
     )
     .then((courierInfo) => {
       res.send(courierInfo);

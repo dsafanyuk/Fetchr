@@ -19,7 +19,7 @@ router.post(
     check('password', 'Password must have a minimum of 8 characters')
       .isLength({ min: 8 })
       .trim(),
-    check('phone', 'Only digits')
+    check('phone_number', 'Only digits')
       .isMobilePhone()
       .trim(),
     check('room_num', 'Please enter 4 digits, no more no less')
@@ -29,10 +29,10 @@ router.post(
       })
       .isNumeric()
       .trim(),
-    check('first_name', 'Cannot have numbers')
+    check('first_name', 'Cannot have numbers or special characters')
       .isAlpha()
       .trim(),
-    check('last_name', 'Cannot have numbers')
+    check('last_name', 'Cannot have numbers or special characters')
       .isAlpha()
       .trim(),
   ],
@@ -53,11 +53,13 @@ router.get('/:user_id/creditCheck', verifyToken, userController.creditCheck);
 
 router.post('/login', loginController.loginUser);
 
-router.get('/:user_id/', verifyToken, userController.showOneUser); // eslint-disable-line no-use-before-define
+router.get('/:user_id/',  verifyToken, userController.showOneUser); // eslint-disable-line no-use-before-define
+router.get('/:user_id/showInfo', verifyToken, userController.showUserById);
 
 router.get('/:user_id/orders', verifyToken, userController.showUserOrders);
+router.get('/:user_id/orderschat', verifyToken, userController.showOrdersForChat);
 
-router.patch('/:user_id', verifyToken, userController.updateUser);
+router.put('/:user_id', userController.editUser);
 
 router.post('/', verifyToken, userController.createUser);
 

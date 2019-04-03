@@ -1,3 +1,4 @@
+const Sentry = require('@sentry/node');
 const knex = require('knex')(require('../db'));
 
 // GET /order
@@ -8,6 +9,7 @@ function showAllOrders(req, res) {
       res.send(rows).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -22,6 +24,7 @@ function showOneOrder(req, res) {
       res.send(rows).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -31,14 +34,13 @@ function showOneOrder(req, res) {
 // POST /orders
 function createOrder(req, res) {
   const request = req.body;
-
   const order = {
     customer_id: request.customer_id,
     delivery_status: request.delivery_status,
     order_total: request.order_total,
   };
 
-  const productsWithQuantity = request.productsWithQuantity;
+  const { productsWithQuantity } = request;
 
   knex('orders')
     .insert(order)
@@ -57,6 +59,7 @@ function createOrder(req, res) {
         .insert(orderProducts)
         .then(() => {})
         .catch((err) => {
+          Sentry.captureException(err);
           res.status(500).send({
             message: `${err}`,
           });
@@ -73,6 +76,7 @@ function createOrder(req, res) {
           res.send({ status: 'success', message: orderProducts }).status(200);
         })
         .catch((err) => {
+          Sentry.captureException(err);
           res.status(500).send({
             message: `${err}`,
           });
@@ -100,8 +104,8 @@ function updateOrder(req, res) {
     .then(() => {
       res.send('success').status(200);
     })
-
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -117,9 +121,6 @@ function showOneOrderSummary(req, res) {
     .where('orders.order_id', req.params.order_id)
     .select('product_name', 'quantity', 'price', 'product_url')
     .then((productList) => {
-      productList.forEach((product) => {
-        product.price *= product.quantity; // eslint-disable-line no-param-reassign
-      });
       knex('orders')
         .where('orders.order_id', req.params.order_id)
         .select('delivery_status', 'customer_id')
@@ -128,6 +129,7 @@ function showOneOrderSummary(req, res) {
         });
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod

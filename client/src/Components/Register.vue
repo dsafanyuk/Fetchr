@@ -8,12 +8,12 @@
                     </div>
                     <div class="col-md-6 mx-auto">
                         <div class="form-group">
-                            <h4 class="text-center form_h">Sign Up on our Platform</h4>
+                            <h4 class="text-center form_h">Start your Fetchr experience!</h4>
                         </div>
                         <br>
-                        <form>
+                        <form @keyup.enter="registerCustomer">
                             <v-text-field
-                                v-validate="'required|max:15'"
+                                v-validate="'required|max:15|alpha'"
                                 v-model="cFirstname"
                                 :counter="15"
                                 :error-messages="errors.collect('cFirstname')"
@@ -24,7 +24,7 @@
                                 required
                             ></v-text-field>
                             <v-text-field
-                                v-validate="'required|max:15'"
+                                v-validate="'required|max:15|alpha'"
                                 v-model="cLastname"
                                 :counter="15"
                                 :error-messages="errors.collect('cLastname')"
@@ -46,8 +46,9 @@
                                 required
                             ></v-text-field>
                             <v-text-field
+                                name="room_number"
+                                mask="####"
                                 v-validate="'required|digits:4'"
-                                type="number"
                                 v-model="cRoom"
                                 :error-messages="errors.collect('cRoom')"
                                 data-vv-name="cRoom"
@@ -57,8 +58,8 @@
                                 required
                             ></v-text-field>
                             <v-text-field
+                                mask="phone"
                                 v-validate="'required|digits:10'"
-                                type="number"
                                 v-model="cPhone"
                                 :error-messages="errors.collect('cPhone')"
                                 data-vv-name="cPhone"
@@ -68,7 +69,7 @@
                                 required
                             ></v-text-field>
                             <v-text-field
-                                v-validate="'required'"
+                                v-validate="'required|min:8'"
                                 type="password"
                                 v-model="cPassword"
                                 :error-messages="errors.collect('cPassword')"
@@ -80,7 +81,7 @@
                                 required
                             ></v-text-field>
                             <v-text-field
-                                v-validate="'required|confirmed:cPassword'"
+                                v-validate="'required|min:8|confirmed:cPassword'"
                                 type="password"
                                 v-model="cRepeatPassword"
                                 :error-messages="errors.collect('cRepeatPassword')"
@@ -107,6 +108,9 @@
                                 @click="clear"
                             >Clear</v-btn>
                         </div>
+                        <div class="form-group text-center">
+                            Already have an account? <router-link to="/login">Log in here</router-link>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,6 +121,7 @@
 <script>
 import axios from "../axios";
 import Toasted from 'vue-toasted';
+import Vue from 'vue'
 
     export default {
         $_veeValidate: {
@@ -175,24 +180,16 @@ import Toasted from 'vue-toasted';
             registerCustomer(e) {
                 let toasted = this.$toasted;
 
-                if (
-                    this.cFirstname &&
-                    this.cLastname &&
-                    this.cEmail &&
-                    this.cRoom &&
-                    this.cPhone &&
-                    this.cPassword &&
-                    this.cRepeatPassword
-                ) {
-                    // Replace with a Validator Lib
-                    if (this.cPassword === this.cRepeatPassword) {
+                this.$validator.validateAll()
+                .then((result) => {
+                    if(result) {
                         axios
                             .post('api/users/register', {
                                 first_name: this.cFirstname,
                                 last_name: this.cLastname,
                                 email_address: this.cEmail,
                                 room_num: this.cRoom,
-                                phone: this.cPhone,
+                                phone_number: this.cPhone,
                                 password: this.cPassword,
                             })
                             .then((response) => {
@@ -201,14 +198,16 @@ import Toasted from 'vue-toasted';
                                 }
                             })
                             .catch(function (error) {
-                                if (error.response.status == 400) {
-                                    toasted.error(error.response.data, {
-                                        theme: "primary",
-                                        position: "top-center",
-                                        duration : 5000
-                                    });
+                                if (error.response) {
+                                    error.response.data.errors.map( (error) => {
+                                        Vue.toasted.show(error.param + " " + error.msg, {
+                                            theme: 'bubble',
+                                            duration: 4000,
+                                            position: 'top-center',
+                                            icon: 'report_problem'
+                                        });
+                                    })
                                 }
-                                console.log(error);
                                 if (error.response) {
                                     // The request was made and the server responded with a status code
                                     // that falls out of the range of 2xx
@@ -217,16 +216,17 @@ import Toasted from 'vue-toasted';
                                     console.log(error.response.headers);
                                 }
                             });
-
                     }
-                } else {
-                    this.$validator.validateAll();
-                }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             },
         },
     };
 </script>
 
-<style>
+<style lang="css" scoped>
 @import "custom_css/registration.scss";
+@import "/src/Components/assets/css/bootstrap.min.css";
 </style>

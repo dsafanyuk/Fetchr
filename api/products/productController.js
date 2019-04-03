@@ -1,4 +1,5 @@
 const express = require('express');
+const Sentry = require('@sentry/node');
 
 const router = express.Router();
 const knex = require('knex')(require('../db'));
@@ -20,10 +21,11 @@ function showAllProducts(req, res) {
         `
     select *, 'true' as 'is_favorite'
         from products
+        where is_active = 'true'
     having product_id in 
         (select product_id 
           from favorites 
-        where user_id = ${user_id})
+        where user_id = ${user_id} )
     UNION
     SELECT *, 'false' as 'is_favorite'
         FROM products
@@ -36,6 +38,7 @@ function showAllProducts(req, res) {
         res.json(products[0]).status(200);
       })
       .catch((err) => {
+        Sentry.captureException(err);
         res.status(500).json({
           message: `${err}`,
         }); // FOR DEBUGGING ONLY, dont json exact message in prod
@@ -58,6 +61,7 @@ function showOneProduct(req, res) {
       }
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).json({
         message: err,
       }); // FOR DEBUGGING ONLY, dont json exact message in prod
@@ -66,7 +70,7 @@ function showOneProduct(req, res) {
 
 // GET /products/filter/{:category}
 function showItemByCategory(req, res) {
-  const category = req.params.category;
+  const { category } = req.params;
   sortParams = req.sortParams;
   const productOrderQuery = (queryBuilder, sortParams) => {
     if (sortParams) {
@@ -86,6 +90,8 @@ function showItemByCategory(req, res) {
       }
     })
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).json({
         message: err,
       }); // FOR DEBUGGING ONLY, dont json exact message in prod

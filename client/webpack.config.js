@@ -1,12 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build.js',
+    path: path.resolve(`${__dirname}/dist`),
+    filename: process.env.NODE_ENV === 'production' ? 'build.[hash].js' : 'build.js',
   },
   module: {
     rules: [
@@ -62,6 +63,7 @@ module.exports = {
   },
   devServer: {
     host: '127.0.0.1',
+    index: '../index.html',
     historyApiFallback: true,
     noInfo: false,
     overlay: true,
@@ -87,6 +89,11 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
+    }),
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      filename: './index.html',
+      template: 'template.html',
     }),
   ]);
 }

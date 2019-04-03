@@ -1,19 +1,28 @@
 <template>
   <v-card>
+    <div v-if="this.$store.getters['courier/isLoading']">
+      <v-progress-linear :indeterminate="true" height="10"></v-progress-linear>
+    </div>
     <v-data-table :headers="headers" :items="orders" v-bind:pagination.sync="pagination">
       <template slot="items" slot-scope="props">
-        <tr @click="toggleDialog(props.item)">
-          <td>{{props.item.order_id}}</td>
-          <td>{{props.item.first_name}}</td>
-          <td>{{props.item.room_num}}</td>
-          <td>{{props.item.time_created}}</td>
+        <tr>
+
+
+          <td @click="toggleDialog(props.item)" >{{props.item.order_id}}</span></td>
+          <td @click="toggleDialog(props.item)">{{props.item.first_name}}</td>
+          <td @click="toggleDialog(props.item)">{{props.item.room_num}}</td>
+          <td @click="toggleDialog(props.item)">{{props.item.time_created}}</td>
+          <CreateConversation :order_id="parseInt(props.item.order_id)"></CreateConversation>
+
         </tr>
+
       </template>
     </v-data-table>
   </v-card>
 </template>
-  
+
 <script>
+import CreateConversation from '../../MainDashboard/components/ChatCreateConversation.vue'
 export default {
   name: "CourierAvailableOrders",
   data() {
@@ -30,6 +39,9 @@ export default {
   props: {
     orders: Array
   },
+  components : {
+      'CreateConversation': CreateConversation,
+  },
   computed: {},
   methods: {
        toggleDialog(value) {
@@ -38,7 +50,9 @@ export default {
   }
 };
 </script>
-    
-    <style scoped lang="css">
+
+<style scoped lang="css">
+.v-progress-linear {
+  margin: auto !important
+}
 </style>
-    

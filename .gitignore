@@ -67,3 +67,5 @@ typings/
 .DS_Store
 .vscode/
 temp.sql
+api/package-lock.json
+client/package-lock.json

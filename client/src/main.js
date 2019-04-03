@@ -6,26 +6,43 @@ import VueToast from 'vue-toasted';
 import VueRouter from 'vue-router';
 import VueSocketio from 'vue-socket.io-extended';
 import io from 'socket.io-client';
-import App from './Components/App.vue';
-import MainLayout from './Components/layouts/MainDashboard/MainLayout.vue';
-import Home from './Components/Home.vue';
-import Login from './Components/Login.vue';
-import Register from './Components/Register.vue';
-import Dashboard from './Components/layouts/MainDashboard/components/Landing.vue';
-import Orders from './Components/layouts/MainDashboard/components/Orders.vue';
-import Checkout from './Components/layouts/MainDashboard/components/Checkout.vue';
-import Confirmation from './Components/layouts/MainDashboard/components/Confirmation.vue';
-import View from './Components/layouts/MainDashboard/components/ViewOrder.vue';
-import CourierLayout from './Components/layouts/CourierDashboard/CourierLayout.vue';
-import Account from './Components/layouts/MainDashboard/components/Account.vue';
+import VueApexCharts from 'vue-apexcharts';
+import * as Sentry from '@sentry/browser';
+import IdleVue from 'idle-vue';
+import browserCookies from 'browser-cookies';
+import firebase from 'firebase';
+import App from './App.vue';
 import store from './store';
+import router from './router';
 import 'vuetify/dist/vuetify.min.css';
+
+Vue.use(VueApexCharts);
+Vue.component('apexchart', VueApexCharts);
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({
+    dsn: 'https://507d31b553f440428333350b394c62cd@sentry.io/1416825',
+    integrations: [
+      new Sentry.Integrations.Vue({
+        Vue,
+        attachProps: true,
+      }),
+    ],
+    sendDefaultPii: true,
+  });
+}
 
 Vue.use(
   VueSocketio,
-  io(process.env.NODE_ENV === 'production' ? 'http://fetchrapp.com:3000' : 'http://127.0.0.1:3000'),
+  io(
+    process.env.NODE_ENV === 'production' ? 'https://fetchrapp.com:3000' : 'http://127.0.0.1:3000',
+    {
+      transports: ['websocket', 'polling'],
+    },
+  ),
   { store },
 );
+Vue.use(VueApexCharts);
+Vue.component('apexchart', VueApexCharts);
 
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
@@ -36,62 +53,16 @@ Vue.use(Vuetify, {
     secondary: '#232534',
     lightened: '#4a6572',
     accent: '#f9aa33',
+    complimentary: '#20FC8F',
   },
 });
 Vue.use(Vuex);
-/* ----------------------- Routes Declaration -----------------*/
-const routes = [
-  {
-    path: '/',
-    component: MainLayout,
-    children: [
-      {
-        path: '/account',
-        component: Account,
-      },
-      {
-        path: '/orders',
-        component: Orders,
-      },
-      {
-        path: '/dashboard',
-        component: Dashboard,
-      },
-      {
-        path: '/confirmation',
-        component: Confirmation,
-      },
-      {
-        path: '/checkout',
-        component: Checkout,
-      },
-      {
-        path: '/view',
-        component: View,
-      },
-    ],
-  },
-  { path: '/home', component: Home },
-  { path: '/login', component: Login },
-  { path: '/register', component: Register },
-  { path: '/courier', component: CourierLayout },
-];
 
-export const router = new VueRouter({
-  routes,
-  mode: 'history',
-});
+const eventsHub = new Vue();
 
-// Called before every route
-router.beforeEach((to, from, next) => {
-  if (store.getters['login/isLoggedIn']) {
-    next();
-  } else if (to.path == '/login' || to.path == '/register' || to.path == '/home') {
-    next();
-  } else {
-    // Redirect to login page
-    next({ path: '/login' });
-  }
+Vue.use(IdleVue, {
+  eventEmitter: eventsHub,
+  idleTime: 5 * 60 * 5000,
 });
 
 new Vue({
@@ -100,4 +71,33 @@ new Vue({
   store,
   router,
   render: h => h(App),
+  onIdle() {
+    // Check if user is logged in, then log out
+    if (
+      store.getters['login/isLoggedIn']
+      && browserCookies.get('token')
+      && browserCookies.get('user_id')
+    ) {
+      // Clear cookies
+      const allCookies = browserCookies.all();
+      for (const cookieName in allCookies) {
+        browserCookies.erase(cookieName);
+      }
+      store.dispatch('login/logout');
+      router.push('/login');
+    }
+  },
+  onActive() {
+    this.messageStr = 'Hello';
+  },
+  created() {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyAMV114OOLoOo0rIRzmLo4WR_S_Q6G-P6o',
+      authDomain: 'fetchr-768e2.firebaseapp.com',
+      databaseURL: 'https://fetchr-768e2.firebaseio.com',
+      projectId: 'fetchr-768e2',
+      storageBucket: 'fetchr-768e2.appspot.com',
+      messagingSenderId: '981262313357',
+    });
+  },
 });

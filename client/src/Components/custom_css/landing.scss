@@ -23,32 +23,6 @@ section {
   border-top: 1px solid #abc;
 }
 
-input {
-  display: none;
-}
-
-label {
-  display: inline-block;
-  margin: 0 0 -1px;
-  padding: 15px 25px;
-  font-weight: 600;
-  text-align: center;
-  color: #abc;
-  border: 1px solid transparent;
-  font-size: 1rem !important;
-}
-
-label:before {
-  font-family: fontawesome;
-  font-weight: normal;
-  margin-right: 10px;
-}
-
-label:hover {
-  color: #789;
-  cursor: pointer;
-}
-
 input:checked + label {
   color: #0af;
   border: 1px solid #abc;

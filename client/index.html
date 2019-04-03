@@ -1,32 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-136743386-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'UA-136743386-1');
+    </script>
     <meta charset="utf-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>fetchr</title>
+    <title>#DEVELOP - Fetchr</title>
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
       crossorigin="anonymous"
     />
-
-    <link
-      rel="stylesheet"
-      href="/src/Components/assets/css/bootstrap.min.css"
-    />
     <link
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
       rel="stylesheet"
-      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
     />
   </head>
 
   <body>
     <div id="app"></div>
-    <script src="./dist/build.js"></script>
+    <script src="/dist/build.js"></script>
   </body>
 </html>
