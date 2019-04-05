@@ -33,6 +33,14 @@
               >
               <v-chip v-else slot-scope="{ active }" :selected="active" @click="customAmount">other</v-chip>
             </v-item>
+            <v-alert
+              :value="true"
+              color="warning"
+              icon="priority_high"
+              outline
+              dismissible
+            >Your wallet maximum needs to be less than $1000
+            </v-alert>
           </v-item-group>
         </v-card-actions>
         <div v-if="transactionIsProcessing">
@@ -131,7 +139,7 @@ export default {
           });
       } else {
         this.$toasted
-          .error("You're Too Rich! Give More To Charity pls")
+          .error("Please enter a different amount that adds up to less than $1000")
           .goAway(3000);
         this.transactionIsProcessing = false;
         this.selectAmount(null);

@@ -91,10 +91,14 @@
                                 solo
                                 required
                             ></v-text-field>
-                            <div class="alert alert-info alert-dismissable">
-                              <a class="panel-close close" data-dismiss="alert">×</a>
-                              Password <strong>must have at least</strong>.<br>- 8 characters
-                            </div>
+                            <v-alert
+                                :value="true"
+                                color="info"
+                                icon="info"
+                                outline
+                                dismissible
+                            >Password <strong>Must have at least</strong>:<br> 8 characters
+                            </v-alert>
                         </form>
                         <div class="form-group text-center">
                             <v-btn

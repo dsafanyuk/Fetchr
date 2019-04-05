@@ -15,9 +15,9 @@
       <div class="col-md-10 offset-md-1 col-sm-5">
         <v-tabs height="80px" centered light show-arrows grow v-model.lazy="active" mandatory>
           <v-tabs-slider color="accent"></v-tabs-slider>
-          <v-tab href="#baby1">Available</v-tab>
-          <v-tab href="#baby2">Accepted</v-tab>
-          <v-tab href="#baby3">Delivered</v-tab>
+          <v-tab href="#baby1">Available ({{availableOrders.length }})</v-tab>
+          <v-tab href="#baby2">Accepted ({{acceptedOrders.length}})</v-tab>
+          <v-tab href="#baby3">Delivered ({{deliveredOrders.length}})</v-tab>
           <v-tab-item v-for="i in 3" :key="i" :value="'baby' + i">
             <CourierAvailableOrders
               v-if="i == 1"
@@ -37,8 +37,7 @@
           </v-tab-item>
         </v-tabs>
       </div>
-    </div>
-
+    </div>  
     <!-- Computers -->
     <div class="row hidden-md-and-down">
       <div class="col-lg-10 offset-lg-1">
@@ -53,9 +52,9 @@
           mandatory
         >
           <v-tabs-slider color="accent"></v-tabs-slider>
-          <v-tab href="#baby1">Available</v-tab>
-          <v-tab href="#baby2">Accepted</v-tab>
-          <v-tab href="#baby3">Delivered</v-tab>
+          <v-tab href="#baby1">Available ({{availableOrders.length }})</v-tab>
+          <v-tab href="#baby2">Accepted ({{acceptedOrders.length}})</v-tab>
+          <v-tab href="#baby3">Delivered ({{deliveredOrders.length}})</v-tab>
           <v-tab-item v-for="i in 3" :key="i" :value="'baby' + i">
             <CourierAvailableOrders
               v-if="i == 1"
@@ -85,7 +84,6 @@ import CourierDeliveredOrders from "./CourierDeliveredOrders";
 import CourierSummaryCard from "./CourierSummaryCard.vue";
 import CourierAvailableOrders from "./CourierAvailableOrders";
 import CourierAcceptedOrders from "./CourierAcceptedOrders";
-import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
 import axios from "../../../../axios";
 
@@ -95,6 +93,7 @@ export default {
       active: "baby1",
       summaryOrder: {},
       summaryIsActive: false,
+      revenue: 0,
       availableOrderSum:0,
     };
   },
@@ -125,6 +124,7 @@ export default {
       return this.$store.getters["courier/acceptedOrders"];
     }
   },
+  
   methods: {
     toggleOrderSummary(value) {
       if (value) this.summaryOrder = value;
@@ -141,10 +141,8 @@ export default {
     },
     getAvailableOrders() {
       this.$store.dispatch("courier/getAvailableOrders");
-    }
-}
-
-
+    },
+  }
 };
 </script>
 

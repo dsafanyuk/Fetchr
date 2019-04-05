@@ -95,6 +95,7 @@ function countAvailableOrder(req, res ){
     res.send(orders);
 })
 }
+
 // Get delivered Orders
 function countDelivered(req, res ){
 
