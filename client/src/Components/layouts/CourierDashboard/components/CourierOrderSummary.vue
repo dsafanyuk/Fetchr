@@ -26,7 +26,7 @@
     </v-card>
   </v-dialog>
 </template>
-        
+
 <script>
 import axios from "../../../../axios.js";
 import browserCookies from "browser-cookies";
@@ -106,6 +106,11 @@ export default {
                 user: this.order.user_id,
                 order: this.order.order_id
               });
+              // Get available order for the Summary Section
+              this.$store.dispatch("courier/updateAvailableOrders")
+
+
+
             } else {
               this.$toasted.error(
                 "Oops! This order has already been accepted. :(",
@@ -143,6 +148,12 @@ export default {
               user: this.order.user_id,
               order: this.order.order_id
             });
+            this.$store.dispatch("courier/updateDeliveredOrders")
+            .then(() => {
+              this.$store.dispatch("courier/updateDeliveredRevenue")
+            })
+
+
           } else {
             this.$toasted.error("Oops! :(", {
               theme: 'bubble',
@@ -173,4 +184,3 @@ export default {
   }
 };
 </script>
-    

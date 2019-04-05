@@ -12,7 +12,8 @@
           <td @click="toggleDialog(props.item)">{{props.item.first_name}}</td>
           <td @click="toggleDialog(props.item)">{{props.item.room_num}}</td>
           <td @click="toggleDialog(props.item)">{{props.item.time_created}}</td>
-          <CreateConversation :order_id="parseInt(props.item.order_id)"></CreateConversation>
+          <CreateConversation v-if = "props.item.order_id" :order_id="parseInt(props.item.order_id)"></CreateConversation>
+          <td v-else ></td>
 
         </tr>
 
