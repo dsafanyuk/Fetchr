@@ -80,7 +80,13 @@ export default {
           icon: "fas fa-sign-out-alt fa-s"
         }
       ],
-      textLists: [ "Remember, you cannot change your password", "You can go to shopping page by clicking Fetchr icon", "All items are non refundable", "Subscribe to PewDiePie", "Unsubscribe from T-series", "Follow us on instagram at @fecthr_app" ],
+      textLists: [
+        "Remember, you cannot change your password",
+        "You can go to shopping page by clicking Fetchr icon",
+        "All items are non refundable",
+        "Try favoriting an item",
+        "Test inputs to handle too many char/numbers"
+      ],
       showText: "",
       textTimeout: null,
       show: false,

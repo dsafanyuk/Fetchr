@@ -11,7 +11,7 @@
           class="headline justify-center text-xs-center font-weight-bold"
           primary-title
         >Refill your Wallet</v-card-title>
-        <v-card-text>Your current balance is:</v-card-text>
+        <v-card-text class="text-xs-center">Your current balance is:</v-card-text>
         <v-card-text class="text-xs-center font-weight-medium display-3">${{walletBalance}}</v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="justify-center text-xs-center" v-if="!transactionIsProcessing">

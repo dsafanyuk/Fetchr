@@ -67,12 +67,8 @@ const routes = [
     path: '/admin',
     component: AdminLayout,
     beforeEnter: (to, from, next) => {
-      if (browserCookies.get('is_admin') == true) {
-        if (to.path == '/admin') {
-          next({ path: '/admin/dashboard' });
-        } else {
-          next();
-        }
+      if (browserCookies.get('is_admin') == 'true') {
+        next();
       } else {
         next({ path: '/login' });
       }
