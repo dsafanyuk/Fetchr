@@ -6,7 +6,6 @@
       :summaryIsActive="summaryIsActive"
       v-model="summaryIsActive"
       @closeDialog="summaryIsActive"
-    
     ></CourierOrderSummary>
     <CourierSummaryCard v-bind:available_orders="availableOrderSum" class="summarycard"></CourierSummaryCard>
 
@@ -37,7 +36,7 @@
           </v-tab-item>
         </v-tabs>
       </div>
-    </div>  
+    </div>
     <!-- Computers -->
     <div class="row hidden-md-and-down">
       <div class="col-lg-10 offset-lg-1">
@@ -94,7 +93,7 @@ export default {
       summaryOrder: {},
       summaryIsActive: false,
       revenue: 0,
-      availableOrderSum:0,
+      availableOrderSum: 0
     };
   },
   components: {
@@ -108,10 +107,8 @@ export default {
     this.$store.dispatch("courier/clearAllOrders");
   },
   mounted: function loadOrder() {
-    this.$store.commit('courier/startLoading');
-    this.getAvailableOrders();
-    this.getAcceptedOrders();
-    this.getDeliveredOrders();
+    this.$store.commit("courier/startLoading");
+    this.$store.dispatch("courier/refreshAllOrders");
   },
   computed: {
     availableOrders() {
@@ -124,7 +121,7 @@ export default {
       return this.$store.getters["courier/acceptedOrders"];
     }
   },
-  
+
   methods: {
     toggleOrderSummary(value) {
       if (value) this.summaryOrder = value;
@@ -141,7 +138,7 @@ export default {
     },
     getAvailableOrders() {
       this.$store.dispatch("courier/getAvailableOrders");
-    },
+    }
   }
 };
 </script>

@@ -16,10 +16,8 @@
           <td class="text-xs-center">{{ fixDate(props.item.time_created) }}</td>
           <td class="text-xs-center">{{ props.item.delivery_status }}</td>
           <td class="text-xs-center">{{ props.item.order_total.toFixed(2) }}</td>
-          <td>
+          <td class="text-xs-center">
             <CreateChat :order_id="props.item.order_id"></CreateChat>
-          </td>
-          <td>
             <v-btn
               @click="viewOrder(props.item.order_id)"
               round
@@ -60,7 +58,7 @@ export default {
         { text: "Date", align: "center", value: "time_created" },
         { text: "Status", align: "center", value: "status" },
         { text: "Order Total", align: "center", value: "order_total" },
-        { text: "", align: "center", value: "" }
+        { text: "", align: "center", value: "", sortable: false }
       ]
     };
   },
@@ -79,11 +77,13 @@ export default {
         this.isLoading = false;
         if (error.response) {
           console.log(error);
-          this.$toasted.error("Something went wrong", {
-            theme: 'bubble',
-            position: 'top-center',
-            icon: 'report_problem',
-          }).goAway(1000);
+          this.$toasted
+            .error("Something went wrong", {
+              theme: "bubble",
+              position: "top-center",
+              icon: "report_problem"
+            })
+            .goAway(1000);
         }
       });
   },
@@ -132,8 +132,7 @@ export default {
       return axios.get("/api/orders/" + courier_id).then(response => {
         return response.data;
       });
-    },
-
+    }
   }
 };
 </script>

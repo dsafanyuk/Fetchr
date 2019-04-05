@@ -43,6 +43,7 @@ function loginUser(req, res) {
 
             res.json({
               token,
+              user_id: user.user_id,
             });
           }
         });

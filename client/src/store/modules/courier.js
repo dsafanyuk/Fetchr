@@ -1,30 +1,13 @@
 import axios from '../../axios';
 
-const browserCookies = require('browser-cookies');
-
-const user = browserCookies.get('user_id');
-const blankOrder = {
-  order_id: '',
-  first_name: '',
-  building: '',
-  order_total: '',
-  time_created: '',
-};
-const blankDeliveredOrder = {
-  order_id: '',
-  first_name: '',
-  building: '',
-  order_total: '',
-  time_delivered: '',
-};
 const state = {
   availableOrders: [],
   acceptedOrders: [],
   deliveredOrders: [],
   isLoading: true,
-  availableOrdersSum :0,
-  deliveredOrdersSum:0,
-  deliveredRevenueSum: 0
+  availableOrdersSum: 0,
+  deliveredOrdersSum: 0,
+  deliveredRevenueSum: 0,
 };
 const mutations = {
   addAvailableOrder: (state, data) => {
@@ -52,29 +35,24 @@ const mutations = {
     state.isLoading = true;
   },
   updateAvailableOrders: (state, value) => {
-    state.availableOrdersSum = value
-
+    state.availableOrdersSum = value;
   },
 
   updateDeliveredOrders: (state, value) => {
-    state.deliveredOrdersSum = value
-
+    state.deliveredOrdersSum = value;
   },
   updateDeliveredRevenue: (state, value) => {
-    state.deliveredRevenueSum = value
-
-
-  }
-
+    state.deliveredRevenueSum = value;
+  },
 };
 const getters = {
   availableOrders: state => state.availableOrders,
   acceptedOrders: state => state.acceptedOrders,
   deliveredOrders: state => state.deliveredOrders,
   isLoading: state => state.isLoading,
-  getAvailableOrdersSum :  state => state.availableOrdersSum,
-  getDeliveredOrdersSum :  state => state.deliveredOrdersSum,
-  getDeliveredRevenueSum   : state  => state.deliveredRevenueSum,
+  getAvailableOrdersSum: state => state.availableOrdersSum,
+  getDeliveredOrdersSum: state => state.deliveredOrdersSum,
+  getDeliveredRevenueSum: state => state.deliveredRevenueSum,
 };
 const actions = {
   clearAllOrders: ({ state, getters, commit }) => new Promise(
@@ -95,7 +73,10 @@ const actions = {
     dispatch('getAcceptedOrders');
     dispatch('getDeliveredOrders');
   },
-  getAvailableOrders: ({ state, getters, commit }) => {
+  getAvailableOrders: ({
+    state, getters, commit, rootGetters,
+  }) => {
+    const user = rootGetters['login/getUserId'];
     axios
       .get(`/api/courier/${user}/order/`)
       .then((response) => {
@@ -104,17 +85,16 @@ const actions = {
         });
 
         commit('stopLoading');
-
-        // Add blank 'orders' to even set data table rows to 5
-        for (let i = getters.availableOrders.length; i < 5; i++) {
-          commit('addAvailableOrder', blankOrder);
-        }
       })
       .catch((error) => {
         console.log(error);
       });
   },
-  getAcceptedOrders: ({ state, getters, commit }) => {
+  getAcceptedOrders: ({
+    state, getters, commit, rootGetters,
+  }) => {
+    const user = rootGetters['login/getUserId'];
+
     axios
       .get(`/api/courier/${user}/order/accepted`)
       .then((response) => {
@@ -123,15 +103,14 @@ const actions = {
         });
 
         commit('stopLoading');
-
-        // Add blank 'orders' to even set data table rows to 5
-        for (let i = getters.acceptedOrders.length; i < 5; i++) {
-          commit('addAcceptedOrder', blankOrder);
-        }
       })
       .catch(error => console.log(error));
   },
-  getDeliveredOrders: ({ state, getters, commit }) => {
+  getDeliveredOrders: ({
+    state, getters, commit, rootGetters,
+  }) => {
+    const user = rootGetters['login/getUserId'];
+
     axios
       .get(`/api/courier/${user}/order/delivered`)
       .then((response) => {
@@ -140,11 +119,6 @@ const actions = {
         });
 
         commit('stopLoading');
-
-        // Add blank 'orders' to even set data table rows to 5
-        for (let i = getters.deliveredOrders.length; i < 5; i++) {
-          commit('addDeliveredOrder', blankDeliveredOrder);
-        }
       })
       .catch((error) => {
         console.log(error);
@@ -157,7 +131,7 @@ const actions = {
   }) => {
     dispatch('clearAllOrders').then(() => {
       dispatch('refreshAllOrders');
-      dispatch('updateAvailableOrders')
+      dispatch('updateAvailableOrders');
     });
   },
   socket_updateAcceptedOrders: ({
@@ -180,28 +154,27 @@ const actions = {
       dispatch('refreshAllOrders');
     });
   },
-  updateAvailableOrders : ({ commit })=> {
+  updateAvailableOrders: ({ commit, rootGetters }) => {
+    const user = rootGetters['login/getUserId'];
 
-    axios
-      .get("/api/courier/" + user + "/countAvailableOrder")
-      .then(response => {
-        commit('updateAvailableOrders', response.data[0][0]["count_av"])
-      });
-  },
-  updateDeliveredOrders:({ commit })=>{
-    axios
-      .get("/api/courier/" + user + "/getTotalDelivered")
-      .then(response => {
-        commit('updateDeliveredOrders', response.data[0][0]["count_d"])
-
-      });
-  },
-  updateDeliveredRevenue : ({ commit })=> {
-    axios.get("/api/courier/" + user + "/getRevenue").then(response => {
-
-        commit('updateDeliveredRevenue', response.data[0][0]["revenue"])
+    axios.get(`/api/courier/${user}/countAvailableOrder`).then((response) => {
+      commit('updateAvailableOrders', response.data[0][0].count_av);
     });
-  }
+  },
+  updateDeliveredOrders: ({ commit, rootGetters }) => {
+    const user = rootGetters['login/getUserId'];
+
+    axios.get(`/api/courier/${user}/getTotalDelivered`).then((response) => {
+      commit('updateDeliveredOrders', response.data[0][0].count_d);
+    });
+  },
+  updateDeliveredRevenue: ({ commit, rootGetters }) => {
+    const user = rootGetters['login/getUserId'];
+
+    axios.get(`/api/courier/${user}/getRevenue`).then((response) => {
+      commit('updateDeliveredRevenue', response.data[0][0].revenue);
+    });
+  },
 };
 export default {
   namespaced: true,

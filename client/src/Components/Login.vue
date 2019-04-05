@@ -107,6 +107,7 @@
           })
             .then((response) => {
               if (response.status == 200) {
+                this.$store.commit('login/setUserId', response.data.user_id)
                 // Change login status, returns a promise
                 this.$store.dispatch('login/login').then(response => {
                   this.$router.push('/' + value);
