@@ -76,10 +76,8 @@
                           <div class="caption">E-mail:</div>
                           <v-text-field
                             v-model="editedItem.email_address"
-                            disabled
                             type="email"
-                            :rules="emailRules"
-                            required
+                            disabled
                           ></v-text-field>
                         </v-flex>
                         <v-flex sm12 md6 lg6>
@@ -190,12 +188,6 @@ export default {
           (v && v.length <= 10 && v.length >= 10) ||
           "The Phone Number field must be numeric and exactly contain 10 digits."
           
-      ],
-      emailRules: [
-        v => !!v || "E-mail is required",
-        v =>
-          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-          "E-mail must be valid"
       ]
     };
   },
