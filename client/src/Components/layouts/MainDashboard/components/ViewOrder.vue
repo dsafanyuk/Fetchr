@@ -50,7 +50,7 @@
     </v-layout>
     <v-btn color="#F5F5F5" @click="$router.push('/orders')">
       <v-icon black>arrow_back</v-icon>&nbsp; &nbsp;Back to Orders
-    </v-btn>
+    </v-btn >
   </v-container>
 </template>
 
