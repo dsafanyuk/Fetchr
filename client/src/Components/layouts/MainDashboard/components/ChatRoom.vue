@@ -50,8 +50,11 @@
       axios
         .get("/api/users/" + browserCookies.get("user_id") + "/orderschat")
         .then(response => {
+          this.$store.dispatch ('clearchats')
+          .then(() => {
+            this.$store.dispatch ('loadChats', {orders : response.data})
+          })
 
-          this.$store.dispatch ('loadChats', {orders : response.data})
         });
 
     },
@@ -64,6 +67,7 @@
     },
     methods :{
       loadChatRoom: function(order_id, receiver_id) {
+        //browserCookies.set("current_receiver_id",receiver_id)
         this.$router.push("/chat/" + order_id);
         this.$emit('fetchMessages')
 
@@ -76,6 +80,5 @@
 </script>
 
 <style scoped="true">
-@import "../../../assets/courier/css/core.css";
-@import "../../../assets/courier/css/components.css";
+
 </style>

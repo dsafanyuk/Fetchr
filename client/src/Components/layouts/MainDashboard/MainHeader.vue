@@ -211,7 +211,7 @@ export default {
         return this.$store.getters["dashboard/getSearchTerm"];
       },
       set(value) {
-        console.log("value");
+    
         this.$store.commit("dashboard/setSearchTerm", value);
       }
     },

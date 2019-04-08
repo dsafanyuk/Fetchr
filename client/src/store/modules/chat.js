@@ -12,10 +12,13 @@ const ChatModule = {
       state.messages = []
     },
     setChats(state, payload) {
-      state.chats = payload
+      state.chats.push(payload)
     },
     setInfo(state, UserInfo) {
       state.UserInfo = UserInfo
+    },
+    clearchats(state){
+      state.chats = []
     }
   },
   actions: {
@@ -23,7 +26,9 @@ const ChatModule = {
     firebase.database().ref("messages").push(payload)
     },
     loadChats({commit,dispatch,state}, payload) {
+
       var chatList = []
+
       // Loop going through each order
       for (var key in payload.orders) {
         if (payload.orders.hasOwnProperty(key)) {
@@ -34,6 +39,7 @@ const ChatModule = {
           // The temp variables keep the data before they are being pushed in the ChatList Array
             if (snapshot.val() != null)
             {
+
             var temp_chat_key = Object.keys(snapshot.val())[0]
             var temp_sender_id = snapshot.val()[temp_chat_key]['sender_id']
             var temp_receiver_id = snapshot.val()[temp_chat_key]['receiver']
@@ -49,24 +55,25 @@ const ChatModule = {
           axios
           .get("/api/users/" + id_to_request +  "/showInfo")
           .then(response => {
-              temp_fullInfo = response.data[0]['first_name'] + " " + response.data[0]['last_name']
-              chatList.push({chat_key : temp_chat_key,
-                sender_id : temp_sender_id,
-               receiver_id :temp_receiver_id,
-               order_id : snapshot.val()[temp_chat_key]['order_id'],
-               userInfo : temp_fullInfo
-              })
 
-          });
-          }
+            if (response.data.length != 0)
+              {
+                     temp_fullInfo = response.data[0]['first_name'] + " " + response.data[0]['last_name']
+                     commit('setChats', {chat_key : temp_chat_key,
+                     sender_id : temp_sender_id,
+                     receiver_id :temp_receiver_id,
+                     order_id : snapshot.val()[temp_chat_key]['order_id'],
+                     userInfo : temp_fullInfo
+                 });
+              }
           })
 
         }
-      }
+      })
+    }
+  }
 
-      commit('setChats', chatList);
-
-    },
+},
     createChat({commit,dispatch}, payload, ) {
       //Generate a conversation ID, create a chatroom node
       //and store it to the "chats " node in firebase
@@ -88,6 +95,10 @@ const ChatModule = {
       dispatch('sendMessage', Message_data);
 
     },
+    clearchats({commit}, payload) {
+      commit('clearchats')
+    }
+
 
 
 

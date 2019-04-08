@@ -11,7 +11,7 @@
 
   <v-card>
     <v-card-title>
-      <span class="headline"> Write a Message to the Courier </span> </v-card-title>
+      <p class="headline"> Write a Message to the <span v-if="path =='/courier'">customer </span> <span v-else >courier </span> </p> </v-card-title>
     <v-card-text>
       <v-container grid-list-md>
         <v-layout wrap>
@@ -41,6 +41,7 @@ import * as firebase from 'firebase'
 export default {
   data() {
     return {
+      path: this.$route.path,
       chatloader : false,
       fullPage: true,
       orders: {},
@@ -71,7 +72,6 @@ props : {
     },
 
     isChatExist : function (){
-
       var self = this
       var isexist = false
 
@@ -93,7 +93,7 @@ props : {
 
   },
   onCancel : function(){
-    console.log(" Loader Cancelled");
+    console.log(" Loader cancelled");
   }
 
   }

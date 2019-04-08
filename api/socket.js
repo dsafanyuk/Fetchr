@@ -10,6 +10,7 @@ const socketApi = {};
 socketApi.io = io;
 
 io.on('connection', (socket) => {
+
   socket.on('ORDER_CREATED', (data) => {
     updateOpenOrders(data, socket);
   });

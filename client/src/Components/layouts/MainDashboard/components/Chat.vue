@@ -45,7 +45,7 @@
 
 
 
-        <div class="chat-conversation"  style="max-height:300px;"   id="chat-conversation"  ref="chatContainer">
+        <div class="chat-conversation"     id="chat-conversation"  ref="chatContainer">
                 <ul class="conversation-list"  tabindex="5001" >
                     <li  v-for="message in chatMessages" class="clearfix"   v-bind:class="displayMessages(message.SenderId)">
 
@@ -77,7 +77,7 @@
                                 color="info"
                                 indeterminate
                               ></v-progress-circular>
-                              <img v-else width="24" height="24" src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg" alt="">
+                            <a v-on:click="sendMessage"><v-icon>far fa-paper-plane</v-icon></a>
                             </v-fade-transition>
                           </template>
                           <template v-slot:append-outer>
@@ -129,62 +129,83 @@
     props: [
       'id'
     ],
-    created(){
-    },
-    mounted () {
+    created () {
+      this.$store.dispatch('clearchats')
       this.fetchMessages()
-      this.scrollToEnd();
+
     },
-    updated ()
-    {
-      this.scrollToEnd();
+    mounted (){
+      // Clear the store before reload
+      this.$store.dispatch('clearchats')
     },
+    watch: {
+      chatMessages: function() {
+        if (this.chatMessages.length == 1 || this.chatMessages.length == 0)
+        {
+        this.scrollToTop()
+
+        }
+        else
+        {
+          var self = this
+           setTimeout(function(){
+              self.scrollToEnd()
+            }, 100);
+        }
+      }},
     components: {
       'chatroom': ChatRoom,
       'OrderDetailsChat': OrderDetailsChat,
+      'loading' : Loading
+
     },
     computed: {
-
-      messages () {
-        return this.chatMessages
-      },
     },
     methods: {
       scrollToEnd() {
 				var container = document.querySelector(".chat-conversation");
 				var scrollHeight = container.scrollHeight;
 				container.scrollTop = scrollHeight;
-			},
 
+
+			},
+      scrollToTop() {
+        var container = document.querySelector(".chat-conversation");
+        container.scrollTop = 0;
+
+      },
       sendMessage () {
         if (this.content !== '') {
       const  Message_data = {
         OrderId  : parseInt(this.$route.params.order_id),
-        ReceiverId: browserCookies.get("current_receiver"),
+        ReceiverId: browserCookies.get("current_receiver_id"),
         SenderId :  browserCookies.get("user_id"),
         Content : this.content
       }
           this.$store.dispatch('sendMessage', Message_data)
-          this.content = '' // Clear after You send the Message
+          this.content = ''
         }
       },
 
       fetchMessages() {
         this.isChatLoading = true;
+
         let orderId = parseInt(this.$route.params.order_id)
-        let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(orderId).limitToLast(20)
+        let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(orderId).limitToLast(100)
         let temp_data = []
+        var self = this
         refmessages.on("child_added", function(snapshot) {
+
+          self.isChatLoading = false;
           var data = snapshot.val()
           temp_data.push(data)
-
-
         })
-        this.chatMessages = temp_data
 
-        this.scrollToEnd()
+        this.chatMessages = temp_data
+        //If there's no chat for the current id
+        self.isChatLoading = false;
+
       },
-      // Messages Left & right
       displayMessages(SenderId)
       {
         if( SenderId == browserCookies.get("user_id") )
@@ -197,7 +218,7 @@
         .then(response => {
             fullname = response.data[0]['first_name'] + " " + response.data[0]['last_name']
             chatList.push({chat_key : temp_chat_key,
-              sender_id : temp_sender_id,
+            sender_id : temp_sender_id,
              receiver_id :temp_receiver_id,
              order_id : snapshot.val()[temp_chat_key]['order_id'],
              userInfo : temp_fullInfo
@@ -220,6 +241,7 @@
           let orderInfo = response.data.orderInfo[0];
 
           this.items = response.data.productList;
+          this.total = 0
           this.items.forEach(item => {
             item.item_total = item.price * item.quantity;
             this.total += item.item_total;
@@ -236,10 +258,10 @@
     }
   }
 </script>
+<style scoped src="../../../assets/courier/css/core.scss"></style>
+<style scoped src="../../../assets/courier/css/components.scss"></style>
+<style lang="css" scoped>
 
-<style>
-@import "../../../assets/courier/css/core.css";
-@import "../../../assets/courier/css/components.css";
 .conversation-text{
   padding-bottom: 10px !important;
 }
@@ -255,6 +277,7 @@
 width: 600px;
 max-height: 300px;
 overflow: scroll;
+ overflow-x: hidden;
 }
 .chat_container{
 margin-top: 100px;
@@ -299,5 +322,4 @@ margin-top: 100px;
       max-width: 60%;
     }
   }
-
 </style>

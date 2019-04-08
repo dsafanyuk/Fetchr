@@ -30,7 +30,7 @@ computed: {
 
 },
 mounted: function() {
-this.getOrderSummary();
+
 },
 props : {
   items : Array,
