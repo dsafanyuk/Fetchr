@@ -82,7 +82,7 @@
       </v-layout>
   <v-footer height="auto" color="rgb(76, 94, 105)">
       <v-layout justify-center row wrap>
-        <v-btn v-for="link in links" :key="link" v-bind:to="link.to" color="white" flat round>{{ link.name }}</v-btn>
+        <v-btn v-for="(link, i) in links" :key="i" v-bind:to="link.to" color="white" flat round>{{ link.name }}</v-btn>
         <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
           &copy;2018 —
           <strong>Fetchr</strong>
