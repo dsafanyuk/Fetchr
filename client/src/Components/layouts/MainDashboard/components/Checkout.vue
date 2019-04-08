@@ -11,11 +11,19 @@
             <td class="body-2 text-xs-left">{{ props.item.product_name }}</td>
             <td class="text-xs-left">${{ (props.item.price).toFixed(2) }}</td>
             <td class="text-xs-center">
-              <v-btn icon v-on:click="incQuantity(props.item)">
+              <v-btn
+                icon
+                v-on:click="incQuantity(props.item)"
+                :disabled="props.item.quantity === 10"
+              >
                 <v-icon color="primary">add_circle</v-icon>
               </v-btn>
               <span>{{ props.item.quantity }}</span>
-              <v-btn icon v-on:click="decQuantity(props.item)">
+              <v-btn
+                icon
+                v-on:click="decQuantity(props.item)"
+                :disabled="props.item.quantity === 1"
+              >
                 <v-icon color="primary">remove_circle</v-icon>
               </v-btn>
             </td>
