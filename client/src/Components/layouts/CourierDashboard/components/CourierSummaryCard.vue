@@ -21,7 +21,7 @@
                 ></v-progress-circular>
                 <div v-if="!(isLoading)">
                   <h4 class="m-t-0 m-b-5">
-                    <b>{{available_orders}}</b>
+                    <b>{{availableOrders.length}}</b>
                   </h4>
                 </div>
                 <p class="text-muted m-b-0 m-t-0">Total Available Orders</p>
@@ -148,7 +148,7 @@
                 ></v-progress-circular>
                 <div v-if="!(isLoading)">
                   <h4 class="m-t-0 m-b-5">
-                    <b>{{delivered_orders}}</b>
+                    <b>{{deliveredOrders.length}}</b>
                   </h4>
                 </div>
                 <p class="text-muted m-b-0 m-t-0">Total Delivered Orders</p>
@@ -276,7 +276,7 @@
                 ></v-progress-circular>
                 <div v-if="!(isLoading)">
                   <h4 class="m-t-0 m-b-5">
-                    <b>{{delivered_revenue}}</b>
+                    <b>{{deliveredRevenue}}</b>
                   </h4>
                 </div>
                 <p class="text-muted m-b-0 m-t-0">Total Delivered Revenue</p>
@@ -398,7 +398,7 @@
 
               <div class="table-detail">
                 <h4 class="m-t-0 m-b-5">
-                  <b>{{available_orders}}</b>
+                  <b>{{availableOrders.length}}</b>
                 </h4>
                 <p class="text-muted m-b-0 m-t-0">Total Available Orders</p>
               </div>
@@ -516,7 +516,7 @@
 
               <div class="table-detail">
                 <h4 class="m-t-0 m-b-5">
-                  <b>{{delivered_orders}}</b>
+                  <b>{{deliveredOrders.length}}</b>
                 </h4>
                 <p class="text-muted m-b-0 m-t-0">Total Delivered Orders</p>
               </div>
@@ -635,7 +635,7 @@
 
               <div class="table-detail">
                 <h4 class="m-t-0 m-b-5">
-                  <b>{{delivered_revenue}}</b>
+                  <b>{{deliveredRevenue}}</b>
                 </h4>
                 <p class="text-muted m-b-0 m-t-0">Total Delivered Revenue</p>
               </div>
@@ -755,17 +755,19 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: "CourierSummaryCard",
-  data() {
-    return {
-     available_orders :  this.$store.getters['courier/getAvailableOrdersSum'],
-     delivered_orders :  this.$store.getters['courier/getDeliveredOrdersSum'],
-     delivered_revenue : this.$store.getters['courier/getDeliveredRevenueSum']
-    };
-  },
   computed: {
     isLoading() {
       return this.$store.getters["courier/isLoading"];
-    }
+    },
+    availableOrders() {
+      return this.$store.getters["courier/availableOrders"];
+    },
+    deliveredOrders() {
+      return this.$store.getters["courier/deliveredOrders"];
+    },
+    deliveredRevenue() {
+      return this.$store.getters['courier/getDeliveredRevenueSum'];
+    },
   },
   methods: {
   },
@@ -774,30 +776,9 @@ export default {
 this.$store.dispatch("courier/updateAvailableOrders")
 this.$store.dispatch("courier/updateDeliveredOrders")
 this.$store.dispatch("courier/updateDeliveredRevenue")
-this.$store.subscribe((mutation, state) => {
-  switch(mutation.type)
-  {
-    case "courier/updateAvailableOrders" :
-    {
-      this.available_orders = this.$store.getters['courier/getAvailableOrdersSum']
-
-      break;
-    }
-    case "courier/updateDeliveredOrders":
-    {
-      this.delivered_orders = this.$store.getters['courier/getDeliveredOrdersSum']
-      break;
-    }
-    case "courier/updateDeliveredRevenue" :
-    {
-      this.delivered_revenue = this.$store.getters['courier/getDeliveredRevenueSum']
-
-      break;
-    }
-
-  }
-
-})
+.then(() => {
+  this.delivered_revenue = this.$store.getters['courier/getDeliveredRevenueSum'];
+});
 
 }
 

@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const courierController = require('./courierController');
 
-router.get('/:user_id/order', courierController.availableOrders);
+router.get('/:user_id/order/available', courierController.availableOrders);
 router.get('/:user_id/order/accepted', courierController.acceptedOrders);
 router.get('/:user_id/order/delivered', courierController.deliveredOrders);
 router.get('/:user_id/countAvailableOrder', courierController.countAvailableOrder);

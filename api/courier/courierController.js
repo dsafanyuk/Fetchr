@@ -1,6 +1,9 @@
 const knex = require('knex')(require('../db'));
 const { fixDateTime } = require('./courierHelper');
 const moment = require('moment');
+const updateAcceptedOrders = require('../socket/updateAcceptedOrders');
+const updateDeliveredOrders = require('../socket/updateDeliveredOrders');
+const socketApi = require('../socket');
 
 // GET /courier/:user_id/order
 function availableOrders(req, res) {
@@ -15,7 +18,7 @@ function availableOrders(req, res) {
       'orders.time_created',
       'order_total',
     )
-    .whereNull('courier_id')
+    .where('delivery_status', 'pending')
     .whereNot('customer_id', req.params.user_id)
     .then((orders) => {
       orders.forEach((order) => {
@@ -135,6 +138,11 @@ function getRevenue(req, res) {
 }
 // POST /accept
 function acceptOrder(req, res) {
+  updateAcceptedOrders({
+    user: req.body.customer_id,
+    order: req.body.order_id,
+  }, socketApi);
+
   knex('orders')
     .whereNull('courier_id')
     .andWhere('order_id', req.body.order_id)
@@ -159,6 +167,11 @@ function acceptOrder(req, res) {
 
 // POST /deliver
 function deliverOrder(req, res) {
+  updateDeliveredOrders({
+    user: req.body.customer_id,
+    order: req.body.order_id,
+  }, socketApi);
+
   knex('orders')
     .where('order_id', req.body.order_id)
     .update({

@@ -5,8 +5,6 @@ const state = {
   acceptedOrders: [],
   deliveredOrders: [],
   isLoading: true,
-  availableOrdersSum: 0,
-  deliveredOrdersSum: 0,
   deliveredRevenueSum: 0,
 };
 const mutations = {
@@ -34,13 +32,6 @@ const mutations = {
   startLoading: (state, data) => {
     state.isLoading = true;
   },
-  updateAvailableOrders: (state, value) => {
-    state.availableOrdersSum = value;
-  },
-
-  updateDeliveredOrders: (state, value) => {
-    state.deliveredOrdersSum = value;
-  },
   updateDeliveredRevenue: (state, value) => {
     state.deliveredRevenueSum = value;
   },
@@ -50,8 +41,6 @@ const getters = {
   acceptedOrders: state => state.acceptedOrders,
   deliveredOrders: state => state.deliveredOrders,
   isLoading: state => state.isLoading,
-  getAvailableOrdersSum: state => state.availableOrdersSum,
-  getDeliveredOrdersSum: state => state.deliveredOrdersSum,
   getDeliveredRevenueSum: state => state.deliveredRevenueSum,
 };
 const actions = {
@@ -78,7 +67,7 @@ const actions = {
   }) => {
     const user = rootGetters['login/getUserId'];
     axios
-      .get(`/api/courier/${user}/order/`)
+      .get(`/api/courier/${user}/order/available`)
       .then((response) => {
         response.data.forEach((order) => {
           commit('addAvailableOrder', order);
@@ -131,7 +120,6 @@ const actions = {
   }) => {
     dispatch('clearAllOrders').then(() => {
       dispatch('refreshAllOrders');
-      dispatch('updateAvailableOrders');
     });
   },
   socket_updateAcceptedOrders: ({
@@ -152,20 +140,6 @@ const actions = {
     console.log('EVENT RECEIVED: UPDATE_DELIVERED_ORDERS');
     dispatch('clearAllOrders').then(() => {
       dispatch('refreshAllOrders');
-    });
-  },
-  updateAvailableOrders: ({ commit, rootGetters }) => {
-    const user = rootGetters['login/getUserId'];
-
-    axios.get(`/api/courier/${user}/countAvailableOrder`).then((response) => {
-      commit('updateAvailableOrders', response.data[0][0].count_av);
-    });
-  },
-  updateDeliveredOrders: ({ commit, rootGetters }) => {
-    const user = rootGetters['login/getUserId'];
-
-    axios.get(`/api/courier/${user}/getTotalDelivered`).then((response) => {
-      commit('updateDeliveredOrders', response.data[0][0].count_d);
     });
   },
   updateDeliveredRevenue: ({ commit, rootGetters }) => {

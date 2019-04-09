@@ -12,6 +12,7 @@ const mutations = {
     if (message.user == user) {
       Vue.toasted.show(`Order #${message.order} has been accepted.`, {
         theme: 'bubble',
+        position: 'top-center',
         action: [
           {
             class: 'toast-action',
@@ -35,6 +36,7 @@ const mutations = {
     if (message.user == user) {
       Vue.toasted.show(`Order #${message.order} has been delivered.`, {
         theme: 'bubble',
+        position: 'top-center',
         action: [
           {
             text: 'SHOW',

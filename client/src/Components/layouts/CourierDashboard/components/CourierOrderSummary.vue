@@ -41,7 +41,8 @@ export default {
       order_id: Number,
       order_total: String,
       room_num: String,
-      time_created: String
+      time_created: String,
+      user_id: Number,
     },
     summaryIsActive: Boolean
   },
@@ -92,7 +93,8 @@ export default {
         axios
           .post(`/api/courier/accept`, {
             courier_id: browserCookies.get("user_id"),
-            order_id: this.order.order_id
+            order_id: this.order.order_id,
+            customer_id: this.order.user_id,
           })
           .then(response => {
             if (response.data == "success") {
@@ -102,15 +104,6 @@ export default {
                 position: "top-center",
                 duration: 5000
               });
-              this.$socket.emit("ORDER_ACCEPTED", {
-                user: this.order.user_id,
-                order: this.order.order_id
-              });
-              // Get available order for the Summary Section
-              this.$store.dispatch("courier/updateAvailableOrders")
-
-
-
             } else {
               this.$toasted.error(
                 "Oops! This order has already been accepted. :(",
@@ -121,12 +114,6 @@ export default {
                 }
               );
             }
-          })
-          .then(() => {
-            this.$store.dispatch("courier/clearAllOrders");
-          })
-          .then(() => {
-            this.$store.dispatch("courier/refreshAllOrders");
           });
       }
     },
@@ -134,7 +121,8 @@ export default {
       axios
         .post(`/api/courier/deliver`, {
           courier_id: browserCookies.get("user_id"),
-          order_id: this.order.order_id
+          order_id: this.order.order_id,
+          customer_id: this.order.user_id,
         })
         .then(response => {
           if (response.data == "success") {
@@ -143,15 +131,8 @@ export default {
               theme: 'bubble',
               position: "top-center",
               duration: 5000
-            });
-            this.$socket.emit("ORDER_DELIVERED", {
-              user: this.order.user_id,
-              order: this.order.order_id
-            });
-            this.$store.dispatch("courier/updateDeliveredOrders")
-            .then(() => {
-              this.$store.dispatch("courier/updateDeliveredRevenue")
             })
+            this.$store.dispatch("courier/updateDeliveredRevenue")
 
 
           } else {
@@ -161,12 +142,6 @@ export default {
               duration: 5000
             });
           }
-        })
-        .then(() => {
-          this.$store.dispatch("courier/clearAllOrders");
-        })
-        .then(() => {
-          this.$store.dispatch("courier/refreshAllOrders");
         });
     }
   },
