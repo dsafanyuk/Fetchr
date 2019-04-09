@@ -41,7 +41,7 @@
               <v-btn 
                 :loading="loading && this.loginTo == 'dashboard'"
                 :disabled="loading && this.loginTo == 'dashboard'"
-                round color="cyan"
+                round color="#647a87"
                 class="white--text"
                 type="submit"
                 @click="login('dashboard')"
@@ -49,7 +49,7 @@
               <v-btn
                 :loading="loading && this.loginTo == 'courier'"
                 :disabled="loading && this.loginTo == 'courier'"
-                round color="cyan"
+                round color="#647a87"
                 class="white--text"
                 type="submit"
                 @click="login('courier')"

@@ -35,8 +35,7 @@
         <div class="hidden-md-and-down">
           <v-menu fixed bottom left>
             <v-btn flat slot="activator" color="white" light>
-              Hi {{firstName}} &nbsp;&nbsp;&nbsp;
-              <v-icon>fas fa-user-alt fa-s</v-icon>
+              Hi {{firstName}} &nbsp;&nbsp;&nbsp;▼
             </v-btn>
             <v-list dense class="pt-0" style="cursor: pointer">
               <v-list-tile
@@ -55,6 +54,61 @@
               </v-list-tile>
             </v-list>
           </v-menu>
+          <v-dialog v-model="helpDialog" width="800">
+            <template v-slot:activator="{ on }">
+              <v-btn depressed icon v-on="on">
+                <v-icon v-on:click="showInstructions" color="white">help </v-icon>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-stepper v-model="help" non-linear>
+                <v-stepper-header>
+                  <v-stepper-step v-on:click="help = 1" editable step="1">
+                    Accept an order
+                  </v-stepper-step>
+                  <v-divider></v-divider>
+                  <v-stepper-step v-on:click="help = 2" editable step="2">
+                    Deliver an order
+                  </v-stepper-step>
+                  <v-divider></v-divider>
+                  <v-stepper-step v-on:click="help = 3" editable step="3">
+                    View order
+                  </v-stepper-step>
+                </v-stepper-header>
+                <v-stepper-items>
+                  <v-stepper-content
+                    :step="help">
+                    <v-card class="mb-5" color="grey lighten-1">
+                      <v-img :src="gifs[help-1]"></v-img>
+                    </v-card>
+                    <div class="text-xs-center">
+                      {{ instructions[help-1] }}
+                    </div>
+                    <br>
+                    <div class="text-xs-center">
+                      <v-btn 
+                        class="text-xs-center"
+                        color="primary"
+                        :disabled="help == 1"
+                        v-on:click="help--">
+                        back
+                      </v-btn>
+                      <v-btn v-on:click="helpDialog = !helpDialog" class="text-xs-center" color="primary">
+                        close
+                      </v-btn>
+                      <v-btn 
+                        class="text-xs-center"
+                        color="primary"
+                        :disabled="help == 3"
+                        v-on:click="help++">
+                        next
+                      </v-btn>
+                    </div>
+                  </v-stepper-content>
+                </v-stepper-items>
+              </v-stepper>
+            </v-card>
+          </v-dialog>
         </div>
       </v-toolbar>
     </div>
@@ -63,6 +117,10 @@
 
 <script>
 import browserCookies from "browser-cookies";
+import CourierAcceptOrder from "../../images/CourierAcceptOrder.gif";
+import CourierDeliverOrder from "../../images/CourierDeliverOrder.gif";
+import CourierViewOrder from "../../images/CourierViewOrder.gif";
+
 export default {
   data() {
     return {
@@ -79,6 +137,18 @@ export default {
           title: "Logout",
           icon: "fas fa-sign-out-alt fa-s"
         }
+      ],
+      helpDialog: false,
+      help: 1,
+      instructions: [
+        "Accept an order from available orders",
+        "Go to 'accepted' tab, deliver the order",
+        "Once it's delivered, you can click the row for further details",
+      ],
+      gifs: [
+        CourierAcceptOrder,
+        CourierDeliverOrder,
+        CourierViewOrder,
       ],
       textLists: [
         "Remember, you cannot change your password",
@@ -99,6 +169,14 @@ export default {
     this.textTimeout = setTimeout(() => {
       this.show = true;
     },3000);
+  },
+  watch: {
+    // If dialog is closed, instructions go back to step 1
+    helpDialog: function(value) {
+      if(!value) {
+        this.help = 1;
+      }
+    }
   },
   methods: {
     enter: function() {
@@ -145,7 +223,7 @@ export default {
           }
           break;
       }
-    }
+    },
   }
 };
 </script>

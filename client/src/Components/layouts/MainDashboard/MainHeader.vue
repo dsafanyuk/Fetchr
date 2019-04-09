@@ -87,7 +87,7 @@
       <div class="text-xs-right col-xs-4" @click="showShoppingCart(true)">
         <v-badge color="red" right overlap>
           <span slot="badge" v-if="numOfItemsInCart>0">{{numOfItemsInCart}}</span>
-          <v-btn fab small color="#f9aa33" icon class="ma-0">
+          <v-btn :disabled="!this.$store.getters['cart/totalCartItems']" dark fab small color="#f9aa33" icon class="ma-0">
             <v-icon color="white">shopping_cart</v-icon>
           </v-btn>
         </v-badge>

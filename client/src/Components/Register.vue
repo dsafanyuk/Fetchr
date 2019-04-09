@@ -102,12 +102,12 @@
                         </form>
                         <div class="form-group text-center">
                             <v-btn
-                                round color="cyan" dark
+                                round color="#647a87" dark
                                 type="submit"
                                 @click="registerCustomer"
                             >Register</v-btn>
                             <v-btn
-                                round color="cyan" dark
+                                round color="#647a87" dark
                                 type="button"
                                 @click="clear"
                             >Clear</v-btn>
