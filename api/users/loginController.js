@@ -25,6 +25,7 @@ function loginUser(req, res) {
         user = {
           user_id: `${users[0].user_id}`,
           email_address: `${users[0].email_address}`,
+          is_admin: `${users[0].is_admin}`,
         };
 
         // Create jwt, expires in 1 hour

@@ -12,6 +12,6 @@ router.use('/users', userRouter);
 router.use('/orders', verifyToken, orderRouter);
 router.use('/products', verifyToken, productRouter);
 router.use('/courier', courierRouter);
-router.use('/admin', adminRouter);
+router.use('/admin', verifyToken, adminRouter);
 
 module.exports = router;
