@@ -773,8 +773,6 @@ export default {
   },
 
   mounted() {
-this.$store.dispatch("courier/updateAvailableOrders")
-this.$store.dispatch("courier/updateDeliveredOrders")
 this.$store.dispatch("courier/updateDeliveredRevenue")
 .then(() => {
   this.delivered_revenue = this.$store.getters['courier/getDeliveredRevenueSum'];

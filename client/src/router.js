@@ -150,7 +150,22 @@ const routes = [
   },
 
   { path: '/home', component: Home },
-  { path: '/login', component: Login },
+  { 
+    path: '/login',
+    component: Login,
+    beforeEnter: (to, from, next) => {
+      // Check if the user is logged in & cookies have not expired
+      if (
+        store.getters['login/isLoggedIn']
+        && browserCookies.get('token')
+        && browserCookies.get('user_id')
+      ) {
+        next({ path: '/dashboard'});
+      } else {
+        next();
+      }
+    },
+  },
   { path: '/register', component: Register },
   { path: '/courier', component: CourierLayout, beforeEnter: requireAuth },
   { path: '*', component: NotFoundComponent },
