@@ -214,13 +214,21 @@ export default {
         }
         case "Logout":
           {
-            let allCookies = browserCookies.all();
-            for (let cookieName in allCookies) {
-              browserCookies.erase(cookieName);
-            }
-            window.localStorage.clear();
-            this.$store.dispatch("login/logout");
-            this.$router.push("/login");
+            this.$store.dispatch("login/logout").then(
+              response => {
+                let allCookies = browserCookies.all();
+
+                for (let cookieName in allCookies) {
+                  browserCookies.erase(cookieName);
+                }
+                
+                window.localStorage.removeItem('vuex');
+                this.$router.push("/login");
+              },
+              error => {
+                this.$store.commit("login/logoutFailed");
+              }
+            );
           }
           break;
       }
