@@ -1,4 +1,5 @@
 import axios from '../../axios';
+import router from '../../router';
 
 const state = {
   availableOrders: [],
@@ -116,19 +117,24 @@ const actions = {
   socket_updateOpenOrders: ({
     state, getters, commit, dispatch,
   }) => {
-    dispatch('clearAllOrders').then(() => {
-      dispatch('refreshAllOrders');
-    });
+    if(router.history.current.fullPath == "/courier") {
+      dispatch('clearAllOrders').then(() => {
+        dispatch('refreshAllOrders');
+      });
+    }
   },
   socket_updateAcceptedOrders: ({
     state, getters, commit, dispatch,
   }, data) => {
     const notifyData = data;
+
     commit('notification/NOTIFY_ACCEPTED', notifyData, { root: true });
     console.log('EVENT RECEIVED: UPDATE_ACCEPTED_ORDERS');
-    dispatch('clearAllOrders').then(() => {
-      dispatch('refreshAllOrders');
-    });
+    if(router.history.current.fullPath == "/courier") {
+      dispatch('clearAllOrders').then(() => {
+        dispatch('refreshAllOrders');
+      });
+    }
   },
   socket_updateDeliveredOrders: ({
     state, getters, commit, dispatch,
@@ -136,9 +142,11 @@ const actions = {
     const notifyData = data;
     commit('notification/NOTIFY_DELIVERED', notifyData, { root: true });
     console.log('EVENT RECEIVED: UPDATE_DELIVERED_ORDERS');
-    dispatch('clearAllOrders').then(() => {
-      dispatch('refreshAllOrders');
-    });
+    if(router.history.current.fullPath == "/courier") {
+      dispatch('clearAllOrders').then(() => {
+        dispatch('refreshAllOrders');
+      });
+    }
   },
   updateDeliveredRevenue: ({ commit, rootGetters }) => {
     const user = rootGetters['login/getUserId'];

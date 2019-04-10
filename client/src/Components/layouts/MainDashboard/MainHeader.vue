@@ -41,7 +41,7 @@
       <v-flex
         v-on:click="scrollToTop"
         align-self-center
-        style="margin-left: 100px"
+        style="margin-left: 30px"
         class="hidden-sm-and-down"
       >
         <transition name="fade" v-on:enter="enter" v-on:leave="leave">
@@ -294,7 +294,6 @@ export default {
                   browserCookies.erase(cookieName);
                 }
                 
-                window.localStorage.removeItem('vuex');
                 this.$router.push("/login");
               },
               error => {

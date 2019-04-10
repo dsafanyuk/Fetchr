@@ -13,7 +13,7 @@ export default {
   components: {
     CourierHeader: CourierHeader,
     CourierDashboard: CourierDashboard
-  }
+  },
 };
 </script>
 

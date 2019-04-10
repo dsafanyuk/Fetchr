@@ -118,11 +118,7 @@ const routes = [
     component: MainLayout,
     beforeEnter: (to, from, next) => {
       if (to.path == '/') {
-        if (window.localStorage.vuex) {
-          next({ path: '/dashboard' });
-        } else {
-          next({ path: '/home' });
-        }
+        next({ path: '/home' });
       } else {
         next();
       }
@@ -181,7 +177,7 @@ const routes = [
     beforeEnter: requireLoggedOut,
   },
   { path: '/courier', component: CourierLayout, beforeEnter: requireAuth },
-  { path: '/nicetry', beforeEnter: requireAuth, component: NiceTry },
+  { path: '/nicetry', component: NiceTry, beforeEnter: requireAuth },
   { path: '*', component: NotFoundComponent },
 ];
 

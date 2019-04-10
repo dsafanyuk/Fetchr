@@ -86,7 +86,6 @@ new Vue({
             browserCookies.erase(cookieName);
           }
           
-          window.localStorage.removeItem('vuex');
           router.push("/login");
         },
         error => {
