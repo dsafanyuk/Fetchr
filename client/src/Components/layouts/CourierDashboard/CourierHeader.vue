@@ -155,7 +155,6 @@ export default {
         "You can go to shopping page by clicking Fetchr icon",
         "All items are non refundable",
         "Try favoriting an item",
-        "Test inputs to handle too many char/numbers"
       ],
       showText: "",
       textTimeout: null,
