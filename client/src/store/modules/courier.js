@@ -111,7 +111,6 @@ const actions = {
       })
       .catch((error) => {
         console.log(error);
-        loadingOrdersToast.goAway();
         this.$toasted.error('Something went wrong');
       });
   },

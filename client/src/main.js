@@ -83,6 +83,7 @@ new Vue({
       for (const cookieName in allCookies) {
         browserCookies.erase(cookieName);
       }
+      window.localStorage.clear();
       store.dispatch('login/logout');
       router.push('/login');
     }

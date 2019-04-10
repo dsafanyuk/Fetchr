@@ -291,6 +291,7 @@ export default {
             for (let cookieName in allCookies) {
               browserCookies.erase(cookieName);
             }
+            window.localStorage.clear();
             this.$store.dispatch("login/logout").then(
               response => {
                 this.$router.push("/login");
