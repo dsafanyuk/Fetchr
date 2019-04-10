@@ -103,22 +103,23 @@ props : {
       var isexist = false
 
       self.chatloader = true
-
       let chatref = firebase.database().ref('chats').orderByChild('order_id').equalTo(this.$props.order_id)
-      chatref.on("child_added", function(snapshot) {
+
+      chatref.on("value", function(snapshot) {
       if(snapshot.exists())
       {
-
           self.chatloader = false
           self.$router.push("/chat/"+self.$props.order_id);
       }
       else
       {
+
           self.chatloader = false
           self.dialog = true
       }
       })
       chatref = null
+
 
   },
   onCancel : function(){
