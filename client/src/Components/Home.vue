@@ -45,7 +45,11 @@
             :src="gif.src"
             transition="fade"
             reverse-transition="fade"
-          ></v-carousel-item>
+          >
+          <v-layout class="firstCarousel" v-if="i == 0" justify-center align-center v-bind:data-logo="faintLogo">
+              <div class="display-1" >Click the right arrow to see how it works!</div>
+          </v-layout>
+        </v-carousel-item>
         </v-carousel>
       </v-layout>
     </v-container>
@@ -116,7 +120,7 @@
 </template>
 
 <script>
-import SwipeRight from "./SwipeRight.vue";
+import Logo from "./images/logo.png"
 import AddToCart from "./assets/AddToCart.gif";
 import AddToFavorites from "./assets/AddToFavorites.gif";
 import AddToWallet from "./assets/AddToWallet.gif";
@@ -130,6 +134,7 @@ import Kesney from "./assets/Saurel.png";
 export default {
   data() {
     return {
+      faintLogo: Logo,
       links: [
         {
           name: "Login",
@@ -141,7 +146,7 @@ export default {
         }
       ],
       gifs: [
-        { src: SwipeRight, title: "Welcome to Fetchr" },
+        { src: '', title: "Welcome to Fetchr" },
         { src: AddToCart, title: "Add Items to Cart" },
         { src: AddToFavorites, title: "Add Your Favorite Items" },
         { src: AddToWallet, title: "Add More Cash" },
@@ -177,15 +182,15 @@ export default {
           portrait: Caleb,
           name: "Caleb Murray",
           role: "Database Administrator",
-          bio: "Lives on rice and salmon; Olen henna"
+          bio: "Lives on rice and salmon; Olen Yhdysvalloista"
         },
         {
           portrait: Ben,
           name: "Ben Kintaudi",
           role: "Communications Coordinator",
-          bio: "Loves to play soccer; The weird one"
-        }
-      ]
+          bio: "Loves to play soccer; The weird one; Bite-Sized-Ben",
+        },
+      ],
     };
   }
 };

@@ -57,6 +57,25 @@ h2 {
 .v-icon {
   margin-bottom: 2%;
 }
-.theme--dark .v-icon {
-  color: #414141;
+.firstCarousel {
+  background-color: #fdddad;
+  opacity: .4;
+  color: #000;
+  height:100%;
+}
+.firstCarousel[data-logo] {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url('/distlogo.png');
+}
+.firstCarousel > div {
+  font-weight: 1000;
+  padding-left: 14%;
+  padding-right: 14%;
+}
+.gifSize {
+	left: 25%;
+	top: 15%;
+	width: 64%;
 }
