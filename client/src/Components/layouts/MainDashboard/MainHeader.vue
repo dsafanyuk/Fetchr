@@ -90,7 +90,7 @@
           <v-btn
             @click="showShoppingCart(true)"
             :disabled="!this.$store.getters['cart/totalCartItems']"
-            dark fab small 
+            dark fab small
             color="#f9aa33"
             icon
             class="ma-0">

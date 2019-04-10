@@ -169,12 +169,12 @@ const routes = [
     path: '/home',
     component: Home,
   },
-  { 
+  {
     path: '/login',
     component: Login,
     beforeEnter: requireLoggedOut,
   },
-  { 
+  {
     path: '/register',
     component: Register,
     beforeEnter: requireLoggedOut,

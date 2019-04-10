@@ -41,8 +41,6 @@
       return {
         recentChats: 'Recent Chats',
         orders : {},
-        avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-
       }
     },
     created () {
@@ -60,10 +58,12 @@
     },
     computed: {
       chats () {
-
         return  this.$store.getters.chats
 
       }
+    },
+    mounted (){
+      this.$store.dispatch ('clearchats')
     },
     methods :{
       loadChatRoom: function(order_id, receiver_id) {

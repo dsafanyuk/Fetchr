@@ -5,7 +5,6 @@ const ChatModule = {
   state: {
     chats: [],
     UserInfo : "",
-
   },
   mutations: {
     setMessagesEmpty(state) {
@@ -46,10 +45,10 @@ const ChatModule = {
             var temp_fullInfo = ""
             var id_to_request = 0
             // This determine which info we need to display
-            if (temp_sender_id == browserCookies.get("user_id"))
+           if (temp_sender_id == browserCookies.get("user_id"))
                 id_to_request = temp_receiver_id // I don't wan't to display my own name in the chat room
-            else
-                id_to_request = temp_sender_id
+           else
+               id_to_request = temp_sender_id
 
 
           axios

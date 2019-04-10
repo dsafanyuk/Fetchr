@@ -271,7 +271,8 @@
 }
 .mymessage .ctext-wrap{
   color : white;
-  background: #34d3eb
+  background: #f9aa33
+
 }
 .chat-conversation{
 width: 600px;
