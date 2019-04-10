@@ -64,10 +64,10 @@ h2 {
   height:100%;
 }
 .firstCarousel[data-logo] {
-  background-position: center;
+  background-position: top;
   background-repeat: no-repeat;
-  background-size: contain;
-  background-image: url('/distlogo.png');
+  background-size: 300px 130px;
+  background-image: url('/distfetchr_header_logo_colored.png');
 }
 .firstCarousel > div {
   font-weight: 1000;

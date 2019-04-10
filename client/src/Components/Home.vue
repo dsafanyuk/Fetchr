@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import Logo from "./images/logo.png"
+import Logo from "./images/fetchr_header_logo_colored.png"
 import AddToCart from "./assets/AddToCart.gif";
 import AddToFavorites from "./assets/AddToFavorites.gif";
 import AddToWallet from "./assets/AddToWallet.gif";
@@ -188,7 +188,7 @@ export default {
           portrait: Ben,
           name: "Ben Kintaudi",
           role: "Communications Coordinator",
-          bio: "Loves to play soccer; The weird one; Bite-Sized-Ben",
+          bio: "Loves to play soccer; The weird one;",
         },
       ],
     };
