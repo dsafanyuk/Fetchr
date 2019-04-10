@@ -57,7 +57,7 @@
           <v-dialog v-model="helpDialog" width="800">
             <template v-slot:activator="{ on }">
               <v-btn depressed icon v-on="on">
-                <v-icon v-on:click="showInstructions" color="white">help </v-icon>
+                <v-icon color="white">help </v-icon>
               </v-btn>
             </template>
             <v-card>
