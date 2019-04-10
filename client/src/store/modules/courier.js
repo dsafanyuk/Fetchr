@@ -111,7 +111,6 @@ const actions = {
       })
       .catch((error) => {
         console.log(error);
-        this.$toasted.error('Something went wrong');
       });
   },
   socket_updateOpenOrders: ({
