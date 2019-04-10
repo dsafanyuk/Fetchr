@@ -88,11 +88,11 @@ const routes = [
           next();
         }
         else {
-          next({ path: '/dashboard' });
+          next({ path: '/nicetry' });
         }
       })
       .catch(error => {
-        next({ path: '/dashboard' })
+        next({ path: '/nicetry' })
       });
     },
     children: [
