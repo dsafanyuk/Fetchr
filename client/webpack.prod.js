@@ -3,6 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -81,5 +82,6 @@ module.exports = {
       filename: './index.html',
       template: 'template.html',
     }),
+    new CompressionPlugin(),
   ],
 };
