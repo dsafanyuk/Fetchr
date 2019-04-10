@@ -105,7 +105,7 @@ props : {
       self.chatloader = true
 
       let chatref = firebase.database().ref('chats').orderByChild('order_id').equalTo(this.$props.order_id)
-      chatref.on("value", function(snapshot) {
+      chatref.on("child_added", function(snapshot) {
       if(snapshot.exists())
       {
 
@@ -118,6 +118,7 @@ props : {
           self.dialog = true
       }
       })
+      chatref = null
 
   },
   onCancel : function(){

@@ -204,6 +204,7 @@
         this.chatMessages = temp_data
         //If there's no chat for the current id
         self.isChatLoading = false;
+        //refmessages = null;
 
       },
       displayMessages(SenderId)
