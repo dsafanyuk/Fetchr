@@ -62,12 +62,9 @@ h2 {
   opacity: .4;
   color: #000;
   height:100%;
-}
-.firstCarousel[data-logo] {
   background-position: top;
   background-repeat: no-repeat;
   background-size: 300px 130px;
-  background-image: url('/distfetchr_header_logo_colored.png');
 }
 .firstCarousel > div {
   font-weight: 1000;
