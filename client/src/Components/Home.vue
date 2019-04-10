@@ -74,6 +74,7 @@
     <v-container mb-5>
       <v-card color="transparent" flat>
         <v-card-title
+          id="team"
           class="display-3 justify-center text-xs-center font-weight-bold"
           primary-title
         >Meet the Fetchr Team</v-card-title>
@@ -192,6 +193,17 @@ export default {
         },
       ],
     };
+  },
+  mounted () {
+    // From testing, without a brief timeout, it won't work.
+    if (this.$route.hash) {
+      setTimeout(() => this.scrollTo(this.$route.hash), 1)
+    }
+  },
+  methods: {
+    scrollTo: function (hashtag) {
+      setTimeout(() => { location.href = hashtag }, 1)
+    }
   }
 };
 </script>
