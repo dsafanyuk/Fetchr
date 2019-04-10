@@ -4,6 +4,15 @@
     <v-layout row class="pa-3 mb-2">
       <v-flex md8 xs12>
         <v-data-table :items="items" hide-headers :hide-actions="!isMobile" class="elevation-1">
+          <template v-slot:no-data>
+            <v-flex class="text-xs-center">
+              <router-link to="/dashboard">
+                <v-btn
+                  color="success"
+                >Can't checkout without with an empty cart, let's add some items!</v-btn>
+              </router-link>
+            </v-flex>
+          </template>
           <template slot="items" slot-scope="props">
             <td align="text-xs-center" class="hidden-sm-and-down">
               <img :src="props.item.product_url" class="checkout-img">

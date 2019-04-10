@@ -1,5 +1,5 @@
 <template>
-  <div class="text-xs-center">
+  <div>
     <v-dialog v-model="show" width="750" transition="false">
       <v-card>
         <div class="text-xs-right">
@@ -11,7 +11,12 @@
           class="headline justify-center text-xs-center font-weight-bold"
           primary-title
         >Your Shopping Cart</v-card-title>
-        <v-data-table :items="items" hide-headers :total-items="10" hide-actions>
+        <v-data-table :items="items" hide-headers hide-actions>
+          <template v-slot:no-data>
+            <td class="text-xs-right" :colspan="3">
+              <v-flex class="text-xs-center">Cart is empty, add some items!</v-flex>
+            </td>
+          </template>
           <template slot="items" slot-scope="props">
             <td>{{ props.item.product_name }}</td>
             <td class="text-xs-center">

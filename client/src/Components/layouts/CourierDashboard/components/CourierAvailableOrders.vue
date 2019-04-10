@@ -4,6 +4,11 @@
       <v-progress-linear :indeterminate="true" height="10"></v-progress-linear>
     </div>
     <v-data-table :headers="headers" :items="orders" v-bind:pagination.sync="pagination">
+      <template v-slot:no-data>
+        <v-flex class="text-xs-center">
+          <v-alert type="info" outline :value="true">No open orders.</v-alert>
+        </v-flex>
+      </template>
       <template slot="items" slot-scope="props">
         <tr @click="toggleDialog(props.item)">
           <td>{{props.item.order_id}}</td>
@@ -32,7 +37,7 @@ export default {
     };
   },
   props: {
-    orders: Array,
+    orders: Array
   },
   computed: {
     isDialog() {
@@ -53,6 +58,6 @@ export default {
 }
 
 .v-progress-linear {
-  margin: auto !important
+  margin: auto !important;
 }
 </style>

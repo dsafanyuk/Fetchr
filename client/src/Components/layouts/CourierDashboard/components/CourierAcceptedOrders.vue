@@ -4,6 +4,11 @@
       <v-progress-linear :indeterminate="true" height="10"></v-progress-linear>
     </div>
     <v-data-table :headers="headers" :items="orders" v-bind:pagination.sync="pagination">
+      <template v-slot:no-data>
+        <v-flex class="text-xs-center">
+          <v-alert type="info" outline :value="true">Start accepting some orders to see them here</v-alert>
+        </v-flex>
+      </template>
       <template slot="items" slot-scope="props">
         <td @click="toggleDialog(props.item)">{{props.item.order_id}}</td>
         <td @click="toggleDialog(props.item)">{{props.item.first_name}}</td>

@@ -11,6 +11,13 @@
         v-bind:pagination.sync="pagination"
         :rows-per-page-items="rowsPerPage"
       >
+        <template v-slot:no-data v-if="!isLoading">
+          <v-flex class="text-xs-center">
+            <router-link to="/dashboard">
+              <v-btn color="accent">Create Your First Order</v-btn>
+            </router-link>
+          </v-flex>
+        </template>
         <template slot="items" slot-scope="props">
           <td class="text-xs-center">{{ props.item.order_id }}</td>
           <td class="text-xs-center">{{ fixDate(props.item.time_created) }}</td>
