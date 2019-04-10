@@ -1,56 +1,62 @@
-* i{ font-family: "Material Icons"}
+* i {
+  font-family: 'Material Icons';
+}
 * {
-	font-family: Roboto,sans-serif;
+  font-family: Roboto, sans-serif;
 }
-.header{
-	background-color: rgba(0, 0, 0, .01);
-	height: 88px;
-	display:flex;justify-content:space-between;
-	align-items:center
+.header {
+  background-color: rgba(0, 0, 0, 0.01);
+  height: 88px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.hero{
-	background-image: url("https://www.shipt.com/wp-content/uploads/2018/06/bg-campaign.png");
-	background-size: cover;
+.hero {
+  background-image: url('https://www.shipt.com/wp-content/uploads/2018/06/bg-campaign.png');
+  background-size: cover;
 }
 .hero-button {
-	margin-top: 5%;
+  margin-top: 5%;
 }
 .logo {
-	max-height: 100%;
-	max-width: 50%;
+  max-height: 100px;
+  max-width: 150px;
 }
 h2 {
-	font-size: 4em;
-	margin-bottom: .5em;
+  font-size: 4em;
+  margin-bottom: 0.5em;
 }
 .hero-text {
-	color: #fff;
+  color: #fff;
 }
 .hero-text > button {
-	margin-top: 5%;
+  margin-top: 5%;
 }
 .v-card__title {
-	font-size: 2.6em;
-	font-weight: 700;
-	align-self: center;
-	padding-bottom: 0;
-	margin-top: .8em;
+  font-size: 2.6em;
+  font-weight: 700;
+  align-self: center;
+  padding-bottom: 0;
+  margin-top: 0.8em;
 }
 .v-card__subtitle {
-	font-size: 1.3em !important;
-	padding-top: .5em;
-	color: rgba(0, 0, 0, .5);
-	margin-bottom: 1.2em;
+  font-size: 1.3em !important;
+  padding-top: 0.5em;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 1.2em;
 }
 .v-card__text {
-	font-size: 1.6em;
+  font-size: 1.6em;
 }
 .hero-color {
-	color: #414141;
+  color: #414141;
 }
 .huge-bottom-margin {
-	margin-bottom: 9%;
+  margin-bottom: 9%;
 }
 .v-icon {
-	margin-bottom: 2%;
+  margin-bottom: 2%;
+}
+.theme--dark .v-icon {
+  color: #414141;
 }

@@ -202,15 +202,13 @@ import Vue from 'vue'
                                 }
                             })
                             .catch(function (error) {
-                                if (error.response) {
-                                    error.response.data.errors.map( (error) => {
-                                        Vue.toasted.show(error.param + " " + error.msg, {
+                                if (error.response.status == 400) {
+                                        Vue.toasted.show(error.response.data, {
                                             theme: 'bubble',
                                             duration: 4000,
                                             position: 'top-center',
                                             icon: 'report_problem'
                                         });
-                                    })
                                 }
                                 if (error.response) {
                                     // The request was made and the server responded with a status code
