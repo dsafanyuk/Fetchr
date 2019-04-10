@@ -18,13 +18,17 @@
           <td class="text-xs-center">{{ props.item.order_total.toFixed(2) }}</td>
           <td class="text-xs-center">
             <CreateChat :order_id="props.item.order_id"></CreateChat>
-            <v-btn
-              @click="viewOrder(props.item.order_id)"
-              round
-              dark
-              color="#616161"
-              type="button"
-            >View</v-btn>
+            <v-tooltip right>
+              <template v-slot:activator="{ on }">
+              <v-btn
+                @click="viewOrder(props.item.order_id)"
+                icon
+                type="button"
+                v-on="on"
+              ><v-icon color="primary">visibility</v-icon></v-btn>
+              </template>
+              <span>View Order</span>
+            </v-tooltip>
           </td>
         </template>
       </v-data-table>

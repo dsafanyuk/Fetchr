@@ -11,7 +11,7 @@ const verifyToken = require('./verifyToken');
 router.use('/users', userRouter);
 router.use('/orders', verifyToken, orderRouter);
 router.use('/products', verifyToken, productRouter);
-router.use('/courier', courierRouter);
+router.use('/courier', verifyToken, courierRouter);
 router.use('/admin', verifyToken, adminRouter);
 
 module.exports = router;

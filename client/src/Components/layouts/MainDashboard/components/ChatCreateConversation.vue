@@ -5,8 +5,17 @@
             :on-cancel="onCancel"
             :is-full-page="fullPage">
   </loading>
-
-<v-btn   icon slot="default"  @click="isChatExist()"> <v-icon>far fa-comment</v-icon></v-btn>
+<v-tooltip right>
+  <template v-slot:activator="{ on }">
+    <v-btn
+      v-on="on"
+      icon slot="default"
+      @click="isChatExist()">
+      <v-icon color="primary">chat_bubble</v-icon>
+    </v-btn>
+  </template>
+  <span>Chat</span>
+</v-tooltip>
 <v-dialog v-model="dialog" persistent max-width="600px">
 
   <v-card>

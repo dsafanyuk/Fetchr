@@ -62,6 +62,19 @@ function proceed(next) {
   }
 }
 
+function requireLoggedOut(to, from, next) {
+  // Check if the user is logged in & cookies have not expired
+  if (
+    store.getters['login/isLoggedIn']
+    && browserCookies.get('token')
+    && browserCookies.get('user_id')
+  ) {
+    next({ path: '/dashboard'});
+  } else {
+    next();
+  }
+}
+
 /* ----------------------- Routes Declaration -----------------*/
 const routes = [
   {
@@ -149,24 +162,21 @@ const routes = [
     ],
   },
 
-  { path: '/home', component: Home },
+  {
+    path: '/home',
+    component: Home,
+    beforeEnter: requireLoggedOut,
+  },
   { 
     path: '/login',
     component: Login,
-    beforeEnter: (to, from, next) => {
-      // Check if the user is logged in & cookies have not expired
-      if (
-        store.getters['login/isLoggedIn']
-        && browserCookies.get('token')
-        && browserCookies.get('user_id')
-      ) {
-        next({ path: '/dashboard'});
-      } else {
-        next();
-      }
-    },
+    beforeEnter: requireLoggedOut,
   },
-  { path: '/register', component: Register },
+  { 
+    path: '/register',
+    component: Register,
+    beforeEnter: requireLoggedOut,
+  },
   { path: '/courier', component: CourierLayout, beforeEnter: requireAuth },
   { path: '*', component: NotFoundComponent },
 ];
