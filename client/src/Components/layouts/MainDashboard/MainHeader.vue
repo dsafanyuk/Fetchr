@@ -192,6 +192,7 @@ export default {
         "You can go to shopping page by clicking Fetchr icon",
         "All items are non refundable",
         "Try favoriting an item",
+        "Your wallet can hold $5000",
       ],
       showText: "",
       textTimeout: null,

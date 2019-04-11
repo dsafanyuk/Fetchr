@@ -37,7 +37,7 @@
               <template v-slot:activator="{ on }">
                 <v-icon color="grey" dark v-on="on">info</v-icon>
               </template>
-              <span>Your wallet balance cannot exceed $1000</span>
+              <span>Your wallet balance cannot exceed $5000</span>
             </v-tooltip>
           </v-item-group>
         </v-card-actions>
@@ -108,8 +108,8 @@ export default {
       this.transactionIsProcessing = true;
       this.selectedAmount = parseFloat(this.selectedAmount).toFixed(2);
       if (
-        parseFloat(this.selectedAmount) + parseFloat(this.walletBalance) <
-        1000
+        parseFloat(this.selectedAmount) + parseFloat(this.walletBalance) <=
+        5000
       ) {
         axios
           .post("/api/users/" + browserCookies.get("user_id") + "/wallet", {
@@ -134,7 +134,7 @@ export default {
       } else {
         this.$toasted
           .error(
-            "Please enter a different amount that adds up to less than $1000"
+            "Please enter a different amount that adds up to $5000"
           )
           .goAway(3000);
         this.transactionIsProcessing = false;
