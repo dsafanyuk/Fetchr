@@ -210,7 +210,7 @@ export default {
                   browserCookies.erase(cookieName);
                 }
 
-                this.$router.push("/login");
+                this.$router.push("/home");
               },
               error => {
                 this.$store.commit("login/logoutFailed");

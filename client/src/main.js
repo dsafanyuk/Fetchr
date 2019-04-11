@@ -86,7 +86,7 @@ new Vue({
             browserCookies.erase(cookieName);
           }
           
-          router.push("/login");
+          router.push("/home");
         },
         error => {
           store.commit("login/logoutFailed");
