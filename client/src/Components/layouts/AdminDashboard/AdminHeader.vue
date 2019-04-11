@@ -76,7 +76,6 @@ export default {
       ],
       menu: [
         { title: "Switch to Shopping Mode", icon: "shopping_cart" },
-        { title: "Leave Feedback", icon: "feedback" },
         {
           title: "Logout",
           icon: "fas fa-sign-out-alt fa-s"
@@ -96,10 +95,6 @@ export default {
       switch (menuItem) {
         case "Switch to Shopping Mode": {
           this.$router.push("/dashboard");
-          break;
-        }
-        case "Leave Feedback": {
-          window.open("https://goo.gl/forms/Q1EzTiaBkPZwepb62");
           break;
         }
         case "Logout":

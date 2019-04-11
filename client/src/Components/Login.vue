@@ -6,11 +6,10 @@
           <div class="col-md-6 mx-auto">
             <img class="center_img" width="300px" height="300px " src="./images/logo.png" />
           </div>
-
           <div class="col-md-6 mx-auto">
-
             <div class="form-group">
               <h4 class="text-center form_h"> Login in on our Platform </h4>
+              <br>
             </div>
             <br>
             <form @keyup.enter="login('dashboard')">
@@ -56,7 +55,11 @@
               >Login as Courier</v-btn>
             </div>
             <div class="form-group text-center">
-                Don't have an account? <router-link to="/register">Sign up here</router-link>
+                            <span class="caption red--text text-xs-center text-center">You cannot use your PCC login info, please make a new account</span>
+                            <br>
+                Don't have an account? <router-link to="/register" class='underline'>Sign up here</router-link>
+                <br>Or<br>
+                <router-link to="/home" class='underline'>Go Home here</router-link>
             </div>
           </div>
         </div>
@@ -137,5 +140,7 @@
 
 <style lang="css" scoped>
   @import 'custom_css/registration.scss';
-  @import '/src/Components/assets/css/bootstrap.min.css';
+  .underline{
+  text-decoration: underline;
+}
 </style>

@@ -41,6 +41,7 @@
                                 :error-messages="errors.collect('cEmail')"
                                 data-vv-name="cEmail"
                                 placeholder="Email"
+                                autocomplete="username"
                                 value=""
                                 solo
                                 required
@@ -70,6 +71,7 @@
                             ></v-text-field>
                             <v-text-field
                                 v-validate="'required|min:8'"
+                                autocomplete="new-password"
                                 type="password"
                                 v-model="cPassword"
                                 :error-messages="errors.collect('cPassword')"
@@ -113,7 +115,9 @@
                             >Clear</v-btn>
                         </div>
                         <div class="form-group text-center">
-                            Already have an account? <router-link to="/login">Log in here</router-link>
+                            Already have an account? <router-link to="/login" class='underline'>Log in here</router-link>
+                                            <br>Or<br>
+                <router-link to="/home" class='underline'>Go Home here</router-link>
                         </div>
                     </div>
                 </div>
@@ -145,6 +149,8 @@ import Vue from 'vue'
                 cRepeatPassword: '',
                 dictionary: {
                     attributes: {
+                        cFirstname: 'First Name',
+                        cLastname: 'Last Name',
                         cEmail: 'E-mail Address',
                         cRoom: 'Room Number',
                         cPhone: 'Phone Number',
@@ -230,5 +236,7 @@ import Vue from 'vue'
 
 <style lang="css" scoped>
 @import "custom_css/registration.scss";
-@import "/src/Components/assets/css/bootstrap.min.css";
+.underline{
+  text-decoration: underline;
+}
 </style>

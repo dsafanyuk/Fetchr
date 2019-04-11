@@ -14,14 +14,14 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <v-layout class="mt-1">
+    <v-container fluid class="mt-1">
       <v-flex xs12>
         <v-layout pt-5 pb-5 class="hero">
           <v-layout align-center column fill-height class="hero-text justify-center">
             <v-icon x-large color="#f9aa33">people</v-icon>
             <span class="display-1 text-xs-center">What you need - straight to your door.</span>
             <br>
-            <span class="body-2 text-xs-center">We're students. We get you.</span>
+            <span class="body-2 text-xs-center">We're students. We get it.</span>
             <v-btn
               to="/register"
               large
@@ -32,13 +32,14 @@
           </v-layout>
         </v-layout>
       </v-flex>
-    </v-layout>
-    <v-container>
+    </v-container>
+    <v-container >
       <v-layout pb-5 align-end justify-center>
         <span class="display-3 font-weight-bold text-xs-center">{{gifs[gifSlide].title}}</span>
       </v-layout>
       <v-layout class>
-        <v-carousel :cycle="false" :dark="true" v-model="gifSlide">
+        <v-carousel :cycle="false" light v-model="gifSlide" height="565">
+          <v-flex xs12>
           <v-carousel-item
             v-for="(gif, i) in gifs"
             :key="i"
@@ -50,6 +51,7 @@
               <div class="display-1" >Click the right arrow to see how it works!</div>
           </v-layout>
         </v-carousel-item>
+          </v-flex>
         </v-carousel>
       </v-layout>
     </v-container>
