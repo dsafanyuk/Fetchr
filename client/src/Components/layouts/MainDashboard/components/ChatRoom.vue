@@ -1,10 +1,15 @@
 <template>
   <v-card>
 
-
-    <v-list subheader>
+    <v-list subheader
+    >
       <v-subheader>Recent orders</v-subheader>
+      <v-flex
+       id="scroll-target"
+       style="max-height: 400px"
+       class="scroll-y">
       <v-list-tile
+
         v-for="(chat, index) in chats"
         :key="chat.order_id"
         avatar
@@ -27,6 +32,7 @@
           <v-icon :color="('/chat/' + chat.order_id) == currPath ? 'white' : 'black'">chat_bubble</v-icon>
         </v-list-tile-action>
       </v-list-tile>
+      </v-flex>
     </v-list>
 
     <v-divider></v-divider>
@@ -34,6 +40,7 @@
 
       </v-list-tile>
     </v-list>
+
   </v-card>
 </template>
 

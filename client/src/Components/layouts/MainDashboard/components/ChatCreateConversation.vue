@@ -91,8 +91,11 @@ props : {
         else
           receiver_id = response.data[0]['courier_id'];
 
-        this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : this.$props.order_id });
-        this.$router.push("/chat/" + this.$props.order_id);
+        this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : this.$props.order_id })
+        .then(() => {
+          this.$router.push("/chat/" + this.$props.order_id);
+        })
+
       });
 
 

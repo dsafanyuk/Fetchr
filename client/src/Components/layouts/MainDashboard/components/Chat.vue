@@ -17,7 +17,7 @@
       <div class="card-box" >
 
         <!-- Order Details -->
-        <div class="text-xs-left">
+        <div class="text-xs-left col-md-6">
      <v-dialog
        v-model="ORDER_DETAILS_DIALOG"
        width="500"
@@ -190,7 +190,6 @@
 
       fetchMessages() {
         this.isChatLoading = true;
-
         let orderId = parseInt(this.$route.params.order_id)
         let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(orderId).limitToLast(100)
         let temp_data = []
