@@ -12,7 +12,7 @@
     <v-flex xs12 sm3 md3 offset-sm1>
       <chatroom @fetchMessages="fetchMessages" model="fullPage"> </chatroom>
     </v-flex>
-    <div col-md-6>
+    <div col-md-6 style="margin-left: 20px">
 
       <div class="card-box" >
 
@@ -49,8 +49,8 @@
                 <ul class="conversation-list"  tabindex="5001" >
                     <li  v-for="message in chatMessages" class="clearfix"   v-bind:class="displayMessages(message.SenderId)">
 
-                        <div class="conversation-text" >
-                            <div class="ctext-wrap">
+                        <div class="conversation-text" style="width: 100%; margin-left: 0px">
+                            <div class="ctext-wrap" style="font-size: 16px">
                                 <p v-html="message.Content"> </p>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                                 color="info"
                                 indeterminate
                               ></v-progress-circular>
-                            <a v-on:click="sendMessage"><v-icon>far fa-paper-plane</v-icon></a>
+                            <a v-on:click="sendMessage"><v-icon>send</v-icon></a>
                             </v-fade-transition>
                           </template>
                           <template v-slot:append-outer>
@@ -123,7 +123,7 @@
         ORDER_DETAILS_DIALOG : false,
         isChatLoading: false,
         fullPage: true,
-
+        senderFirstName: browserCookies.get('first_name'),
       }
     },
     props: [
@@ -182,6 +182,7 @@
         SenderId :  browserCookies.get("user_id"),
         Content : this.content
       }
+          console.log(this.$store.getters.UserInfo);
           this.$store.dispatch('sendMessage', Message_data)
           this.content = ''
         }
@@ -218,6 +219,7 @@
         .get("/api/users/" + id +  "/showInfo")
         .then(response => {
             fullname = response.data[0]['first_name'] + " " + response.data[0]['last_name']
+            console.log(fullname);
             chatList.push({chat_key : temp_chat_key,
             sender_id : temp_sender_id,
              receiver_id :temp_receiver_id,
