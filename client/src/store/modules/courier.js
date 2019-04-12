@@ -117,7 +117,7 @@ const actions = {
   socket_updateOpenOrders: ({
     state, getters, commit, dispatch,
   }) => {
-    if(router.history.current.fullPath == "/courier") {
+    if (router.history.current.fullPath == '/courier') {
       dispatch('clearAllOrders').then(() => {
         dispatch('refreshAllOrders');
       });
@@ -128,9 +128,9 @@ const actions = {
   }, data) => {
     const notifyData = data;
 
-    commit('notification/NOTIFY_ACCEPTED', notifyData, { root: true });
+    dispatch('notification/NOTIFY_ACCEPTED', notifyData, { root: true });
     console.log('EVENT RECEIVED: UPDATE_ACCEPTED_ORDERS');
-    if(router.history.current.fullPath == "/courier") {
+    if (router.history.current.fullPath == '/courier') {
       dispatch('clearAllOrders').then(() => {
         dispatch('refreshAllOrders');
       });
@@ -140,9 +140,9 @@ const actions = {
     state, getters, commit, dispatch,
   }, data) => {
     const notifyData = data;
-    commit('notification/NOTIFY_DELIVERED', notifyData, { root: true });
+    dispatch('notification/NOTIFY_DELIVERED', notifyData, { root: true });
     console.log('EVENT RECEIVED: UPDATE_DELIVERED_ORDERS');
-    if(router.history.current.fullPath == "/courier") {
+    if (router.history.current.fullPath == '/courier') {
       dispatch('clearAllOrders').then(() => {
         dispatch('refreshAllOrders');
       });
