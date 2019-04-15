@@ -2,6 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const adminController = require('./adminController');
+const verifyAdmin = require('./verifyAdmin')
 
 router.get('/products', adminController.showAllProducts);
 router.post('/products', adminController.addProduct);
@@ -23,4 +24,6 @@ router.get('/couriers/topThree', adminController.topThreeCouriers);
 router.get('/graphs/ordersPerDay', adminController.ordersPerDay);
 router.get('/graphs/productsPerDay', adminController.productsPerDay);
 router.get('/graphs/prodsSoldByCat', adminController.prodsSoldByCat);
+router.get('/verify', verifyAdmin.isAdmin);
+
 module.exports = router;

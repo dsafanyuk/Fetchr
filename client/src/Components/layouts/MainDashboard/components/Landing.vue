@@ -8,6 +8,19 @@
           :key="product.product_id"
           :product="product"
         ></LandingCard>
+        <v-btn
+              color="primary"
+              dark red
+              small
+              bottom
+              right
+              fab
+              floating
+              fixed
+              @click="scrollToTop"
+            >
+              <v-icon>keyboard_arrow_up</v-icon>
+            </v-btn>
       </div>
     </v-container>
   </v-app>
@@ -104,6 +117,9 @@ export default {
     ShoppingCart: ShoppingCart
   },
   methods: {
+    scrollToTop: function() {
+      window.scrollTo(0, 0);
+    },
     sortProducts() {
       let allProducts = this.products;
       this.snacksProducts = allProducts.filter(product => {

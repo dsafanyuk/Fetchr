@@ -41,7 +41,7 @@
       <v-flex
         v-on:click="scrollToTop"
         align-self-center
-        style="margin-right:10px"
+        style="margin-left: 30px"
         class="hidden-sm-and-down"
       >
         <transition name="fade" v-on:enter="enter" v-on:leave="leave">
@@ -49,7 +49,10 @@
         </transition>
       </v-flex>
       <div class="hidden-sm-and-down">
-        <v-menu fixed>
+        <v-btn v-on:click="goToDashboard" depressed icon>
+          <v-icon color="white">home</v-icon>
+        </v-btn>
+        <v-menu id="customer_menu" fixed bottom offset-y class="active_menu">
           <v-btn
             v-if="!firstName"
             flat
@@ -81,10 +84,16 @@
           </v-list>
         </v-menu>
       </div>
-      <div class="text-xs-right col-xs-4" @click="showShoppingCart(true)">
+      <div class="text-xs-right col-xs-4">
         <v-badge color="red" right overlap>
           <span slot="badge" v-if="numOfItemsInCart>0">{{numOfItemsInCart}}</span>
-          <v-btn fab small color="#f9aa33" icon class="ma-0">
+          <v-btn
+            @click="showShoppingCart(true)"
+            :disabled="!this.$store.getters['cart/totalCartItems']"
+            dark fab small
+            color="#f9aa33"
+            icon
+            class="ma-0">
             <v-icon color="white">shopping_cart</v-icon>
           </v-btn>
         </v-badge>
@@ -164,16 +173,13 @@ export default {
         }
       ],
       menu: [
-        { title: "Switch To Courier", icon: "fa fa-bicycle" },
+        { title: "Switch To Courier", icon: "fa fa-truck" },
         { title: "Account", icon: "fas fa-user-alt fa-s" },
         { title: "Orders", icon: "far fa-list-alt fa-s" },
         {
           title: "Wallet",
           icon: "fas fa-wallet fa-s"
-        },
-        { title: "Leave Feedback", icon: "feedback" },
-
-        {
+        },{
           title: "Logout",
           icon: "fas fa-sign-out-alt fa-s"
         }
@@ -183,7 +189,7 @@ export default {
         "You can go to shopping page by clicking Fetchr icon",
         "All items are non refundable",
         "Try favoriting an item",
-        "Test inputs to handle too many char/numbers"
+        "Your wallet can hold $5000",
       ],
       showText: "",
       textTimeout: null,
@@ -208,7 +214,6 @@ export default {
         return this.$store.getters["dashboard/getSearchTerm"];
       },
       set(value) {
-        console.log("value");
         this.$store.commit("dashboard/setSearchTerm", value);
       }
     },
@@ -261,10 +266,6 @@ export default {
           this.$router.push("/courier");
           break;
         }
-        case "Leave Feedback": {
-          window.open("https://goo.gl/forms/Q1EzTiaBkPZwepb62");
-          break;
-        }
         case "Account": {
           this.$router.push("/account");
           break;
@@ -279,13 +280,15 @@ export default {
         }
         case "Logout":
           {
-            let allCookies = browserCookies.all();
-            for (let cookieName in allCookies) {
-              browserCookies.erase(cookieName);
-            }
             this.$store.dispatch("login/logout").then(
               response => {
-                this.$router.push("/login");
+                let allCookies = browserCookies.all();
+
+                for (let cookieName in allCookies) {
+                  browserCookies.erase(cookieName);
+                }
+                
+                this.$router.push("/home");
               },
               error => {
                 this.$store.commit("login/logoutFailed");
@@ -331,5 +334,9 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+.active_menu .menuable__content__active {
+  position: fixed;
 }
 </style>

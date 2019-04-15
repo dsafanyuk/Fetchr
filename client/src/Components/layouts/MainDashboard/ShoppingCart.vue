@@ -1,5 +1,5 @@
 <template>
-  <div class="text-xs-center">
+  <div>
     <v-dialog v-model="show" width="750" transition="false">
       <v-card>
         <div class="text-xs-right">
@@ -11,15 +11,28 @@
           class="headline justify-center text-xs-center font-weight-bold"
           primary-title
         >Your Shopping Cart</v-card-title>
-        <v-data-table :items="items" hide-headers :total-items="10" hide-actions>
+        <v-data-table :items="items" hide-headers hide-actions>
+          <template v-slot:no-data>
+            <td class="text-xs-right" :colspan="3">
+              <v-flex class="text-xs-center">Cart is empty, add some items!</v-flex>
+            </td>
+          </template>
           <template slot="items" slot-scope="props">
             <td>{{ props.item.product_name }}</td>
             <td class="text-xs-center">
-              <v-btn icon v-on:click="incQuantity(props.item)">
+              <v-btn
+                icon
+                v-on:click="incQuantity(props.item)"
+                :disabled="props.item.quantity === 10"
+              >
                 <v-icon color="primary">add_circle</v-icon>
               </v-btn>
               {{ props.item.quantity }}
-              <v-btn icon v-on:click="decQuantity(props.item)">
+              <v-btn
+                icon
+                v-on:click="decQuantity(props.item)"
+                :disabled="props.item.quantity === 1"
+              >
                 <v-icon color="primary">remove_circle</v-icon>
               </v-btn>
             </td>
@@ -43,7 +56,7 @@
           </template>
         </v-data-table>
         <div class="text-xs-center">
-          <v-btn color="gray" @click="show = !show">Continue Shopping</v-btn>
+          <v-btn color="gray" @click="show = !show" to="/dashboard">Continue Shopping</v-btn>
 
           <v-btn :disabled="isEmpty" v-on:click="checkout(false)" color="success">
             Checkout &nbsp;&nbsp;

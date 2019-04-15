@@ -41,6 +41,7 @@
                                 :error-messages="errors.collect('cEmail')"
                                 data-vv-name="cEmail"
                                 placeholder="Email"
+                                autocomplete="username"
                                 value=""
                                 solo
                                 required
@@ -70,6 +71,7 @@
                             ></v-text-field>
                             <v-text-field
                                 v-validate="'required|min:8'"
+                                autocomplete="new-password"
                                 type="password"
                                 v-model="cPassword"
                                 :error-messages="errors.collect('cPassword')"
@@ -91,25 +93,31 @@
                                 solo
                                 required
                             ></v-text-field>
-                            <div class="alert alert-info alert-dismissable">
-                              <a class="panel-close close" data-dismiss="alert">×</a>
-                              Password <strong>must have at least</strong>.<br>- 8 characters
-                            </div>
+                            <v-alert
+                                :value="true"
+                                color="info"
+                                icon="info"
+                                outline
+                                dismissible
+                            >Password <strong>Must have at least</strong>:<br> 8 characters
+                            </v-alert>
                         </form>
                         <div class="form-group text-center">
                             <v-btn
-                                round color="cyan" dark
+                                round color="#647a87" dark
                                 type="submit"
                                 @click="registerCustomer"
                             >Register</v-btn>
                             <v-btn
-                                round color="cyan" dark
+                                round color="#647a87" dark
                                 type="button"
                                 @click="clear"
                             >Clear</v-btn>
                         </div>
                         <div class="form-group text-center">
-                            Already have an account? <router-link to="/login">Log in here</router-link>
+                            Already have an account? <router-link to="/login" class='underline'>Log in here</router-link>
+                                            <br>Or<br>
+                <router-link to="/home" class='underline'>Go Home here</router-link>
                         </div>
                     </div>
                 </div>
@@ -141,6 +149,8 @@ import Vue from 'vue'
                 cRepeatPassword: '',
                 dictionary: {
                     attributes: {
+                        cFirstname: 'First Name',
+                        cLastname: 'Last Name',
                         cEmail: 'E-mail Address',
                         cRoom: 'Room Number',
                         cPhone: 'Phone Number',
@@ -198,15 +208,13 @@ import Vue from 'vue'
                                 }
                             })
                             .catch(function (error) {
-                                if (error.response) {
-                                    error.response.data.errors.map( (error) => {
-                                        Vue.toasted.show(error.param + " " + error.msg, {
+                                if (error.response.status == 400) {
+                                        Vue.toasted.show(error.response.data, {
                                             theme: 'bubble',
                                             duration: 4000,
                                             position: 'top-center',
                                             icon: 'report_problem'
                                         });
-                                    })
                                 }
                                 if (error.response) {
                                     // The request was made and the server responded with a status code
@@ -228,5 +236,7 @@ import Vue from 'vue'
 
 <style lang="css" scoped>
 @import "custom_css/registration.scss";
-@import "/src/Components/assets/css/bootstrap.min.css";
+.underline{
+  text-decoration: underline;
+}
 </style>

@@ -1,6 +1,6 @@
 # Fetchr
 
-## The student-run, store-to-door platform was made by students for students.
+## The student-run, store-to-door platform was made by students for students
 
 _Fetchr_ is a platform that allows students to order things to be delivered to their room.
 
@@ -26,33 +26,34 @@ Need extra money? Sign up to be a courier! View open orders and make a quick buc
 
 **Communications Coordinate**: Benji Kintaudi
 
+## Run Fetchr
 
-## Run the api
+Check the wiki: <https://github.com/Dsafanyuk/Fetchr/wiki>
 
-Change into project folder
+## User Dashboard
 
-`cd Fetchr`
+Users can balance to their wallet
 
-Change into the `api` folder
+![User adding balance to Wallet](client/src/Components/assets/AddToWallet.gif)
 
-`cd api`
+Users can add items to their favorites
 
-Install npm dependencies
+![User adding item to Favorites](client/src/Components/assets/AddToFavorites.gif)
 
-`npm install`
+Users can add items to their cart
 
-Start api server
+![User adding item to Cart](client/src/Components/assets/AddToCart.gif)
 
-`npm start`
+## Courier Dashboard
 
-### [API Documentation](https://fetchr1.docs.apiary.io/#)
+Courier Accepting an Order
 
-Test using Postman [install here](https://www.getpostman.com/apps) or browser:
+![Courier Accepting an Order](client/src/Components/images/CourierAcceptOrder.gif)
 
-http://localhost:3000/api/user
+Courier Delivering an Order
 
-http://localhost:3000/api/users/1
+![Courier Delivering an Order](client/src/Components/images/CourierDeliverOrder.gif)
 
-http://localhost:3000/api/order
+Courier Viewing an Order
 
-http://localhost:3000/api/order/1
+![Courier Viewing an Order](client/src/Components/images/CourierViewOrder.gif)

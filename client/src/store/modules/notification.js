@@ -4,14 +4,18 @@ import router from '../../router';
 
 const browserCookies = require('browser-cookies');
 
-const user = parseInt(browserCookies.get('user_id'));
 Vue.use(Toasted);
 const state = {};
-const mutations = {
-  NOTIFY_ACCEPTED: (state, message) => {
-    if (message.user == user) {
+const actions = {
+  NOTIFY_ACCEPTED: ({ rootGetters }, message) => {
+    const user = rootGetters['login/getUserId'];
+    console.log('order accepted', message);
+    if (message.user == user && router.path != '/home') {
+      console.log('my order accepted', message);
+
       Vue.toasted.show(`Order #${message.order} has been accepted.`, {
         theme: 'bubble',
+        position: 'top-center',
         action: [
           {
             class: 'toast-action',
@@ -31,10 +35,14 @@ const mutations = {
       });
     }
   },
-  NOTIFY_DELIVERED: (state, message) => {
-    if (message.user == user) {
+  NOTIFY_DELIVERED: ({ rootGetters }, message) => {
+    const user = rootGetters['login/getUserId'];
+    if (message.user == user && router.path != '/home') {
+      console.log('my order delivered', message);
+
       Vue.toasted.show(`Order #${message.order} has been delivered.`, {
         theme: 'bubble',
+        position: 'top-center',
         action: [
           {
             text: 'SHOW',
@@ -56,5 +64,5 @@ const mutations = {
 };
 export default {
   namespaced: true,
-  mutations,
+  actions,
 };

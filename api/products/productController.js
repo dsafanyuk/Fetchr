@@ -29,6 +29,7 @@ function showAllProducts(req, res) {
     UNION
     SELECT *, 'false' as 'is_favorite'
         FROM products
+        where is_active = 'true'
     having product_id not in 
         (select product_id 
           from favorites

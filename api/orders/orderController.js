@@ -1,5 +1,6 @@
 const Sentry = require('@sentry/node');
 const knex = require('knex')(require('../db'));
+const updateOpenOrders = require('../socket/updateOpenOrders');
 
 // GET /order
 function showAllOrders(req, res) {
@@ -41,6 +42,10 @@ function createOrder(req, res) {
   };
 
   const { productsWithQuantity } = request;
+
+  const socketApi = require('../socket');
+
+  updateOpenOrders(socketApi);
 
   knex('orders')
     .insert(order)

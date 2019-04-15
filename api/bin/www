@@ -41,8 +41,7 @@ if (process.env.NODE_ENV == 'production') {
 
 var socketApi = require('../socket');
 
-var { io } = socketApi;
-io.listen(server);
+socketApi.listen(server);
 
 /**
  * Listen on provided port, on all network interfaces.

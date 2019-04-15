@@ -4,6 +4,15 @@
     <v-layout row class="pa-3 mb-2">
       <v-flex md8 xs12>
         <v-data-table :items="items" hide-headers :hide-actions="!isMobile" class="elevation-1">
+          <template v-slot:no-data>
+            <v-flex class="text-xs-center">
+              <router-link to="/dashboard">
+                <v-btn
+                  color="success"
+                >Can't checkout without with an empty cart, let's add some items!</v-btn>
+              </router-link>
+            </v-flex>
+          </template>
           <template slot="items" slot-scope="props">
             <td align="text-xs-center" class="hidden-sm-and-down">
               <img :src="props.item.product_url" class="checkout-img">
@@ -11,11 +20,19 @@
             <td class="body-2 text-xs-left">{{ props.item.product_name }}</td>
             <td class="text-xs-left">${{ (props.item.price).toFixed(2) }}</td>
             <td class="text-xs-center">
-              <v-btn icon v-on:click="incQuantity(props.item)">
+              <v-btn
+                icon
+                v-on:click="incQuantity(props.item)"
+                :disabled="props.item.quantity === 10"
+              >
                 <v-icon color="primary">add_circle</v-icon>
               </v-btn>
               <span>{{ props.item.quantity }}</span>
-              <v-btn icon v-on:click="decQuantity(props.item)">
+              <v-btn
+                icon
+                v-on:click="decQuantity(props.item)"
+                :disabled="props.item.quantity === 1"
+              >
                 <v-icon color="primary">remove_circle</v-icon>
               </v-btn>
             </td>
@@ -134,7 +151,6 @@ export default {
         });
       });
       this.$store.dispatch("wallet/getWalletBalance");
-      console.log(productsWithQuantity);
       if (this.sufficientFunds) {
         axios
           .post("/api/orders/", {
@@ -144,7 +160,6 @@ export default {
             productsWithQuantity: productsWithQuantity
           })
           .then(response => {
-            socket.emit("ORDER_CREATED");
             //go to the confirmation page and send it the order id
             router.push("/confirmation?order=" + response.data.message);
             this.$store.dispatch("wallet/getWalletBalance");

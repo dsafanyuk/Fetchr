@@ -11,7 +11,7 @@
           class="headline justify-center text-xs-center font-weight-bold"
           primary-title
         >Refill your Wallet</v-card-title>
-        <v-card-text>Your current balance is:</v-card-text>
+        <v-card-text class="text-xs-center">Your current balance is:</v-card-text>
         <v-card-text class="text-xs-center font-weight-medium display-3">${{walletBalance}}</v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="justify-center text-xs-center" v-if="!transactionIsProcessing">
@@ -33,18 +33,20 @@
               >
               <v-chip v-else slot-scope="{ active }" :selected="active" @click="customAmount">other</v-chip>
             </v-item>
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <v-icon color="grey" dark v-on="on">info</v-icon>
+              </template>
+              <span>Your wallet balance cannot exceed $5000</span>
+            </v-tooltip>
           </v-item-group>
         </v-card-actions>
         <div v-if="transactionIsProcessing">
           <v-progress-linear :indeterminate="true" height="15" color="success"></v-progress-linear>
         </div>
         <div v-else class="text-xs-center">
-          <v-btn
-            :disabled="validAmountChosen"
-            round
-            color="success"
-            @click="addToWallet"
-          >Refill &nbsp; &nbsp;
+          <v-btn :disabled="validAmountChosen" round color="success" @click="addToWallet">
+            Refill &nbsp; &nbsp;
             <v-icon>fas fa-money-bill-wave</v-icon>
           </v-btn>
         </div>
@@ -106,8 +108,8 @@ export default {
       this.transactionIsProcessing = true;
       this.selectedAmount = parseFloat(this.selectedAmount).toFixed(2);
       if (
-        parseFloat(this.selectedAmount) + parseFloat(this.walletBalance) <
-        1000
+        parseFloat(this.selectedAmount) + parseFloat(this.walletBalance) <=
+        5000
       ) {
         axios
           .post("/api/users/" + browserCookies.get("user_id") + "/wallet", {
@@ -122,16 +124,18 @@ export default {
           })
           .catch(error => {
             Vue.toasted.error("Failed wallet transaction", {
-              theme: 'bubble',
+              theme: "bubble",
               duration: 4000,
-              position: 'top-center',
-              icon: 'report_problem'
+              position: "top-center",
+              icon: "report_problem"
             });
             console.log(error);
           });
       } else {
         this.$toasted
-          .error("You're Too Rich! Give More To Charity pls")
+          .error(
+            "Please enter a different amount that adds up to $5000"
+          )
           .goAway(3000);
         this.transactionIsProcessing = false;
         this.selectAmount(null);

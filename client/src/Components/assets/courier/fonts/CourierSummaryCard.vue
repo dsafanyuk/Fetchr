@@ -409,6 +409,6 @@ export default {
 </script>
 
 <style scoped="true">
-@import "../../assets/courier/css/core.css";
+@import "../../assets/courier/css/core.scss";
 
 </style>

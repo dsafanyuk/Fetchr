@@ -21,7 +21,7 @@
                 ></v-progress-circular>
                 <div v-if="!(isLoading)">
                   <h4 class="m-t-0 m-b-5">
-                    <b>{{available_orders}}</b>
+                    <b>{{availableOrders.length}}</b>
                   </h4>
                 </div>
                 <p class="text-muted m-b-0 m-t-0">Total Available Orders</p>
@@ -148,7 +148,7 @@
                 ></v-progress-circular>
                 <div v-if="!(isLoading)">
                   <h4 class="m-t-0 m-b-5">
-                    <b>{{delivered_orders}}</b>
+                    <b>{{deliveredOrders.length}}</b>
                   </h4>
                 </div>
                 <p class="text-muted m-b-0 m-t-0">Total Delivered Orders</p>
@@ -158,7 +158,7 @@
                   data-plugin="peity-bar"
                   data-colors="#f9aa33,#ebeff2"
                   data-width="120"
-                  data-height="45"
+                  data-height="s45"
                   style="display: none;"
                 >5,3,9,6,5,9,7,3,5,2,9,7,2,1</span>
                 <svg class="peity" height="45" width="120">
@@ -276,7 +276,7 @@
                 ></v-progress-circular>
                 <div v-if="!(isLoading)">
                   <h4 class="m-t-0 m-b-5">
-                    <b>{{revenue}}</b>
+                    <b>{{deliveredRevenue}}</b>
                   </h4>
                 </div>
                 <p class="text-muted m-b-0 m-t-0">Total Delivered Revenue</p>
@@ -398,7 +398,7 @@
 
               <div class="table-detail">
                 <h4 class="m-t-0 m-b-5">
-                  <b>{{available_orders}}</b>
+                  <b>{{availableOrders.length}}</b>
                 </h4>
                 <p class="text-muted m-b-0 m-t-0">Total Available Orders</p>
               </div>
@@ -516,7 +516,7 @@
 
               <div class="table-detail">
                 <h4 class="m-t-0 m-b-5">
-                  <b>{{delivered_orders}}</b>
+                  <b>{{deliveredOrders.length}}</b>
                 </h4>
                 <p class="text-muted m-b-0 m-t-0">Total Delivered Orders</p>
               </div>
@@ -635,7 +635,7 @@
 
               <div class="table-detail">
                 <h4 class="m-t-0 m-b-5">
-                  <b>{{revenue}}</b>
+                  <b>{{deliveredRevenue}}</b>
                 </h4>
                 <p class="text-muted m-b-0 m-t-0">Total Delivered Revenue</p>
               </div>
@@ -751,50 +751,36 @@ import axios from "../../../../axios";
 import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
 const user = browserCookies.get("user_id");
+import { mapGetters } from 'vuex'
 
 export default {
   name: "CourierSummaryCard",
-  data() {
-    return {
-      available_orders: 0,
-      delivered_orders: 0,
-      revenue: 0
-    };
-  },
   computed: {
     isLoading() {
       return this.$store.getters["courier/isLoading"];
-    }
+    },
+    availableOrders() {
+      return this.$store.getters["courier/availableOrders"];
+    },
+    deliveredOrders() {
+      return this.$store.getters["courier/deliveredOrders"];
+    },
+    deliveredRevenue() {
+      return this.$store.getters['courier/getDeliveredRevenueSum'];
+    },
   },
   methods: {
-    getAvailableOrders() {
-      axios
-        .get("/api/courier/" + user + "/countAvailableOrder")
-        .then(response => {
-          this.available_orders = response.data[0][0]["count_av"];
-        });
-    },
-    getTotalDelivered() {
-      axios
-        .get("/api/courier/" + user + "/getTotalDelivered")
-        .then(response => {
-          this.delivered_orders = response.data[0][0]["count_d"];
-        });
-    },
-    getRevenue() {
-      axios.get("/api/courier/" + user + "/getRevenue").then(response => {
-        this.revenue = response.data[0][0]["revenue"];
-      });
-    }
   },
 
-  mounted: function() {
-    this.getAvailableOrders();
-    this.getTotalDelivered();
-    this.getRevenue();
-  }
+  mounted() {
+this.$store.dispatch("courier/updateDeliveredRevenue")
+.then(() => {
+  this.delivered_revenue = this.$store.getters['courier/getDeliveredRevenueSum'];
+});
+
+}
+
+
 };
 </script>
-
-<style scoped src="../../../assets/courier/css/core.css">
-</style>
+<style scoped src="../../../assets/courier/css/core.scss"> </style>
