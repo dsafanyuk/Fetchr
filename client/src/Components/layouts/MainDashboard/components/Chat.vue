@@ -75,7 +75,7 @@
 <script>
 import ChatRoom from "./ChatRoom.vue";
 import OrderDetailsChat from "./ChatOrderDetails.vue";
-import * as firebase from "firebase";
+import firebase from "firebase/app";
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";
 import Loading from "vue-loading-overlay";
@@ -122,7 +122,6 @@ export default {
     OrderDetailsChat: OrderDetailsChat,
     loading: Loading
   },
-  computed: {},
   methods: {
     scrollToEnd() {
       var container = document.querySelector(".chat-conversation");
